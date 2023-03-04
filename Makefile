@@ -17,7 +17,7 @@ $(OBJS):	$(SRCS)
 			@$(CC) $(CFLAGS) -c $(SRCS)
 
 $(NAME):	$(OBJS) $(LIBFT)
-			@$(CC) $(CFLAGS) $(OBJS) $(LIBFT_LINK) $(FT_PRINTF_LINK) -o $(NAME)
+			@$(CC) $(CFLAGS) $(OBJS) $(LIBFT_LINK) $(FT_PRINTF_LINK) -lreadline -o $(NAME)
 			@echo "Minishell compiled!"
 
 $(LIBFT):
