@@ -3,7 +3,7 @@ NAME = minishell
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
 
-SRCS = $(addprefix ./src/, )
+SRCS = $(addprefix ./src/, testing.c)
 
 OBJS = $(addsuffix .o, $(notdir $(basename $(SRCS))))
 
@@ -19,6 +19,9 @@ $(OBJS):	$(SRCS)
 $(NAME):	$(OBJS) $(LIBFT)
 			@$(CC) $(CFLAGS) $(OBJS) $(LIBFT_LINK) $(FT_PRINTF_LINK) -o $(NAME)
 			@echo "Minishell compiled!"
+
+$(LIBFT):
+			@make -C ./includes/libft_plus
 
 clean:
 			@rm -f $(OBJS)
