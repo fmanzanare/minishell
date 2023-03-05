@@ -6,7 +6,7 @@
 #    By: vde-prad <vde-prad@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 11:02:01 by vde-prad          #+#    #+#              #
-#    Updated: 2023/03/04 21:02:38 by vde-prad         ###   ########.fr        #
+#    Updated: 2023/03/05 13:21:46 by vde-prad         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRCS	= 	pipex.c \
 
 OBJS	= ${SRCS:.c=.o}
 NAME	= pipex
-LIBRARY = ../../include/libft_bonus/libft.a
+LIBRARY = ../../includes/libft_plus/libft.a
 CC		= gcc
 CFLAGS	= -Wall -Wextra -Werror
 RM		= rm -f
