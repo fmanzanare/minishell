@@ -4,7 +4,7 @@ CC = gcc
 CFLAGS = -Wall -Werror -Wextra
 
 SRCS = $(addprefix ./src/, testing.c)
-SRCS_UTILS = $(addprefix ./src/utils/, command_spliter.c free_fts.c)
+SRCS_UTILS = $(addprefix ./src/utils/, command_spliter.c free_fts.c list_utils.c)
 
 OBJS = $(addsuffix .o, $(notdir $(basename $(SRCS))))
 OBJS_UTILS = $(addsuffix .o, $(notdir $(basename $(SRCS_UTILS))))
