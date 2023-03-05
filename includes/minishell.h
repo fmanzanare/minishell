@@ -22,9 +22,14 @@ typedef struct s_inputs
 	t_args			*args;
 }				t_inputs;
 
-/* UTILS */
+/*** UTILS ***/
 char		**command_spliter(char *str, char c);
+// free_fts.c
 void		ft_free_arr(char **arr);
-t_args		*create_node(char *cmd_line);
+void		free_list(t_args **args);
+// list_utils.c
+void		run_to_head(t_args **args);
+void		run_to_tail(t_args **args);
+void		fill_command_lines(t_args **args, char **line_splited);
 
 #endif

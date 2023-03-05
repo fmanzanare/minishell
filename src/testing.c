@@ -21,12 +21,6 @@ int	arr_len (char **arr)
 	return (i);
 }
 
-void	run_to_head(t_args **args)
-{
-	while ((*args)->prev)
-		*args = (*args)->prev;
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_inputs	inputs;
@@ -36,31 +30,23 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	if (!argv[0])
 		return (1);
-	i = 0;
 	while(1)
 	{
+		i = 0;
 		inputs.line = readline(get_username(envp));
 		inputs.line_splited = ft_split(inputs.line, '|');
-		while (inputs.line_splited[i])
-		{
-			if (i == 0)
-				inputs.args = create_node(inputs.line_splited[i]);
-			else
-			{
-				inputs.args->next = create_node(inputs.line_splited[i]);
-				inputs.args->next->prev = inputs.args;
-				inputs.args = inputs.args->next;
-			}
-			i++;
-		}
+		fill_command_lines(&inputs.args, inputs.line_splited);
 		run_to_head(&inputs.args);
 		while (inputs.args)
 		{
 			ft_printf("%s\n", inputs.args->cmd_line);
+			if (!inputs.args->next)
+				break;
 			inputs.args = inputs.args->next;
 		}
 		add_history(inputs.line);
-		//ft_printf("%s\n", inputs.line);
+		free_list(&inputs.args);
+		ft_free_arr(inputs.line_splited);
 	}
 	free(inputs.line);
 	return (0);
