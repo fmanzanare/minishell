@@ -11,16 +11,6 @@ static char	*get_username(char **envp)
 	return (ret);
 }
 
-int	arr_len (char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i])
-		i++;
-	return (i);
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_inputs	inputs;
