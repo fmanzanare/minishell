@@ -10,7 +10,8 @@ typedef struct s_args
 	char 			*cmd_line;
 	char 			**cmd_arr;
 	char 			*cmd_path;
-	char 			*cmd_argv;
+	int				pipe_flag;
+	int				red_flag;
 	struct s_args	*next;
 	struct s_args	*prev;
 }				t_args;
@@ -19,6 +20,7 @@ typedef struct s_inputs
 {
 	char			*line;
 	char			**line_splited;
+	char			*pipes_redir;
 	t_args			*args;
 }				t_inputs;
 
@@ -35,5 +37,8 @@ void		fill_command_lines(t_args **args, char **line_splited);
 char		**command_spliter(char *str, char c);
 // inputs_spliter.c
 int 		input_size(char **line_splited);
+// pipes_and_redirs.c
+char		*pipes_redirs_stringer(char *str);
+void		print_pipes_redirs_str(char *line);
 
 #endif
