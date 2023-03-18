@@ -15,6 +15,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_inputs	inputs;
 	int			i;
+	int			j;
 
 	if (argc != 1)
 		return (1);
@@ -29,7 +30,15 @@ int	main(int argc, char **argv, char **envp)
 		run_to_head(&inputs.args);
 		while (inputs.args)
 		{
+			j = 0;
 			ft_printf("%s\n", inputs.args->cmd_line);
+			ft_printf("Splited:\n");
+			while (inputs.args->cmd_arr[j])
+			{
+				ft_printf("%d: %s\n", j, inputs.args->cmd_arr[j]);
+				j++;
+			}
+			ft_printf("\n");
 			if (!inputs.args->next)
 				break;
 			inputs.args = inputs.args->next;

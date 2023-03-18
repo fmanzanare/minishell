@@ -1,13 +1,11 @@
 #include "../../includes/minishell.h"
 
-// char	breakchar_ctrl(char *str)
-// {
-// 	int		i;
+int		input_size(char **line_splited)
+{
+	int		counter;
 
-
-// }
-
-// char **inputs_spliter(char *line)
-// {
-
-// }
+	counter = 0;
+	while (line_splited[counter])
+		counter++;
+	return (counter);
+}

@@ -26,7 +26,7 @@ void	run_to_tail(t_args **args)
  * @param first_node Flag to indicate if it is the first cmd_line.
  * @return Trimmed string.
 */
-char	*ft_trim(char *str, int first_node)
+char	*ft_trim(char *str, int node, int input_len)
 {
 	int		len;
 	int		i;
@@ -35,9 +35,11 @@ char	*ft_trim(char *str, int first_node)
 
 	i = 0;
 	j = 1;
-	if (!first_node)
+	if (!node)
 		j = 0;
 	len = ft_strlen(str) - 1;
+	if (node < (input_len - 1) && node)
+		len--;
 	res = malloc(sizeof(char *) * len);
 	while (i < len)
 	{
@@ -55,12 +57,13 @@ char	*ft_trim(char *str, int first_node)
  * @param first_node Flag to indicate if it is the first argument.
  * @return New node.
 */
-static t_args	*create_node(char *cmd_line, int first_node)
+static t_args	*create_node(char *cmd_line, int first_node, int input_len)
 {
 	t_args	*new;
 
 	new = malloc(sizeof * new);
-	new->cmd_line = ft_trim(cmd_line, first_node);
+	new->cmd_line = ft_trim(cmd_line, first_node, input_len);
+	new->cmd_arr = command_spliter(cmd_line, ' ');
 	new->next = NULL;
 	new->prev = NULL;
 	return (new);
@@ -74,15 +77,17 @@ static t_args	*create_node(char *cmd_line, int first_node)
 void	fill_command_lines(t_args **args, char **line_splited)
 {
 	int		i;
+	int		input_len;
 
 	i = 0;
+	input_len = input_size(line_splited);
 	while (line_splited[i])
 	{
 		if (i == 0)
-			*args = create_node(line_splited[i], i);
+			*args = create_node(line_splited[i], i, input_len);
 		else
 		{
-			(*args)->next = create_node(line_splited[i], i);
+			(*args)->next = create_node(line_splited[i], i, input_len);
 			(*args)->next->prev = *args;
 			*args = (*args)->next;
 		}
