@@ -20,6 +20,7 @@ typedef struct s_inputs
 {
 	char			*line;
 	char			**line_splited;
+	int				lenght;
 	char			*pipes_redir;
 	t_args			*args;
 }				t_inputs;
