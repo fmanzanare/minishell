@@ -3,32 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   setdata.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vde-prad <vde-prad@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: vde-prad <vde-prad@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 17:48:26 by vde-prad          #+#    #+#             */
-/*   Updated: 2022/11/18 18:02:37 by vde-prad         ###   ########.fr       */
+/*   Updated: 2023/03/19 22:19:10 by vde-prad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../pipex.h"
 
-void	ft_parserarg(char	**av, t_argdata *pdata)
+//parser the cmd name, flags and cmd arguments in a double char pointer
+static void	ft_parserarg(char	**av, t_argdata *pdata, int ac)
 {
-	if (av[2][0] != 0 && av[3][0] != 0)
+	int	i;
+	int	j;
+
+	i = 2;
+	j = 0;
+	pdata->full_cmd = malloc(sizeof(char ***));
+	pdata->cmd = malloc(sizeof(char **));
+	while (i <= ac - 2)
 	{
-		pdata->options[0] = ft_split(av[2], ' ');
-		pdata->options[1] = ft_split(av[3], ' ');
-		pdata->cmd[0] = ft_strdup(pdata->options[0][0]);
-		pdata->cmd[1] = ft_strdup(pdata->options[1][0]);
-	}
-	else
-	{
-		ft_putstr_fd("Error: argument(s) empty\n", 2);
-		exit(127);
+		if (av[i][0] != 0)
+		{
+			pdata->full_cmd[j] = ft_split(av[i], ' ');
+			pdata->cmd[j] = ft_strdup(pdata->full_cmd[j][0]);
+			i++;
+			j++;
+		}
+		else
+		{
+			ft_putstr_fd("Error: argument(s) empty\n", 2);
+			exit(127);
+		}
 	}
 }
 
 //set fdin, fdout, pp, cmd and options in data structure
-void	ft_setdata(t_argdata *pdata, char	**av)
+void	ft_setdata(t_argdata *pdata, char	**av, int ac)
 {
 	if (!access(av[1], F_OK | R_OK))
 		pdata->fdin = open(av[1], O_RDONLY);
@@ -48,5 +60,23 @@ void	ft_setdata(t_argdata *pdata, char	**av)
 		ft_putstr_fd("Error: pipe\n", 2);
 		exit(127);
 	}
-	ft_parserarg(av, pdata);
+	ft_parserarg(av, pdata, ac);
+}
+
+int	main(int ac, char **av)
+{
+	t_argdata	data;
+	int			i = 0;
+	int			j = 0;
+
+	printf("ac = %d\n", ac);
+	ft_parserarg(av, &data, ac);
+	while (i < ac - 3)
+	{
+		printf("cmd : %s\n", data.cmd[i]);
+		while (data.full_cmd[i][j])
+			printf("full_cmd : %s\n", data.full_cmd[i][j++]);
+		j = 0;
+		i++;
+	}
 }
