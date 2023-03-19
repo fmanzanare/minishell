@@ -27,7 +27,7 @@ int	main(int argc, char **argv, char **envp)
 		inputs.line = readline(get_username(envp));
 		print_pipes_redirs_str(&inputs);
 		inputs.line_splited = ft_split(inputs.line, '|');
-		fill_command_lines(&inputs.args, inputs.line_splited);
+		fill_command_lines(&inputs.args, inputs.line_splited, &inputs);
 		run_to_head(&inputs.args);
 		while (inputs.args)
 		{
