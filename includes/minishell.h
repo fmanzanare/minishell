@@ -38,7 +38,7 @@ char		**command_spliter(char *str, char c);
 // inputs_spliter.c
 int 		input_size(char **line_splited);
 // pipes_and_redirs.c
-char		*pipes_redirs_stringer(char *str);
-void		print_pipes_redirs_str(char *line);
+void		pipes_redirs_stringer(t_inputs *inputs);
+void		print_pipes_redirs_str(t_inputs *inputs); //For testing.
 
 #endif
