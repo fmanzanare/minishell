@@ -11,15 +11,25 @@
 */
 static void	red_pipe_checker(char *str, int *rp_idx, t_args *new)
 {
-	if (str[rp_idx[0]] == '<' || str[rp_idx[0]] == '>')
+	if (str[*rp_idx] == '<' && str[*rp_idx + 1] != '<')
 	{
-		new->red_flag = 1;
-		rp_idx[0]++;
+		new->ired_flag = 1;
+		(*rp_idx) += 2;
 	}
-	if (str[rp_idx[0]] == '|')
+	else if (str[*rp_idx] == '>' && str[*rp_idx + 1] != '>')
 	{
-		new->pipe_flag = 1;
-		rp_idx[0]++;
+		new->ored_flag = 1;
+		(*rp_idx) += 2;
+	}
+	else if (str[*rp_idx] == '>' && str[*rp_idx + 1] == '>')
+	{
+		new->app_flag = 1;
+		(*rp_idx) += 3;
+	}
+	else if (str[*rp_idx] == '<' && str[*rp_idx + 1] == '<')
+	{
+		new->hd_flag = 1;
+		(*rp_idx) += 3;
 	}
 }
 
@@ -32,13 +42,27 @@ static void	red_pipe_checker(char *str, int *rp_idx, t_args *new)
 static t_args	*create_node(char *cmd, int node, int *rp_idx, t_inputs *inputs)
 {
 	t_args	*new;
+	int		i;
 
+	i = 0;
 	new = malloc(sizeof * new);
 	new->cmd_line = ft_trim(cmd, node, inputs->lenght);
 	new->cmd_arr = command_spliter(cmd, ' ');
 	new->pipe_flag = 0;
-	new->red_flag = 0;
-	red_pipe_checker(inputs->pipes_redir, rp_idx, new);
+	new->ired_flag = 0;
+	new->ored_flag = 0;
+	new->app_flag = 0;
+	new->hd_flag = 0;
+	while (inputs->pipes_redir[i] != '|' && inputs->pipes_redir[i] != '\0')
+	{
+		red_pipe_checker(inputs->pipes_redir, rp_idx, new);
+		i++;
+	}
+	if (inputs->pipes_redir[*rp_idx] == '|')
+	{
+		new->pipe_flag = 1;
+		(*rp_idx) += 2;
+	}
 	new->next = NULL;
 	new->prev = NULL;
 	return (new);
