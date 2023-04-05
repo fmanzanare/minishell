@@ -6,7 +6,7 @@
 /*   By: vde-prad <vde-prad@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 17:48:26 by vde-prad          #+#    #+#             */
-/*   Updated: 2023/03/19 22:19:10 by vde-prad         ###   ########.fr       */
+/*   Updated: 2023/03/20 18:36:34 by vde-prad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ static void	ft_parserarg(char	**av, t_argdata *pdata, int ac)
 
 	i = 2;
 	j = 0;
-	pdata->full_cmd = malloc(sizeof(char ***));
-	pdata->cmd = malloc(sizeof(char **));
+	pdata->full_cmd = malloc((ac - 3) * sizeof(char **));//cambiar triple puntero por estructura?
+	pdata->cmd = malloc((ac - 3) * sizeof(char *));
 	while (i <= ac - 2)
 	{
 		if (av[i][0] != 0)
