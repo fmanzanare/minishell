@@ -10,7 +10,7 @@ void	free_list(t_args **args)
 	while (*args)
 	{
 		tmp = (*args)->next;
-		//ft_free_arr((*args)->cmd_arr);
+		//ft_free_arr((*args)->split);
 		free(*args);
 		(*args) = tmp;
 	}

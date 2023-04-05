@@ -65,6 +65,8 @@ int	main(int argc, char **argv, char **envp)
 		inputs.lenght = input_size(inputs.line_splited);
 		fill_command_lines(&inputs.args, inputs.line_splited, &inputs);
 		run_to_head(&inputs.args);
+		//----------------------------------------------------------------
+		// BUCLE PARA IMPRIMIR Y COMPROBAR QUE TODO FUNCIONA CORRECTAMENTE
 		while (inputs.args)
 		{
 			j = 0;
@@ -75,16 +77,30 @@ int	main(int argc, char **argv, char **envp)
 			ft_printf("Append Redir flag: %d\n", inputs.args->app_flag);
 			ft_printf("Heredoc Redir flag: %d\n", inputs.args->hd_flag);
 			ft_printf("Splited:\n");
+			while (inputs.args->cmd_split[j])
+			{
+				ft_printf("%d: %s\n", j, inputs.args->cmd_split[j]);
+				j++;
+			}
+			ft_printf("-------------------\n");
+			j = 0;
 			while (inputs.args->cmd_arr[j])
 			{
 				ft_printf("%d: %s\n", j, inputs.args->cmd_arr[j]);
 				j++;
 			}
+			if (inputs.args->infile)
+				ft_printf("Infile: %s\n", inputs.args->infile);
+			if (inputs.args->outfile)
+				ft_printf("Outfile: %s\n", inputs.args->outfile);
+			if (inputs.args->delim)
+				ft_printf("Delim: %s\n", inputs.args->delim);
 			ft_printf("\n");
 			if (!inputs.args->next)
 				break ;
 			inputs.args = inputs.args->next;
 		}
+		//----------------------------------------------------------------
 		add_history(inputs.line);
 		free_list(&inputs.args);
 		ft_free_arr(inputs.line_splited);

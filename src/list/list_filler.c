@@ -33,6 +33,19 @@ static void	red_pipe_checker(char *str, int *rp_idx, t_args *new)
 	}
 }
 
+static void	zeros_and_nulls_init(t_args *node)
+{
+	node->pipe_flag = 0;
+	node->ired_flag = 0;
+	node->ored_flag = 0;
+	node->app_flag = 0;
+	node->hd_flag = 0;
+	node->infile = NULL;
+	node->outfile = NULL;
+	node->delim = NULL;
+	node->cmd_arr = NULL;
+}
+
 /**
  * Creates a new node of the list.
  * @param cmd_line Command line to be added.
@@ -42,22 +55,15 @@ static void	red_pipe_checker(char *str, int *rp_idx, t_args *new)
 static t_args	*create_node(char *cmd, int node, int *rp_idx, t_inputs *inputs)
 {
 	t_args	*new;
-	int		i;
 
-	i = 0;
 	new = malloc(sizeof * new);
-	new->cmd_line = ft_trim(cmd, node, inputs->lenght);
-	new->cmd_arr = command_spliter(cmd, ' ');
-	new->pipe_flag = 0;
-	new->ired_flag = 0;
-	new->ored_flag = 0;
-	new->app_flag = 0;
-	new->hd_flag = 0;
-	while (inputs->pipes_redir[i] != '|' && inputs->pipes_redir[i] != '\0')
-	{
+	node = 0;
+	new->cmd_line = cmd;
+	new->cmd_split = command_spliter(cmd, ' ');
+	zeros_and_nulls_init(new);
+	while (inputs->pipes_redir[*rp_idx] != '|'
+		&& inputs->pipes_redir[*rp_idx] != '\0')
 		red_pipe_checker(inputs->pipes_redir, rp_idx, new);
-		i++;
-	}
 	if (inputs->pipes_redir[*rp_idx] == '|')
 	{
 		new->pipe_flag = 1;
@@ -83,10 +89,14 @@ void	fill_command_lines(t_args **args, char **line_splited, t_inputs *inputs)
 	while (line_splited[i])
 	{
 		if (i == 0)
+		{
 			*args = create_node(line_splited[i], i, &rp_idx, inputs);
+			iofiles_fdr(*args);
+		}
 		else
 		{
 			(*args)->next = create_node(line_splited[i], i, &rp_idx, inputs);
+			iofiles_fdr((*args)->next);
 			(*args)->next->prev = *args;
 			*args = (*args)->next;
 		}

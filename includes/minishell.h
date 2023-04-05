@@ -8,8 +8,12 @@
 typedef struct s_args
 {
 	char			*cmd_line;
+	char			**cmd_split;
 	char			**cmd_arr;
 	char			*cmd_path;
+	char			*infile;
+	char			*delim;
+	char			*outfile;
 	int				pipe_flag;
 	int				ored_flag;
 	int				ired_flag;
@@ -44,13 +48,16 @@ int		check_s_qmark(char c, int qmark_flag);
 int		check_d_qmark(char c, int qmark_flag);
 
 /** LIST **/
-// list_utils.c
-char	*ft_trim(char *str, int node, int input_len);
 // list_moves.c
 void	run_to_head(t_args **args);
 void	run_to_tail(t_args **args);
 // list_filler.c
-void	fill_command_lines(t_args **args, char **line_splited, t_inputs *inputs);
+void	fill_command_lines(t_args **args, char **line_splited,
+			t_inputs *inputs);
+// iofiles_fdr.c
+void	iofiles_fdr(t_args *node);
+// cmd_arrayer.c
+void	cmd_arrayer(t_args *node);
 
 /** SYNTAX_ERRORS **/
 // syntax_checker.c
