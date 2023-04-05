@@ -2,5 +2,65 @@
 # define MINISHELL_H
 
 # include "./libft_plus/libft.h"
+# include <readline/readline.h>
+# include <stdlib.h>
+
+typedef struct s_args
+{
+	char			*cmd_line;
+	char			**cmd_split;
+	char			**cmd_arr;
+	char			*cmd_path;
+	char			*infile;
+	char			*delim;
+	char			*outfile;
+	int				pipe_flag;
+	int				ored_flag;
+	int				ired_flag;
+	int				app_flag;
+	int				hd_flag;
+	struct s_args	*next;
+	struct s_args	*prev;
+}				t_args;
+
+typedef struct s_inputs
+{
+	char			*line;
+	char			**line_splited;
+	int				lenght;
+	char			*pipes_redir;
+	t_args			*args;
+}				t_inputs;
+
+/*** UTILS ***/
+// free_fts.c
+void	ft_free_arr(char **arr);
+void	free_list(t_args **args);
+// command_spliter.c
+char	**command_spliter(char *str, char c);
+// inputs_spliter.c
+int		input_size(char **line_splited);
+// pipes_and_redirs.c
+void	pipes_redirs_stringer(t_inputs *inputs);
+void	print_pipes_redirs_str(t_inputs *inputs); //For testing.
+// qmarks_fts.c
+int		check_s_qmark(char c, int qmark_flag);
+int		check_d_qmark(char c, int qmark_flag);
+
+/** LIST **/
+// list_moves.c
+void	run_to_head(t_args **args);
+void	run_to_tail(t_args **args);
+// list_filler.c
+void	fill_command_lines(t_args **args, char **line_splited,
+			t_inputs *inputs);
+// iofiles_fdr.c
+void	iofiles_fdr(t_args *node);
+// cmd_arrayer.c
+void	cmd_arrayer(t_args *node);
+
+/** SYNTAX_ERRORS **/
+// syntax_checker.c
+char	syntax_checker(char *str);
 
 #endif
