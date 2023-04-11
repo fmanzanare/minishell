@@ -6,11 +6,11 @@
 /*   By: vde-prad <vde-prad@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 17:48:26 by vde-prad          #+#    #+#             */
-/*   Updated: 2023/03/20 18:36:34 by vde-prad         ###   ########.fr       */
+/*   Updated: 2023/04/11 16:28:00 by vde-prad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../pipex.h"
+#include "../../includes/minishell.h"
 
 //parser the cmd name, flags and cmd arguments in a double char pointer
 static void	ft_parserarg(char	**av, t_argdata *pdata, int ac)

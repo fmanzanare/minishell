@@ -1,10 +1,17 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+/*********************** STANDARD LIBRARIES *********************************/
 # include "./libft_plus/libft.h"
 # include <readline/readline.h>
 # include <stdlib.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include <string.h>
+# include <sys/wait.h>
 
+/************************** DEFINITIONS *************************************/
 typedef struct s_args
 {
 	char			*cmd_line;
@@ -31,6 +38,16 @@ typedef struct s_inputs
 	char			*pipes_redir;
 	t_args			*args;
 }				t_inputs;
+
+typedef struct s_argdata{
+	int		fdin;
+	int		fdout;
+	int		*pp;
+	char	**cmd;
+	char	***full_cmd;
+}	t_argdata;
+
+//*************************** FUNCTIONS **************************************
 
 /*** UTILS ***/
 // free_fts.c
@@ -63,4 +80,7 @@ void	cmd_arrayer(t_args *node);
 // syntax_checker.c
 char	syntax_checker(char *str);
 
+//** PIPE **//
+void	ft_setdata(t_argdata *pdata, char	**av, int ac);
+char	*ft_getpath(char **ep, char *cmd);
 #endif

@@ -6,13 +6,13 @@
 /*   By: vde-prad <vde-prad@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 17:44:12 by vde-prad          #+#    #+#             */
-/*   Updated: 2023/04/10 18:06:26 by vde-prad         ###   ########.fr       */
+/*   Updated: 2023/04/11 16:27:58 by vde-prad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../../includes/minishell.h"
 
-void	child(t_argdata data, char **ep)
+static void	child(t_argdata data, char **ep)
 {
 	char	*path;
 
@@ -26,7 +26,7 @@ void	child(t_argdata data, char **ep)
 	exit(-1);
 }
 
-void	ft_freeclose(t_argdata *data)
+static void	ft_freeclose(t_argdata *data)
 {
 	close(data->fdin);
 	close(data->fdout);
@@ -36,7 +36,7 @@ void	ft_freeclose(t_argdata *data)
 	free(data->options[0]);
 }
 
-	main(int ac, char **av, char **ep)
+int	terminator(int ac, char **av, char **ep)
 {
 	int			pid;
 	int			pid1;

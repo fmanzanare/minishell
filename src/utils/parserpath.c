@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parserpath.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vde-prad <vde-prad@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: vde-prad <vde-prad@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 17:45:50 by vde-prad          #+#    #+#             */
-/*   Updated: 2022/11/18 17:41:15 by vde-prad         ###   ########.fr       */
+/*   Updated: 2023/04/11 16:27:39 by vde-prad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../pipex.h"
+
+#include "../../includes/minishell.h"
 
 static void	ft_freepaths(char **paths)
 {
