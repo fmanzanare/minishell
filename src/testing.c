@@ -46,10 +46,8 @@ int	main(int argc, char **argv, char **envp)
 	int			i;
 	int			j;
 
-	if (argc != 1)
-		return (1);
-	if (!argv[0])
-		return (1);
+	(void)argc;
+	(void)argv;
 	while (1)
 	{
 		i = 0;
@@ -101,6 +99,8 @@ int	main(int argc, char **argv, char **envp)
 			inputs.args = inputs.args->next;
 		}
 		//----------------------------------------------------------------
+		run_to_head(&inputs.args);
+		ft_terminator(&inputs, envp);
 		add_history(inputs.line);
 		free_list(&inputs.args);
 		ft_free_arr(inputs.line_splited);

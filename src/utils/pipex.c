@@ -6,80 +6,59 @@
 /*   By: vde-prad <vde-prad@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 17:44:12 by vde-prad          #+#    #+#             */
-/*   Updated: 2023/04/11 16:27:58 by vde-prad         ###   ########.fr       */
+/*   Updated: 2023/04/15 20:51:27 by vde-prad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	child(t_argdata data, char **ep)
+int	ft_terminator(t_inputs *inputs, char **envp)
 {
-	char	*path;
+	int			i;
+	int			childfd;
+	t_pipedata	data;
 
-	path = ft_getpath(ep, data.cmd[0]);
-	dup2(data.fdin, STDIN_FILENO);
-	dup2(data.pp[1], STDOUT_FILENO);
-	close(data.pp[1]);
-	close(data.pp[0]);
-	execve(path, data.options[0], ep);
-	ft_putstr_fd("Error: execve failed\n", 2);
-	exit(-1);
-}
-
-static void	ft_freeclose(t_argdata *data)
-{
-	close(data->fdin);
-	close(data->fdout);
-	free(data->cmd[1]);
-	free(data->options[1]);
-	free(data->cmd[0]);
-	free(data->options[0]);
-}
-
-int	terminator(int ac, char **av, char **ep)
-{
-	int			pid;
-	int			pid1;
-	int			status;
-	t_argdata	data;
-
-	if (ac == 5)
-		ft_setdata(&data, av, ac);
-	else
+	data.cpy_out = dup(STDOUT_FILENO);
+	data.cpy_in = dup(STDIN_FILENO);
+	data.fdin = dup(data.cpy_in);
+	i = 0;
+	while (i < inputs->lenght)
 	{
-		ft_putstr_fd("Error: number of arguments incorrect\n", 2);
-		exit(127);
+		dup2(data.fdin, 0);
+		close(data.fdin);
+		if (i == inputs->lenght -1)
+			data.fdout = data.cpy_out;
+		else
+		{
+			if (pipe(data.pp) == 1)
+			{
+				perror("pipe failure");
+				exit(127);
+			}
+			data.fdout = data.pp[1];
+			data.fdin = data.pp[0];
+		}
+		dup2(data.fdout, 1);
+		close(data.fdout);
+		childfd = fork();
+		if (childfd == 0)
+		{
+			execve(ft_getpath(envp, inputs->args->cmd_arr[0]),
+				inputs->args->cmd_arr, envp);
+			perror("execve failure");
+			exit(127);
+		}
+		if (inputs->args->next)
+			inputs->args = inputs->args->next;
+		i++;
 	}
-	pid = fork();
-	if (pid == 0)
-	{
-		pid1 = fork();
-		if (pid1 == 0)
-			child(data, ep);
-		child2(data, ep);
-	}
-	close(data.pp[1]);
-	close(data.pp[0]);
-	waitpid(pid, &status, 0);
-	ft_freeclose(&data);
-	return (WEXITSTATUS(status));
+	dup2(data.cpy_out, 1);
+	dup2(data.cpy_in, 0);
+	close(data.cpy_out);
+	close(data.cpy_in);
+	waitpid(childfd, &data.status, 0);
+	run_to_head(&inputs->args);
+	return (WEXITSTATUS(data.status));
 }
 // pp[0]--->lectura en pipe
 // pp[1]--->escritura en pipe
-// char	*argv[] = {"/bin/cat", "-e", 0, "/usr/bin/wc", "-l", 0};
-
-// int main(int argc, char *argv[], char **ep)
-// {
-//     char	**paths;
-//     int		i;
-// 
-//     i = -1;
-//     (void)argc;
-//     (void)argv;
-//     paths = ft_getpath(ep, "cat", "-e");
-//     while (paths[++i])
-//     {
-//         puts(paths[i]);
-//         free(paths[i]);
-//     }
-// }

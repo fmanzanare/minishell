@@ -39,13 +39,15 @@ typedef struct s_inputs
 	t_args			*args;
 }				t_inputs;
 
-typedef struct s_argdata{
+typedef struct s_pipedata
+{
+	int		cpy_out;
+	int		cpy_in;
+	int		status;
 	int		fdin;
 	int		fdout;
-	int		*pp;
-	char	**cmd;
-	char	***full_cmd;
-}	t_argdata;
+	int		pp[2];
+}	t_pipedata;
 
 //*************************** FUNCTIONS **************************************
 
@@ -81,6 +83,7 @@ void	cmd_arrayer(t_args *node);
 char	syntax_checker(char *str);
 
 //** PIPE **//
-void	ft_setdata(t_argdata *pdata, char	**av, int ac);
+void	ft_setdata(t_pipedata *pdata, char	**av);
 char	*ft_getpath(char **ep, char *cmd);
+int		ft_terminator(t_inputs *inputs, char **envp);
 #endif
