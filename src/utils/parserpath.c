@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   parserpath.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vde-prad <vde-prad@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: vde-prad <vde-prad@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 17:45:50 by vde-prad          #+#    #+#             */
-/*   Updated: 2022/11/18 17:41:15 by vde-prad         ###   ########.fr       */
+/*   Updated: 2023/04/15 20:17:07 by vde-prad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../pipex.h"
 
+#include "../../includes/minishell.h"
+
+/**
+	free memory of 'paths' variable
+	@param paths contains the possible paths for the cmd
+	@param n iterator index
+*/
 static void	ft_freepaths(char **paths)
 {
 	int	n;
@@ -24,6 +30,13 @@ static void	ft_freepaths(char **paths)
 	free(paths);
 }
 
+/**
+	Put a '/' and the cmd at the end of the possible paths 
+	@param paths the possible paths
+	@param cmd the cmd being searched for
+	@param sufix the '/' and the cmd together
+	@param i iterator index
+*/
 static void	ft_setssufix(char	**paths, char	*cmd)
 {
 	char	*sufix;
@@ -42,6 +55,14 @@ static void	ft_setssufix(char	**paths, char	*cmd)
 	free(sufix);
 }
 
+/**
+	It gets the correct path to the cmd passed by arg
+	@param i Index iterator
+	@param res The correct path with the cmd included
+	@param paths The possible paths for the cmd
+	@param cmd The cmd whose path is been looking for
+	@return 'res', the string which contains the path of the cmd
+*/
 static char	*ft_chkaccess(char	**paths, char	*cmd)
 {
 	int		i;
@@ -68,6 +89,15 @@ static char	*ft_chkaccess(char	**paths, char	*cmd)
 	exit(127);
 }
 
+/**
+	It gets the path of the cmd, included the cmd
+	@param ep Environment variables
+	@param cmd Cmd whose path is looking for
+	@param i Index iterator
+	@param pathline The possible path for cmd
+	@param paths The possible paths splited
+	@return The path of the cmd, cmd included
+*/
 char	*ft_getpath(char **ep, char *cmd)
 {
 	unsigned int	i;
