@@ -3,3 +3,7 @@ https://linux.ciberaula.com/articulo/Curso_comandos_en_Linux_II/
 
 Differences between '>' and '>>' in bash:
 https://serverfault.com/questions/196734/bash-difference-between-and-operator#:~:text=The%20%3E%20sign%20is%20used%20for,if%20it%20doesn't%20exist.
+
+######### Víctor ##########
+- Es necesario arreglar en el parser el fallo en este ejemplo --> 'cat | head | wc -l > outfile < sources.txt'
+- La gestion en las comillas simples con el comando 'awk'

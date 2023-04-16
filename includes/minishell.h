@@ -39,7 +39,7 @@ typedef struct s_inputs
 	t_args			*args;
 }				t_inputs;
 
-typedef struct s_pipedata
+typedef struct s_pipe
 {
 	int		cpy_out;
 	int		cpy_in;
@@ -47,7 +47,7 @@ typedef struct s_pipedata
 	int		fdin;
 	int		fdout;
 	int		pp[2];
-}	t_pipedata;
+}	t_pipe;
 
 //*************************** FUNCTIONS **************************************
 
@@ -83,7 +83,7 @@ void	cmd_arrayer(t_args *node);
 char	syntax_checker(char *str);
 
 //** PIPE **//
-void	ft_setdata(t_pipedata *pdata, char	**av);
+void	ft_setdata(t_pipe *data, t_inputs *inputs);
 
 char	*ft_getpath(char **ep, char *cmd);
 // execute each commands and deals the pipes and redirs

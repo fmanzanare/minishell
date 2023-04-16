@@ -6,11 +6,37 @@
 /*   By: vde-prad <vde-prad@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 17:44:12 by vde-prad          #+#    #+#             */
-/*   Updated: 2023/04/16 08:39:35 by vde-prad         ###   ########.fr       */
+/*   Updated: 2023/04/16 12:58:35 by vde-prad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+/**
+	It sets the output and input file descriptors of the cmd
+	@param inputs Structure that contains the the parsed arguments
+	@param data Structure that contains the 1 the fd necessary for the execution
+	@param i iterator index
+*/
+static void	ft_inout_fd(t_inputs *inputs, t_pipe *data, int i)
+{
+	if (i == inputs->lenght - 1)
+	{
+		data->fdout = data->cpy_out;
+		ft_setdata(data, inputs);
+	}
+	else
+	{
+		if (pipe(data->pp) == 1)
+		{
+			perror("pipe failure");
+			exit(127);
+		}
+		data->fdout = data->pp[1];
+		data->fdin = data->pp[0];
+		ft_setdata(data, inputs);
+	}
+}
 
 /**
 	Generates 'i' number of processes for the execution of each cmd. It
@@ -23,24 +49,13 @@
 	@param childfd File descriptor of the child process
 	@return return the childfd
 */
-static int	ft_breeder(t_inputs *inputs, char **envp, t_pipedata data, int i)
+static int	ft_breeder(t_inputs *inputs, char **envp, t_pipe *data, int i)
 {
 	int	childfd;
 
-	if (i == inputs->lenght -1)
-		data.fdout = data.cpy_out;
-	else
-	{
-		if (pipe(data.pp) == 1)
-		{
-			perror("pipe failure");
-			exit(127);
-		}
-		data.fdout = data.pp[1];
-		data.fdin = data.pp[0];
-	}
-	dup2(data.fdout, 1);
-	close(data.fdout);
+	ft_inout_fd(inputs, data, i);
+	dup2(data->fdout, 1);
+	close(data->fdout);
 	childfd = fork();
 	if (childfd == 0)
 	{
@@ -68,7 +83,7 @@ int	ft_terminator(t_inputs *inputs, char **envp)
 {
 	int			i;
 	int			childfd;
-	t_pipedata	data;
+	t_pipe		data;
 
 	data.cpy_out = dup(STDOUT_FILENO);
 	data.cpy_in = dup(STDIN_FILENO);
@@ -78,7 +93,7 @@ int	ft_terminator(t_inputs *inputs, char **envp)
 	{
 		dup2(data.fdin, 0);
 		close(data.fdin);
-		childfd = ft_breeder(inputs, envp, data, i);
+		childfd = ft_breeder(inputs, envp, &data, i);
 		if (inputs->args->next)
 			inputs->args = inputs->args->next;
 		i++;
