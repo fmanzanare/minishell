@@ -84,6 +84,8 @@ char	syntax_checker(char *str);
 
 //** PIPE **//
 void	ft_setdata(t_pipedata *pdata, char	**av);
+
 char	*ft_getpath(char **ep, char *cmd);
+// execute each commands and deals the pipes and redirs
 int		ft_terminator(t_inputs *inputs, char **envp);
 #endif
