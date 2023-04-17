@@ -41,6 +41,7 @@ typedef struct s_inputs
 
 typedef struct s_pipe
 {
+	char	*lastinf;
 	int		cpy_out;
 	int		cpy_in;
 	int		status;
@@ -83,7 +84,7 @@ void	cmd_arrayer(t_args *node);
 char	syntax_checker(char *str);
 
 //** PIPE **//
-void	ft_setdata(t_pipe *data, t_inputs *inputs);
+void	ft_setdata(t_inputs *inputs, t_pipe *data);
 
 char	*ft_getpath(char **ep, char *cmd);
 // execute each commands and deals the pipes and redirs

@@ -6,7 +6,7 @@
 /*   By: vde-prad <vde-prad@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 17:48:26 by vde-prad          #+#    #+#             */
-/*   Updated: 2023/04/16 13:05:22 by vde-prad         ###   ########.fr       */
+/*   Updated: 2023/04/17 13:17:56 by vde-prad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 	@param inputs Structure that contains the the parsed arguments.
 	@param data Structure that contains the 1 the fd necessary for the execution.
 */
-void	ft_setdata(t_pipe *data, t_inputs *inputs)
+void	ft_setdata(t_inputs *inputs, t_pipe *data)
 {
 	if (inputs->args->ired_flag)
 	{

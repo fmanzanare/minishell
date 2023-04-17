@@ -6,7 +6,7 @@
 /*   By: vde-prad <vde-prad@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 17:44:12 by vde-prad          #+#    #+#             */
-/*   Updated: 2023/04/16 12:58:35 by vde-prad         ###   ########.fr       */
+/*   Updated: 2023/04/17 15:24:33 by vde-prad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /**
 	It sets the output and input file descriptors of the cmd
-	@param inputs Structure that contains the the parsed arguments
+	@param inputs Structure that contains the parsed arguments
 	@param data Structure that contains the 1 the fd necessary for the execution
 	@param i iterator index
 */
@@ -23,7 +23,7 @@ static void	ft_inout_fd(t_inputs *inputs, t_pipe *data, int i)
 	if (i == inputs->lenght - 1)
 	{
 		data->fdout = data->cpy_out;
-		ft_setdata(data, inputs);
+		ft_setdata(inputs, data);
 	}
 	else
 	{
@@ -34,7 +34,7 @@ static void	ft_inout_fd(t_inputs *inputs, t_pipe *data, int i)
 		}
 		data->fdout = data->pp[1];
 		data->fdin = data->pp[0];
-		ft_setdata(data, inputs);
+		ft_setdata(inputs, data);
 	}
 }
 
@@ -44,7 +44,7 @@ static void	ft_inout_fd(t_inputs *inputs, t_pipe *data, int i)
 	@param inputs Structure that contains the arguments passed by the CLI, parsed
 	@param envp Environment variables
 	@param data Structure that contains the file descriptors, necessary for the
-	execution of the cmds
+				execution of the cmds
 	@param i Iterator index
 	@param childfd File descriptor of the child process
 	@return return the childfd
@@ -94,6 +94,7 @@ int	ft_terminator(t_inputs *inputs, char **envp)
 		dup2(data.fdin, 0);
 		close(data.fdin);
 		childfd = ft_breeder(inputs, envp, &data, i);
+		close(data.fdout);
 		if (inputs->args->next)
 			inputs->args = inputs->args->next;
 		i++;
