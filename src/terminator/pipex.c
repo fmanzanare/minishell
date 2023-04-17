@@ -6,7 +6,7 @@
 /*   By: vde-prad <vde-prad@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 17:44:12 by vde-prad          #+#    #+#             */
-/*   Updated: 2023/04/17 15:24:33 by vde-prad         ###   ########.fr       */
+/*   Updated: 2023/04/17 20:47:53 by vde-prad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 */
 static void	ft_inout_fd(t_inputs *inputs, t_pipe *data, int i)
 {
-	if (i == inputs->lenght - 1)
+	if (i == inputs->lenght)
 	{
 		data->fdout = data->cpy_out;
 		ft_setdata(inputs, data);
@@ -55,6 +55,8 @@ static int	ft_breeder(t_inputs *inputs, char **envp, t_pipe *data, int i)
 
 	ft_inout_fd(inputs, data, i);
 	dup2(data->fdout, 1);
+	dup2(data->fdin, 0);
+	close(data->fdin);
 	close(data->fdout);
 	childfd = fork();
 	if (childfd == 0)
@@ -89,15 +91,11 @@ int	ft_terminator(t_inputs *inputs, char **envp)
 	data.cpy_in = dup(STDIN_FILENO);
 	data.fdin = dup(data.cpy_in);
 	i = 0;
-	while (i < inputs->lenght)
+	while (i++ < inputs->lenght)
 	{
-		dup2(data.fdin, 0);
-		close(data.fdin);
 		childfd = ft_breeder(inputs, envp, &data, i);
-		close(data.fdout);
 		if (inputs->args->next)
 			inputs->args = inputs->args->next;
-		i++;
 	}
 	dup2(data.cpy_out, 1);
 	dup2(data.cpy_in, 0);
