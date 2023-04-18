@@ -1,7 +1,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-/*********************** STANDARD LIBRARIES *********************************/
+//*********************** STANDARD LIBRARIES *********************************//
 # include "./libft_plus/libft.h"
 # include <readline/readline.h>
 # include <stdlib.h>
@@ -11,7 +11,7 @@
 # include <string.h>
 # include <sys/wait.h>
 
-/************************** DEFINITIONS *************************************/
+//************************** DEFINITIONS *************************************//
 typedef struct s_args
 {
 	char			*cmd_line;
@@ -39,19 +39,20 @@ typedef struct s_inputs
 	t_args			*args;
 }				t_inputs;
 
-typedef struct s_pipedata
+typedef struct s_pipe
 {
+	char	*lastinf;
 	int		cpy_out;
 	int		cpy_in;
 	int		status;
 	int		fdin;
 	int		fdout;
 	int		pp[2];
-}	t_pipedata;
+}	t_pipe;
 
 //*************************** FUNCTIONS **************************************
 
-/*** UTILS ***/
+//*** UTILS ***//
 // free_fts.c
 void	ft_free_arr(char **arr);
 void	free_list(t_args **args);
@@ -66,7 +67,7 @@ void	print_pipes_redirs_str(t_inputs *inputs); //For testing.
 int		check_s_qmark(char c, int qmark_flag);
 int		check_d_qmark(char c, int qmark_flag);
 
-/** LIST **/
+//** LIST **//
 // list_moves.c
 void	run_to_head(t_args **args);
 void	run_to_tail(t_args **args);
@@ -78,14 +79,15 @@ void	iofiles_fdr(t_args *node);
 // cmd_arrayer.c
 void	cmd_arrayer(t_args *node);
 
-/** SYNTAX_ERRORS **/
+//** SYNTAX_ERRORS **//
 // syntax_checker.c
 char	syntax_checker(char *str);
 
 //** PIPE **//
-void	ft_setdata(t_pipedata *pdata, char	**av);
-
+// redirections.c
+void	ft_setdata(t_inputs *inputs, t_pipe *data);
+// parserpath.c
 char	*ft_getpath(char **ep, char *cmd);
-// execute each commands and deals the pipes and redirs
+// terminator.c
 int		ft_terminator(t_inputs *inputs, char **envp);
 #endif
