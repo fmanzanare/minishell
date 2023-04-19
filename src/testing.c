@@ -52,6 +52,12 @@ int	main(int argc, char **argv, char **envp)
 	{
 		i = 0;
 		inputs.line = readline(get_username(envp));
+		if (inputs.line == NULL)
+		{
+			rl_replace_line(ft_strjoin(get_username(envp), "exit\n"), 0);
+			rl_redisplay();
+			exit (0);
+		}
 		if (syntax_mngr(inputs.line))
 		{
 			add_history(inputs.line);

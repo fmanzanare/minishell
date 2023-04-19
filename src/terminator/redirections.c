@@ -6,7 +6,7 @@
 /*   By: vde-prad <vde-prad@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 17:48:26 by vde-prad          #+#    #+#             */
-/*   Updated: 2023/04/18 14:47:20 by vde-prad         ###   ########.fr       */
+/*   Updated: 2023/04/18 15:07:28 by vde-prad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_setdata(t_inputs *inputs, t_pipe *data)
 			data->fdin = open(inputs->args->infile, O_RDONLY);
 		else
 		{
-			ft_putstr_fd("No such file or directory\n", 2);
+			ft_putstr_fd("No such file or directory\n", STDERR_FILENO);
 			exit(127);
 		}
 	}
@@ -40,7 +40,7 @@ void	ft_setdata(t_inputs *inputs, t_pipe *data)
 					O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (data->fdout < 0)
 		{
-			ft_putstr_fd("Error: output file innaccesible\n", 2);
+			ft_putstr_fd("Error: output file innaccesible\n", STDERR_FILENO);
 			exit(127);
 		}
 	}

@@ -18,6 +18,8 @@ OBJS_SYNTAX = $(addsuffix .o, $(notdir $(basename $(SRCS_SYNTAX))))
 LIBFT = ./includes/libft_plus/libft.a
 LIBFT_LINK = -L./includes/libft_plus -lft
 FT_PRINTF_LINK = -L./includes/libft_plus/ft_printf -lftprintf
+RL_LIB = /Users/vde-prad/.brew/opt/readline/include/libreadline.a
+RL_LIB_LINK = -L/Users/vde-prad/.brew/opt/readline/lib -lft
 
 all:		$(NAME)
 
@@ -36,8 +38,8 @@ $(OBJS_SYNTAX):	$(SRCS_SYNTAX)
 $(OBJS):	$(SRCS)
 			@$(CC) $(CFLAGS) -c $(SRCS)
 
-$(NAME):	$(OBJS) $(OBJS_UTILS) $(OBJS_LIST) $(OBJS_SYNTAX) $(OBJS_TERMINATOR) $(LIBFT)
-			@$(CC) $(CFLAGS) $(OBJS) $(OBJS_TERMINATOR) $(OBJS_UTILS) $(OBJS_LIST) $(OBJS_SYNTAX) $(LIBFT_LINK) $(FT_PRINTF_LINK) -lreadline -o $(NAME)
+$(NAME):	$(OBJS) $(OBJS_UTILS) $(OBJS_LIST) $(OBJS_SYNTAX) $(OBJS_TERMINATOR) $(LIBFT) $(RL_LIB)
+			@$(CC) $(CFLAGS) $(OBJS) $(OBJS_TERMINATOR) $(OBJS_UTILS) $(OBJS_LIST) $(OBJS_SYNTAX) $(RL_LIB_LINK) $(LIBFT_LINK) $(FT_PRINTF_LINK) -lreadline -o $(NAME)
 			@echo "Minishell compiled!"
 
 $(LIBFT):
