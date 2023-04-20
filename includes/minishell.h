@@ -4,6 +4,7 @@
 //*********************** STANDARD LIBRARIES *********************************//
 # include "./libft_plus/libft.h"
 # include <readline/readline.h>
+# include <readline/history.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>

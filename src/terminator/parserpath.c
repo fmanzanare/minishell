@@ -6,7 +6,7 @@
 /*   By: vde-prad <vde-prad@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 17:45:50 by vde-prad          #+#    #+#             */
-/*   Updated: 2023/04/19 12:47:18 by vde-prad         ###   ########.fr       */
+/*   Updated: 2023/04/20 14:46:38 by vde-prad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ static char	*ft_chkaccess(char	**paths, char	*cmd)
 	ft_putstr_fd("Error: command not found: ", 2);
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd("\n", 2);
-	free (res);
 	exit(127);
 }
 

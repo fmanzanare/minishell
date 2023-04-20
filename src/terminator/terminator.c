@@ -6,7 +6,7 @@
 /*   By: vde-prad <vde-prad@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 17:44:12 by vde-prad          #+#    #+#             */
-/*   Updated: 2023/04/19 12:07:49 by vde-prad         ###   ########.fr       */
+/*   Updated: 2023/04/20 14:01:38 by vde-prad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ static void	ft_inout_fd(t_inputs *inputs, t_pipe *data, int i)
 */
 static int	ft_breeder(t_inputs *inputs, char **envp, t_pipe *data, int i)
 {
-	int	childfd;
+	int		childfd;
+	char	*cmd_path;
 
 	ft_inout_fd(inputs, data, i);
 	dup2(data->fdout, STDOUT_FILENO);
@@ -61,8 +62,8 @@ static int	ft_breeder(t_inputs *inputs, char **envp, t_pipe *data, int i)
 	childfd = fork();
 	if (childfd == 0)
 	{
-		execve(ft_getpath(envp, inputs->args->cmd_arr[0]),
-			inputs->args->cmd_arr, envp);
+		cmd_path = ft_getpath(envp, inputs->args->cmd_arr[0]);
+		execve(cmd_path, inputs->args->cmd_arr, envp);
 		perror("execve failure");
 		exit(127);
 	}
@@ -91,10 +92,11 @@ int	ft_terminator(t_inputs *inputs, char **envp)
 	data.cpy_in = dup(STDIN_FILENO);
 	data.fdin = dup(data.cpy_in);
 	i = 0;
-	while (i++ < inputs->lenght && inputs->args)
+	while (i++ < inputs->lenght)
 	{
 		childfd = ft_breeder(inputs, envp, &data, i);
-		inputs->args = inputs->args->next;
+		if (inputs->args->next)
+			inputs->args = inputs->args->next;
 	}
 	dup2(data.cpy_out, STDOUT_FILENO);
 	dup2(data.cpy_in, STDIN_FILENO);
