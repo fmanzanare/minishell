@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   terminator.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vde-prad <vde-prad@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 17:44:12 by vde-prad          #+#    #+#             */
-/*   Updated: 2023/04/17 20:58:35 by vde-prad         ###   ########.fr       */
+/*   Updated: 2023/04/21 11:49:36 by vde-prad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@ static void	ft_inout_fd(t_inputs *inputs, t_pipe *data, int i)
 		data->fdin = data->pp[0];
 		ft_setdata(inputs, data);
 	}
+	dup2(data->fdout, STDOUT_FILENO);
+	dup2(data->fdin, STDIN_FILENO);
+	close(data->fdin);
+	close(data->fdout);
 }
 
 /**
@@ -51,18 +55,21 @@ static void	ft_inout_fd(t_inputs *inputs, t_pipe *data, int i)
 */
 static int	ft_breeder(t_inputs *inputs, char **envp, t_pipe *data, int i)
 {
-	int	childfd;
+	int		childfd;
+	char	*cmd_path;
 
 	ft_inout_fd(inputs, data, i);
-	dup2(data->fdout, 1);
-	dup2(data->fdin, 0);
-	close(data->fdin);
-	close(data->fdout);
+
+	if (access(inputs->args->cmd_arr[0], F_OK | R_OK) == 0)
+		cmd_path = inputs->args->cmd_arr[0];
+	else
+		cmd_path = ft_getpath(envp, inputs->args->cmd_arr[0]);
+	if (cmd_path == NULL)
+		return (-1);
 	childfd = fork();
 	if (childfd == 0)
 	{
-		execve(ft_getpath(envp, inputs->args->cmd_arr[0]),
-			inputs->args->cmd_arr, envp);
+		execve(cmd_path, inputs->args->cmd_arr, envp);
 		perror("execve failure");
 		exit(127);
 	}
@@ -71,21 +78,21 @@ static int	ft_breeder(t_inputs *inputs, char **envp, t_pipe *data, int i)
 
 /**
 	Function that deals with the execution of the commands passed by the parser.
-	It iters the successive nodes of the list that contains the cmds data. It 
-	creates different proccesses with the function ft_breeder. 
+	It iters the successive nodes of the list that contains the cmds data. It
+	creates different proccesses with the function ft_breeder.
 	@param inputs Structure with the necessary data for the execution of the cmds
 	@param envp Environment variables
 	@param i Iterator index
 	@param childfd Child process file descriptor of the last cmd executed
 	@param data Structure that stores the necessary file descriptors and the exit
-	status
+				status
 	@return Exit status
 */
 int	ft_terminator(t_inputs *inputs, char **envp)
 {
-	int			i;
-	int			childfd;
-	t_pipe		data;
+	int		i;
+	int		childfd;
+	t_pipe	data;
 
 	data.cpy_out = dup(STDOUT_FILENO);
 	data.cpy_in = dup(STDIN_FILENO);
@@ -94,11 +101,13 @@ int	ft_terminator(t_inputs *inputs, char **envp)
 	while (i++ < inputs->lenght)
 	{
 		childfd = ft_breeder(inputs, envp, &data, i);
+		if (childfd == -1)
+			break ;
 		if (inputs->args->next)
 			inputs->args = inputs->args->next;
 	}
-	dup2(data.cpy_out, 1);
-	dup2(data.cpy_in, 0);
+	dup2(data.cpy_out, STDOUT_FILENO);
+	dup2(data.cpy_in, STDIN_FILENO);
 	close(data.cpy_out);
 	close(data.cpy_in);
 	waitpid(childfd, &data.status, 0);

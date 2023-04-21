@@ -52,6 +52,8 @@ int	main(int argc, char **argv, char **envp)
 	{
 		i = 0;
 		inputs.line = readline(get_username(envp));
+		if (ft_check_rl(&inputs))
+			continue ;
 		if (syntax_mngr(inputs.line))
 		{
 			add_history(inputs.line);

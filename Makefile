@@ -5,7 +5,7 @@ CFLAGS = -Wall -Werror -Wextra
 
 SRCS = $(addprefix ./src/, testing.c)
 SRCS_UTILS = $(addprefix ./src/utils/, free_fts.c command_spliter.c inputs_utils.c pipes_and_redirs.c qmarks_fts.c)
-SRCS_TERMINATOR = $(addprefix ./src/terminator/, redirections.c parserpath.c terminator.c)
+SRCS_TERMINATOR = $(addprefix ./src/terminator/, redirections.c parserpath.c terminator.c signal.c)
 SRCS_LIST = $(addprefix ./src/list/, list_filler.c list_moves.c iofiles_fdr.c cmd_arrayer.c)
 SRCS_SYNTAX = $(addprefix ./src/syntax_errors/, syntax_checker.c)
 
@@ -18,11 +18,13 @@ OBJS_SYNTAX = $(addsuffix .o, $(notdir $(basename $(SRCS_SYNTAX))))
 LIBFT = ./includes/libft_plus/libft.a
 LIBFT_LINK = -L./includes/libft_plus -lft
 FT_PRINTF_LINK = -L./includes/libft_plus/ft_printf -lftprintf
+RL_LIB = -I /Users/vde-prad/.brew/opt/readline/include
+RL_LIB_LINK = -L /Users/vde-prad/.brew/opt/readline/lib -lreadline
 
 all:		$(NAME)
 
 $(OBJS_TERMINATOR):	$(SRCS_TERMINATOR)
-			@$(CC) $(CFLAGS) -c $(SRCS_TERMINATOR)
+			@$(CC) $(CFLAGS) -c $(SRCS_TERMINATOR) $(RL_LIB)
 
 $(OBJS_LIST):	$(SRCS_LIST)
 			@$(CC) $(CFLAGS) -c $(SRCS_LIST)
@@ -34,10 +36,10 @@ $(OBJS_SYNTAX):	$(SRCS_SYNTAX)
 			@$(CC) $(CFLAGS) -c $(SRCS_SYNTAX)
 
 $(OBJS):	$(SRCS)
-			@$(CC) $(CFLAGS) -c $(SRCS)
+			@$(CC) $(CFLAGS) -c $(SRCS) $(RL_LIB)
 
-$(NAME):	$(OBJS) $(OBJS_UTILS) $(OBJS_LIST) $(OBJS_SYNTAX) $(OBJS_TERMINATOR) $(LIBFT)
-			@$(CC) $(CFLAGS) $(OBJS) $(OBJS_TERMINATOR) $(OBJS_UTILS) $(OBJS_LIST) $(OBJS_SYNTAX) $(LIBFT_LINK) $(FT_PRINTF_LINK) -lreadline -o $(NAME)
+$(NAME):	$(OBJS) $(OBJS_UTILS) $(OBJS_LIST) $(OBJS_SYNTAX) $(OBJS_TERMINATOR) $(LIBFT) 
+			@$(CC) $(CFLAGS) $(OBJS) $(OBJS_TERMINATOR) $(OBJS_UTILS) $(OBJS_LIST) $(OBJS_SYNTAX) $(RL_LIB_LINK) $(LIBFT_LINK) $(FT_PRINTF_LINK) -o $(NAME)
 			@echo "Minishell compiled!"
 
 $(LIBFT):
