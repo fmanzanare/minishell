@@ -52,19 +52,8 @@ int	main(int argc, char **argv, char **envp)
 	{
 		i = 0;
 		inputs.line = readline(get_username(envp));
-		// controla Ctrl + D
-		if (inputs.line == NULL)
-		{
-			rl_redisplay();
-			rl_replace_line("exit", 0);
-			exit (0);
-		}
-		// controla una cadena vacia 
-		if (inputs.line[0] == '\0')
-		{
-			rl_on_new_line();
+		if (ft_check_rl(&inputs))
 			continue ;
-		}
 		if (syntax_mngr(inputs.line))
 		{
 			add_history(inputs.line);

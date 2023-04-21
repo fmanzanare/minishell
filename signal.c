@@ -3,7 +3,7 @@
 #include <unistd.h>
 # include <readline/readline.h>
 
-void func(int signal) {
+static void func(int signal) {
     printf("Señal: %d\n", signal);
 }
 

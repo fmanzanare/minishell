@@ -91,4 +91,6 @@ void	ft_setdata(t_inputs *inputs, t_pipe *data);
 char	*ft_getpath(char **ep, char *cmd);
 // terminator.c
 int		ft_terminator(t_inputs *inputs, char **envp);
+// signal.c
+int		ft_check_rl(t_inputs *inputs);
 #endif
