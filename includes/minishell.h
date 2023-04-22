@@ -93,4 +93,6 @@ char	*ft_getpath(char **ep, char *cmd);
 int		ft_terminator(t_inputs *inputs, char **envp);
 // signal.c
 int		ft_check_rl(t_inputs *inputs);
+// signal.c
+void	ft_sig_handler(int signal);
 #endif
