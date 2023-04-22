@@ -91,10 +91,25 @@ int	main(int argc, char **argv, char **envp)
 			}
 			if (inputs.args->infile)
 				ft_printf("Infile: %s\n", inputs.args->infile);
-			if (inputs.args->outfile)
-				ft_printf("Outfile: %s\n", inputs.args->outfile);
+			if (inputs.args->outf)
+			{
+				j = 0;
+				while (inputs.args->outf[j])
+				{
+					ft_printf("Outfile: %s\n", inputs.args->outf[j]);
+					j++;
+				}
+				ft_printf("FLAGS\n");
+				j = 0;
+				while (j < inputs.args->outf_len)
+				{
+					ft_printf("Outfile flag: %d\n", inputs.args->outf_flags[j]);
+					j++;
+				}
+			}
 			if (inputs.args->delim)
 				ft_printf("Delim: %s\n", inputs.args->delim);
+			ft_printf("Infiles len: %d\n", inputs.args->infiles_len);
 			ft_printf("\n");
 			if (!inputs.args->next)
 				break ;

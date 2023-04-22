@@ -13,22 +13,22 @@ static void	red_pipe_checker(char *str, int *rp_idx, t_args *new)
 {
 	if (str[*rp_idx] == '<' && str[*rp_idx + 1] != '<')
 	{
-		new->ired_flag = 1;
+		new->ired_flag += 1;
 		(*rp_idx) += 2;
 	}
 	else if (str[*rp_idx] == '>' && str[*rp_idx + 1] != '>')
 	{
-		new->ored_flag = 1;
+		new->ored_flag += 1;
 		(*rp_idx) += 2;
 	}
 	else if (str[*rp_idx] == '>' && str[*rp_idx + 1] == '>')
 	{
-		new->app_flag = 1;
+		new->app_flag += 1;
 		(*rp_idx) += 3;
 	}
 	else if (str[*rp_idx] == '<' && str[*rp_idx + 1] == '<')
 	{
-		new->hd_flag = 1;
+		new->hd_flag += 1;
 		(*rp_idx) += 3;
 	}
 }
@@ -41,7 +41,10 @@ static void	zeros_and_nulls_init(t_args *node)
 	node->app_flag = 0;
 	node->hd_flag = 0;
 	node->infile = NULL;
-	node->outfile = NULL;
+	node->infiles_len = 0;
+	node->outf = NULL;
+	node->outf_flags = NULL;
+	node->outf_len = 0;
 	node->delim = NULL;
 	node->cmd_arr = NULL;
 }

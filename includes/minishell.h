@@ -20,8 +20,12 @@ typedef struct s_args
 	char			**cmd_arr;
 	char			*cmd_path;
 	char			*infile;
+	char			**inf_arr;
+	int				infiles_len;
 	char			*delim;
-	char			*outfile;
+	char			**outf;
+	int				*outf_flags;
+	int				outf_len;
 	int				pipe_flag;
 	int				ored_flag;
 	int				ired_flag;
@@ -77,6 +81,8 @@ void	fill_command_lines(t_args **args, char **line_splited,
 			t_inputs *inputs);
 // iofiles_fdr.c
 void	iofiles_fdr(t_args *node);
+// infiles_utils.c
+void	infiles_mngr(t_args *node);
 // cmd_arrayer.c
 void	cmd_arrayer(t_args *node);
 

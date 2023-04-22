@@ -4,7 +4,7 @@ void	cmd_arrayer(t_args *node)
 {
 	char	**tmp;
 
-	if (node->ired_flag || node->delim)
+	if ((node->ired_flag) || node->delim)
 	{
 		tmp = command_spliter(node->cmd_line, '<');
 		node->cmd_arr = command_spliter(tmp[0], ' ');
@@ -16,4 +16,8 @@ void	cmd_arrayer(t_args *node)
 		node->cmd_arr = command_spliter(tmp[0], ' ');
 		ft_free_arr(tmp);
 	}
+	// if (node->ired_flag && node->infiles_len > 1)
+	// {
+
+	// }
 }

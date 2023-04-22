@@ -114,7 +114,5 @@ char	syntax_checker(char *str)
 		if (str[i] == '\0')
 			return ('\n');
 	}
-	else
-		return (error_fdr(str));
-	return ('\0');
+	return (error_fdr(str));
 }
