@@ -48,6 +48,8 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+	signal(SIGINT, ft_sig_handler);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		i = 0;

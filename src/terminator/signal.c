@@ -1,7 +1,7 @@
 
 #include "../../includes/minishell.h"
 
-static void	ft_sig_handler(int signal)
+void	ft_sig_handler(int signal)
 {
 	(void)signal;
 	rl_on_new_line();
@@ -14,8 +14,6 @@ static void	ft_sig_handler(int signal)
 
 int	ft_check_rl(t_inputs *inputs)
 {
-	signal(SIGINT, ft_sig_handler);
-	signal(SIGQUIT, SIG_IGN);
 	if (inputs->line == NULL)
 		exit(0);
 	if (inputs->line[0] == '\0')
