@@ -6,7 +6,7 @@
 #    By: fmanzana <fmanzana@student.42malaga.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/23 12:47:02 by fmanzana          #+#    #+#              #
-#    Updated: 2022/12/23 12:44:47 by fmanzana         ###   ########.fr        #
+#    Updated: 2023/04/22 21:10:22 by fmanzana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRC = ft_isalpha.c \
 		ft_isalnum.c \
 		ft_isascii.c \
 		ft_isprint.c \
+		ft_isredir.c \
 		ft_issing.c \
 		ft_isspecialchar.c \
 		ft_strlen.c \

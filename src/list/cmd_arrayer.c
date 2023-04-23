@@ -1,19 +1,68 @@
 #include "../../includes/minishell.h"
 
-void	cmd_arrayer(t_args *node)
+static void	resize_arr(t_args *node, int idx)
 {
 	char	**tmp;
+	char	arr_len;
+	int		i;
 
-	if (node->ired_flag || node->delim)
+	i = 0;
+	tmp = node->cmd_arr;
+	arr_len = array_len(node->cmd_arr);
+	node->cmd_arr = malloc(sizeof(char *) * (arr_len + 2));
+	while (tmp[i])
 	{
-		tmp = command_spliter(node->cmd_line, '<');
-		node->cmd_arr = command_spliter(tmp[0], ' ');
-		ft_free_arr(tmp);
+		node->cmd_arr[i] = cmdjoin(tmp[i]);
+		i++;
 	}
-	else if (node->ored_flag || node->app_flag)
+	node->cmd_arr[i] = cmdjoin(node->cmd_split[idx]);
+	i++;
+	node->cmd_arr[i] = NULL;
+	ft_free_arr(tmp);
+}
+
+static void	add_to_cmd_array(t_args *node, int idx)
+{
+	int		len;
+
+	len = 0;
+	if (!node->cmd_arr)
 	{
-		tmp = command_spliter(node->cmd_line, '>');
-		node->cmd_arr = command_spliter(tmp[0], ' ');
-		ft_free_arr(tmp);
+		node->cmd_arr = malloc(sizeof(char *) + 1);
+		if (!node->cmd_arr)
+			exit(1);
+		node->cmd_arr[0] = cmdjoin(node->cmd_split[idx]);
+		node->cmd_arr[1] = NULL;
+	}
+	else
+		resize_arr(node, idx);
+}
+
+void	cmd_arrayer(t_args *node, int i, int j)
+{
+	int	red_flag;
+	int	cmd_idx;
+
+	red_flag = 0;
+	cmd_idx = -1;
+	while (node->cmd_split[i])
+	{
+		if (!red_flag && !ft_isredir(node->cmd_split[i][0]))
+			cmd_idx = i;
+		if (cmd_idx >= 0)
+		{
+			add_to_cmd_array(node, cmd_idx);
+			cmd_idx = -1;
+		}
+		j = 0;
+		while (node->cmd_split[i][j])
+		{
+			if (ft_isredir(node->cmd_split[i][j]) && !red_flag)
+				red_flag = 1;
+			else if (!ft_isredir(node->cmd_split[i][j]))
+				red_flag = 0;
+			j++;
+		}
+		i++;
 	}
 }
