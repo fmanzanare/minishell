@@ -35,18 +35,21 @@ static void	red_pipe_checker(char *str, int *rp_idx, t_args *new)
 
 static void	zeros_and_nulls_init(t_args *node)
 {
-	node->pipe_flag = 0;
-	node->ired_flag = 0;
-	node->ored_flag = 0;
-	node->app_flag = 0;
-	node->hd_flag = 0;
-	node->infile = NULL;
-	node->infiles_len = 0;
+	node->cmd_line = NULL;
+	node->cmd_split = NULL;
+	node->cmd_arr = NULL;
+	node->cmd_path = NULL;
+	node->inf = NULL;
+	node->inf_flags = NULL;
+	node->inf_len = 0;
 	node->outf = NULL;
 	node->outf_flags = NULL;
 	node->outf_len = 0;
-	node->delim = NULL;
-	node->cmd_arr = NULL;
+	node->pipe_flag = 0;
+	node->ored_flag = 0;
+	node->ired_flag = 0;
+	node->app_flag = 0;
+	node->hd_flag = 0;
 }
 
 /**
@@ -61,9 +64,9 @@ static t_args	*create_node(char *cmd, int node, int *rp_idx, t_inputs *inputs)
 
 	new = malloc(sizeof * new);
 	node = 0;
+	zeros_and_nulls_init(new);
 	new->cmd_line = cmd;
 	new->cmd_split = command_spliter(cmd, ' ');
-	zeros_and_nulls_init(new);
 	while (inputs->pipes_redir[*rp_idx] != '|'
 		&& inputs->pipes_redir[*rp_idx] != '\0')
 		red_pipe_checker(inputs->pipes_redir, rp_idx, new);

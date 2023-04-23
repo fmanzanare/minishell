@@ -42,16 +42,9 @@ static void	outfiles_flag_filler(t_args *node)
 static void	outfiles_filler(t_args *node, int i, int *outf_idx)
 {
 	int	len;
-	int	j;
 	int	idx;
 
-	len = 0;
-	i++;
-	while (node->cmd_line[i] == ' ')
-		i++;
-	j = i;
-	while (node->cmd_line[j++] != ' ')
-		len++;
+	len = files_len(node, &i);
 	node->outf[*outf_idx] = malloc(sizeof(char) * (len + 1));
 	if (!node->outf)
 		exit(1);
@@ -97,38 +90,23 @@ static void	outfiles_mngr(t_args *node)
 }
 
 /**
- * Looks for the delimiter within the cmd_split variable.
- * @param *node Token/List Node to work with.
-*/
-static void	hd_mngr(t_args *node)
-{
-	int	i;
-
-	i = 0;
-	while (node->cmd_split[i])
-	{
-		if (node->cmd_split[i][0] == '<')
-			node->delim = node->cmd_split[i + 1];
-		i++;
-	}
-}
-
-/**
  * Checks the redirections flags and fills the io files.
  * @param *node Token/List Node to work with.
 */
 void	iofiles_fdr(t_args *node)
 {
-	if (node->hd_flag)
-		hd_mngr(node);
+	if (node->hd_flag || node->ired_flag)
+	{
+		infiles_mngr(node);
+		infiles_flags_filler(node);
+	}
 	if (node->ored_flag || node->app_flag)
 	{
 		outfiles_mngr(node);
 		outfiles_flag_filler(node);
 	}
-	// if (node->ired_flag)
-	// 	infiles_mngr(node);
-	if (!node->hd_flag && !node->app_flag && !node->ired_flag && !node->ored_flag)
+	if (!node->hd_flag && !node->app_flag
+		&& !node->ired_flag && !node->ored_flag)
 		node->cmd_arr = node->cmd_split;
 	else
 		cmd_arrayer(node);

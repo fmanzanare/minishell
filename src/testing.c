@@ -89,8 +89,22 @@ int	main(int argc, char **argv, char **envp)
 				ft_printf("%d: %s\n", j, inputs.args->cmd_arr[j]);
 				j++;
 			}
-			if (inputs.args->infile)
-				ft_printf("Infile: %s\n", inputs.args->infile);
+			if (inputs.args->inf)
+			{
+				j = 0;
+				while (inputs.args->inf[j])
+				{
+					ft_printf("Infile: %s\n", inputs.args->inf[j]);
+					j++;
+				}
+				ft_printf("FLAGS\n");
+				j = 0;
+				while (j < inputs.args->inf_len)
+				{
+					ft_printf("Infile flag: %d\n", inputs.args->inf_flags[j]);
+					j++;
+				}
+			}
 			if (inputs.args->outf)
 			{
 				j = 0;
@@ -107,9 +121,8 @@ int	main(int argc, char **argv, char **envp)
 					j++;
 				}
 			}
-			if (inputs.args->delim)
-				ft_printf("Delim: %s\n", inputs.args->delim);
-			ft_printf("Infiles len: %d\n", inputs.args->infiles_len);
+			if (inputs.args->inf_len)
+				ft_printf("Infiles len: %d\n", inputs.args->inf_len);
 			ft_printf("\n");
 			if (!inputs.args->next)
 				break ;
@@ -119,7 +132,7 @@ int	main(int argc, char **argv, char **envp)
 		run_to_head(&inputs.args);
 		ft_terminator(&inputs, envp);//devuelve el exit status
 		add_history(inputs.line);
-		free_list(&inputs.args);
+		//free_list(&inputs.args); -> SegFault when try to be executed.
 		ft_free_arr(inputs.line_splited);
 	}
 	free(inputs.line);
