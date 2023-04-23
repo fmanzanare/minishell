@@ -6,12 +6,14 @@ CFLAGS = -Wall -Werror -Wextra
 SRCS = $(addprefix ./src/, testing.c)
 SRCS_UTILS = $(addprefix ./src/utils/, free_fts.c command_spliter.c inputs_utils.c pipes_and_redirs.c qmarks_fts.c)
 SRCS_TERMINATOR = $(addprefix ./src/terminator/, redirections.c parserpath.c terminator.c signal.c)
+SRCS_BUILTINS = $(addprefix ./src/terminator/builtins/, echo.c)
 SRCS_LIST = $(addprefix ./src/list/, list_filler.c list_moves.c iofiles_fdr.c cmd_arrayer.c)
 SRCS_SYNTAX = $(addprefix ./src/syntax_errors/, syntax_checker.c)
 
 OBJS = $(addsuffix .o, $(notdir $(basename $(SRCS))))
 OBJS_UTILS = $(addsuffix .o, $(notdir $(basename $(SRCS_UTILS))))
 OBJS_TERMINATOR = $(addsuffix .o, $(notdir $(basename $(SRCS_TERMINATOR))))
+OBJS_BUILTINS = $(addsuffix .o, $(notdir $(basename $(SRCS_BUILTINS))))
 OBJS_LIST = $(addsuffix .o, $(notdir $(basename $(SRCS_LIST))))
 OBJS_SYNTAX = $(addsuffix .o, $(notdir $(basename $(SRCS_SYNTAX))))
 
@@ -26,6 +28,9 @@ all:		$(NAME)
 $(OBJS_TERMINATOR):	$(SRCS_TERMINATOR)
 			@$(CC) $(CFLAGS) -c $(SRCS_TERMINATOR) $(RL_LIB)
 
+$(OBJS_BUILTINS):	$(SRCS_BUILTINS)
+			@$(CC) $(CFLAGS) -c $(SRCS_BUILTINS)
+
 $(OBJS_LIST):	$(SRCS_LIST)
 			@$(CC) $(CFLAGS) -c $(SRCS_LIST)
 
@@ -38,8 +43,8 @@ $(OBJS_SYNTAX):	$(SRCS_SYNTAX)
 $(OBJS):	$(SRCS)
 			@$(CC) $(CFLAGS) -c $(SRCS) $(RL_LIB)
 
-$(NAME):	$(OBJS) $(OBJS_UTILS) $(OBJS_LIST) $(OBJS_SYNTAX) $(OBJS_TERMINATOR) $(LIBFT) 
-			@$(CC) $(CFLAGS) $(OBJS) $(OBJS_TERMINATOR) $(OBJS_UTILS) $(OBJS_LIST) $(OBJS_SYNTAX) $(RL_LIB_LINK) $(LIBFT_LINK) $(FT_PRINTF_LINK) -o $(NAME)
+$(NAME):	$(OBJS) $(OBJS_UTILS) $(OBJS_LIST) $(OBJS_SYNTAX) $(OBJS_TERMINATOR) $(OBJS_BUILTINS) $(LIBFT) 
+			@$(CC) $(CFLAGS) $(OBJS) $(OBJS_TERMINATOR) $(OBJS_BUILTINS) $(OBJS_UTILS) $(OBJS_LIST) $(OBJS_SYNTAX) $(RL_LIB_LINK) $(LIBFT_LINK) $(FT_PRINTF_LINK) -o $(NAME)
 			@echo "Minishell compiled!"
 
 $(LIBFT):

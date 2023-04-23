@@ -42,7 +42,6 @@ typedef struct s_inputs
 
 typedef struct s_pipe
 {
-	char	*lastinf;
 	int		cpy_out;
 	int		cpy_in;
 	int		status;
@@ -95,4 +94,6 @@ int		ft_terminator(t_inputs *inputs, char **envp);
 int		ft_check_rl(t_inputs *inputs);
 // signal.c
 void	ft_sig_handler(int signal);
+// echo.c
+int		ft_echo(t_inputs *inputs);
 #endif
