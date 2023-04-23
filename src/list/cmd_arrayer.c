@@ -1,49 +1,68 @@
 #include "../../includes/minishell.h"
 
-void	cmd_arrayer(t_args *node)
+static void	resize_arr(t_args *node, int idx)
 {
 	char	**tmp;
+	char	arr_len;
+	int		i;
 
-	if ((node->ired_flag))
+	i = 0;
+	tmp = node->cmd_arr;
+	arr_len = array_len(node->cmd_arr);
+	node->cmd_arr = malloc(sizeof(char *) * (arr_len + 2));
+	while (tmp[i])
 	{
-		tmp = command_spliter(node->cmd_line, '<');
-		node->cmd_arr = command_spliter(tmp[0], ' ');
-		ft_free_arr(tmp);
+		node->cmd_arr[i] = cmdjoin(tmp[i]);
+		i++;
 	}
-	else if (node->ored_flag || node->app_flag)
-	{
-		tmp = command_spliter(node->cmd_line, '>');
-		node->cmd_arr = command_spliter(tmp[0], ' ');
-		ft_free_arr(tmp);
-	}
+	node->cmd_arr[i] = cmdjoin(node->cmd_split[idx]);
+	i++;
+	node->cmd_arr[i] = NULL;
+	ft_free_arr(tmp);
 }
 
-static void	redir_first(t_args *node)
+static void	add_to_cmd_array(t_args *node, int idx)
 {
-	char	**tmp;
 	int		len;
 
 	len = 0;
-	if ((node->ired_flag || node->hd_flag)
-		&& !(node->app_flag || node->ored_flag))
+	if (!node->cmd_arr)
 	{
-		tmp = command_spliter(node->cmd_line, '<');
-		len = array_len(tmp);
-		node->cmd_arr = command_spliter(tmp[len - 1], ' ');
+		node->cmd_arr = malloc(sizeof(char *) + 1);
+		if (!node->cmd_arr)
+			exit(1);
+		node->cmd_arr[0] = cmdjoin(node->cmd_split[idx]);
+		node->cmd_arr[1] = NULL;
 	}
-	else if (!(node->ired_flag || node->hd_flag)
-		&& (node->app_flag || node->ored_flag))
-	{
-		tmp = command_spliter(node->cmd_line, '>');
-		len = array_len(tmp);
-		node->cmd_arr = command_spliter(tmp[len - 1], ' ');
-	}
+	else
+		resize_arr(node, idx);
 }
 
-static void	cmd_arrayer_v2(t_args *node)
+void	cmd_arrayer(t_args *node, int i, int j)
 {
-	if (ft_isredir(node->cmd_split[0][0]))
-		redir_first(node);
-	else
-		cmd_first();
+	int	red_flag;
+	int	cmd_idx;
+
+	red_flag = 0;
+	cmd_idx = -1;
+	while (node->cmd_split[i])
+	{
+		if (!red_flag && !ft_isredir(node->cmd_split[i][0]))
+			cmd_idx = i;
+		if (cmd_idx >= 0)
+		{
+			add_to_cmd_array(node, cmd_idx);
+			cmd_idx = -1;
+		}
+		j = 0;
+		while (node->cmd_split[i][j])
+		{
+			if (ft_isredir(node->cmd_split[i][j]) && !red_flag)
+				red_flag = 1;
+			else if (!ft_isredir(node->cmd_split[i][j]))
+				red_flag = 0;
+			j++;
+		}
+		i++;
+	}
 }

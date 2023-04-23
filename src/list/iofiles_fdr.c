@@ -109,5 +109,5 @@ void	iofiles_fdr(t_args *node)
 		&& !node->ired_flag && !node->ored_flag)
 		node->cmd_arr = node->cmd_split;
 	else
-		cmd_arrayer(node);
+		cmd_arrayer(node, 0, 0);
 }

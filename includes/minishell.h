@@ -86,8 +86,9 @@ int		files_len(t_args *node, int *i);
 void	infiles_mngr(t_args *node);
 void	infiles_flags_filler(t_args *node);
 // cmd_arrayer.c
-void	cmd_arrayer(t_args *node);
+void	cmd_arrayer(t_args *node, int i, int j);
 // cmd_arrayer_utils.c
+char	*cmdjoin(char *str);
 int		array_len(char **arr);
 
 //** SYNTAX_ERRORS **//
