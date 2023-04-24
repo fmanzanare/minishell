@@ -6,7 +6,7 @@
 /*   By: vde-prad <vde-prad@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 17:44:12 by vde-prad          #+#    #+#             */
-/*   Updated: 2023/04/23 18:20:28 by vde-prad         ###   ########.fr       */
+/*   Updated: 2023/04/24 14:08:12 by vde-prad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ static int	ft_builtin(t_inputs *inputs)
 	ret = 1;
 	if (ft_strncmp(inputs->args->cmd_arr[0], "echo", ft_strlen("echo")) == 0)
 		ret = ft_echo(inputs);
+	if (ft_strncmp(inputs->args->cmd_arr[0], "cd", ft_strlen("cd")) == 0)
+		ret = ft_cd(inputs);
 	return (ret);
 }
 
@@ -86,6 +88,8 @@ static int	ft_breeder(t_inputs *inputs, char **envp, t_pipe *data, int i)
 			exit(127);
 		}
 	}
+	if (cmd_path)
+		free(cmd_path);
 	return (childpid);
 }
 

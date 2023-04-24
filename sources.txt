@@ -7,3 +7,107 @@ https://serverfault.com/questions/196734/bash-difference-between-and-operator#:~
 ######### Víctor ##########
 - Es necesario arreglar en el parser el fallo en este ejemplo --> 'cat | head | wc -l > outfile < sources.txt'
 - La gestion en las comillas simples con el comando 'awk'
+
+
+getcwd(char *buf, size_t size)
+    The getcwd() function copies the absolute pathname of the current working
+    directory into the memory referenced by buf and returns a pointer to buf.
+    The size argument is the size, in bytes, of the array referenced by buf.
+
+    If buf is NULL, space is allocated as necessary to store the pathname and
+    size is ignored.  This space may later be free(3)'d.
+
+chdir()
+    The chdir() function shall cause the directory named by the pathname pointed to by the
+    path argument to become the current working directory; that is, the starting point for
+    path searches for pathnames not beginning with '/'.
+
+stat()
+    The stat() function shall obtain information about the named file and write it to the 
+    area pointed to by the buf argument. The path argument points to a pathname naming a 
+    file. Read, write, or execute permission of the named file is not required. An 
+    implementation that provides additional or alternate file access control mechanisms 
+    may, under implementation-defined conditions, cause stat() to fail. In particular, 
+    the system may deny the existence of the file specified by path.
+
+    If the named file is a symbolic link, the stat() function shall continue pathname 
+    resolution using the contents of the symbolic link, and shall return information 
+    pertaining to the resulting file if the file exists.
+
+    The buf argument is a pointer to a stat structure, as defined in the <sys/stat.h> 
+    header, into which information is placed concerning the file.
+
+    The stat() function shall update any time-related fields (as described in XBD File Times 
+    Update), before writing into the stat structure.
+
+    [SHM] [Option Start] If the named file is a shared memory object, the implementation shall 
+    update in the stat structure pointed to by the buf argument the st_uid, st_gid, st_size,
+    and st_mode fields, and only the S_IRUSR, S_IWUSR, S_IRGRP, S_IWGRP, S_IROTH, and S_IWOTH 
+    file permission bits need be valid. The implementation may update other fields and flags. 
+    [Option End]
+
+    [TYM] [Option Start] If the named file is a typed memory object, the implementation shall 
+    update in the stat structure pointed to by the buf argument the st_uid, st_gid, st_size, 
+    and st_mode fields, and only the S_IRUSR, S_IWUSR, S_IRGRP, S_IWGRP, S_IROTH, and S_IWOTH 
+    file permission bits need be valid. The implementation may update other fields and flags. 
+    [Option End]
+
+    For all other file types defined in this volume of POSIX.1-2017, the structure members 
+    st_mode, st_ino, st_dev, st_uid, st_gid, st_atim, st_ctim, and st_mtim shall have meaningful 
+    values and the value of the member st_nlink shall be set to the number of links to the file.
+
+lstat()
+    The lstat() function shall be equivalent to stat(), except when path refers to a symbolic 
+    link. In that case lstat() shall return information about the link, while stat() shall return 
+    information about the file the link references.
+
+    For symbolic links, the st_mode member shall contain meaningful information when used with the 
+    file type macros. The file mode bits in st_mode are unspecified. The structure members st_ino, 
+    st_dev, st_uid, st_gid, st_atim, st_ctim, and st_mtim shall have meaningful values and the value 
+    of the st_nlink member shall be set to the number of (hard) links to the symbolic link. The value 
+    of the st_size member shall be set to the length of the pathname contained in the symbolic link not 
+    including any terminating null byte.+
+
+fstat()
+    The fstat() function shall obtain information about an open file associated with the 
+    file descriptor fildes, and shall write it to the area pointed to by buf.
+
+unlink(const char *path)
+    The unlink() function shall remove a link to a file. If path names a symbolic link, unlink() 
+    shall remove the symbolic link named by path and shall not affect any file or directory named 
+    by the contents of the symbolic link. Otherwise, unlink() shall remove the link named by the 
+    pathname pointed to by path and shall decrement the link count of the file referenced by the link.
+
+tcgetattr(int fildes, struct termios *termios_p)
+    The tcgetattr() function shall get the parameters associated with the terminal referred to by fildes
+    and store them in the termios structure referenced by termios_p. The fildes argument is an open 
+    file descriptor associated with a terminal.
+
+getenv(const char *name)
+    The getenv() function shall search the environment of the calling process (see XBD Environment 
+    Variables) for the environment variable name if it exists and return a pointer to the value of the 
+    environment variable. If the specified environment variable cannot be found, a null pointer shall 
+    be returned. The application shall ensure that it does not modify the string pointed to by the 
+    getenv() function.
+
+ioctl(int fildes, int request, ... /* arg */)
+    The ioctl() function shall perform a variety of control functions on STREAMS devices. For 
+    non-STREAMS devices, the functions performed by this call are unspecified. The request argument 
+    and an optional third argument (with varying type) shall be passed to and interpreted by the 
+    appropriate part of the STREAM associated with fildes.
+
+*ttyname(int fildes)
+    The ttyname() function shall return a pointer to a string containing a null-terminated pathname 
+    of the terminal associated with file descriptor fildes. The application shall not modify the 
+    string returned. The returned pointer might be invalidated or the string content might be 
+    overwritten by a subsequent call to ttyname(). The returned pointer and the string content might 
+    also be invalidated if the calling thread is terminated.
+
+isatty(int fildes)
+    The isatty() function shall test whether fildes, an open file descriptor, is associated with a 
+    terminal device.
+
+closedir(DIR *dirp)
+    The closedir() function shall close the directory stream referred to by the argument dirp. Upon 
+    return, the value of dirp may no longer point to an accessible object of the type DIR. If a file 
+    descriptor is used to implement type DIR, that file descriptor shall be closed.
