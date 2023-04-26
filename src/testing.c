@@ -50,6 +50,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	signal(SIGINT, ft_sig_handler);
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGUSR1, ft_procs_sig);
 	while (1)
 	{
 		i = 0;

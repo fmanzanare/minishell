@@ -111,3 +111,47 @@ closedir(DIR *dirp)
     The closedir() function shall close the directory stream referred to by the argument dirp. Upon 
     return, the value of dirp may no longer point to an accessible object of the type DIR. If a file 
     descriptor is used to implement type DIR, that file descriptor shall be closed.
+
+getenv(const char *name)
+    The getenv() function obtains the current value of the environment vari-
+     able, name.  The application should not modify the string pointed to by
+     the getenv() function.
+
+tcsetattr(int fildes, int optional_actions, const struct termios *termios_p)
+    As described below, the effects of the
+     functions on the terminal do not become effective, nor are all errors
+     detected, until the tcsetattr() function is called.  Certain values for
+     baud rates, set in the termios structure and passed to tcsetattr(), have
+     special meanings.  These are discussed in the portion of the manual page
+     that describes the tcsetattr() function.
+
+tcgetattr(int fildes, struct termios *termios_p)
+    functions are provided for
+     getting and setting the termios structure.
+
+tgetent(char *bp, const char *name)
+    The tgetent routine loads the entry for name.  It returns 1 on success,
+       0  if there is no such entry, and -1 if the terminfo database could not
+       be found.  The emulation ignores the buffer pointer bp.
+
+tgetflag(char *id)
+    The tgetflag routine gets the boolean entry for id, or zero  if  it  is
+       not available.
+
+tgetnum(char *id)
+    The  tgetnum  routine gets the numeric entry for id, or -1 if it is not
+       available.
+
+*tgetstr(char *id, char **area)
+    The tgetstr routine returns the string entry for id, or zero if  it  is
+       not  available.   Use  tputs to output the returned string.  The return
+       value will also be copied to the buffer pointed to  by  area,  and  the
+       area value will be updated to point past the null ending this value.
+
+*tgoto(const char *cap, int col, int row)
+    The tgoto routine instantiates the parameters into the  given  capabil-
+       ity.  The output from this routine is to be passed to tputs.
+
+tputs(const char *str, int affcnt, int (*putc)(int));
+    The  tputs  routine  is described on the curs_terminfo(3X) manual page.
+       It can retrieve capabilities by either termcap or terminfo name.

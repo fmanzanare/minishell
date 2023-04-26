@@ -6,7 +6,7 @@
 /*   By: vde-prad <vde-prad@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 17:44:12 by vde-prad          #+#    #+#             */
-/*   Updated: 2023/04/24 14:08:12 by vde-prad         ###   ########.fr       */
+/*   Updated: 2023/04/25 20:42:56 by vde-prad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ static int	ft_builtin(t_inputs *inputs)
 	ret = 1;
 	if (ft_strncmp(inputs->args->cmd_arr[0], "echo", ft_strlen("echo")) == 0)
 		ret = ft_echo(inputs);
-	if (ft_strncmp(inputs->args->cmd_arr[0], "cd", ft_strlen("cd")) == 0)
-		ret = ft_cd(inputs);
 	return (ret);
 }
 
@@ -80,6 +78,7 @@ static int	ft_breeder(t_inputs *inputs, char **envp, t_pipe *data, int i)
 		return (-1);
 	if (ft_builtin(inputs))
 	{
+		signal(SIGUSR1, SIG_IGN);
 		childpid = fork();
 		if (childpid == 0)
 		{
@@ -129,6 +128,7 @@ int	ft_terminator(t_inputs *inputs, char **envp)
 	close(data.cpy_in);
 	if (childpid > 0)
 		waitpid(childpid, &data.status, 0);
+	signal(SIGUSR1, ft_procs_sig);
 	run_to_head(&inputs->args);
 	return (WEXITSTATUS(data.status));
 }

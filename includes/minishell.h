@@ -7,6 +7,7 @@
 # include <readline/history.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <signal.h>
 # include <unistd.h>
 # include <fcntl.h>
 # include <string.h>
@@ -93,6 +94,7 @@ int		ft_terminator(t_inputs *inputs, char **envp);
 // signal.c
 int		ft_check_rl(t_inputs *inputs);
 void	ft_sig_handler(int signal);
+void	ft_procs_sig(int signal);
 // echo.c
 int		ft_echo(t_inputs *inputs);
 int		ft_cd(t_inputs *inputs);
