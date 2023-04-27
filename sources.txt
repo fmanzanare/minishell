@@ -153,5 +153,4 @@ tgetnum(char *id)
        ity.  The output from this routine is to be passed to tputs.
 
 tputs(const char *str, int affcnt, int (*putc)(int));
-    The  tputs  routine  is described on the curs_terminfo(3X) manual page.
-       It can retrieve capabilities by either termcap or terminfo name.
+    

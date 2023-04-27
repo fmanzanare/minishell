@@ -8,6 +8,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <signal.h>
+# include <termios.h>
 # include <unistd.h>
 # include <fcntl.h>
 # include <string.h>
@@ -95,6 +96,7 @@ int		ft_terminator(t_inputs *inputs, char **envp);
 int		ft_check_rl(t_inputs *inputs);
 void	ft_sig_handler(int signal);
 void	ft_procs_sig(int signal);
+void	ft_setterm(void);
 // echo.c
 int		ft_echo(t_inputs *inputs);
 int		ft_cd(t_inputs *inputs);

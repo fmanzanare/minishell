@@ -15,6 +15,15 @@ void	ft_sig_handler(int signal)
 	kill(0, SIGUSR1);
 }
 
+void	ft_setterm(void)
+{
+	struct termios	t;
+
+	tcgetattr(0, &t);
+	t.c_lflag &= ~ECHOCTL;
+	tcsetattr(0, TCSANOW, &t);
+}
+
 int	ft_check_rl(t_inputs *inputs)
 {
 	if (inputs->line == NULL)
