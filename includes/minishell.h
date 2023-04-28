@@ -44,6 +44,7 @@ typedef struct s_inputs
 
 typedef struct s_pipe
 {
+	int		*childpid;
 	int		cpy_out;
 	int		cpy_in;
 	int		status;
@@ -97,6 +98,7 @@ int		ft_check_rl(t_inputs *inputs);
 void	ft_sig_handler(int signal);
 void	ft_procs_sig(int signal);
 void	ft_setterm(void);
+void	ft_antibreeder(t_pipe data, int i);
 // echo.c
 int		ft_echo(t_inputs *inputs);
 int		ft_cd(t_inputs *inputs);

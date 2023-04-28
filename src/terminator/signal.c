@@ -35,3 +35,14 @@ int	ft_check_rl(t_inputs *inputs)
 	}
 	return (0);
 }
+
+void	ft_antibreeder(t_pipe data, int i)
+{	
+	dup2(data.cpy_out, STDOUT_FILENO);
+	dup2(data.cpy_in, STDIN_FILENO);
+	close(data.cpy_out);
+	close(data.cpy_in);
+	waitpid(data.childpid[i - 1], &data.status, 0);
+	while (i-- > 0)
+		kill(data.childpid[i], SIGKILL);
+}
