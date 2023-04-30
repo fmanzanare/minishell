@@ -15,5 +15,5 @@ int	ft_echo(t_inputs *inputs)
 		ft_putstr_fd(inputs->args->cmd_arr[i], 1);
 	if (flag)
 		ft_putstr_fd("\n", 1);
-	return (0);
+	return (-1);
 }

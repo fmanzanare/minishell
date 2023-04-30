@@ -1,6 +1,8 @@
 define HEADER
+
+                        MiniHell Compiled
                                 by
-                       fmanzana && vde-prad
+                  (fmanzana && vde-prad) == true
  _______ _________ _       _________          _______  _        _       
 (       )\\__   __/( (    /|\\__   __/|\\     /|(  ____ \( \\      ( \\      
 | () () |   ) (   |  \\  ( |   ) (   | )   ( || (    \\/| (      | (      
@@ -9,6 +11,7 @@ define HEADER
 | |   | |   | |   | | \\   |   | |   | (   ) || (      | |      | |      
 | )   ( |___) (___| )  \\  |___) (___| )   ( || (____/\\| (____/\\| (____/\\
 |/     \\|\\_______/|/    )_)\\_______/|/     \\|(_______/(_______/(_______/
+
 endef
 export HEADER
 
@@ -20,8 +23,8 @@ COLOR = \033[1;31m
 
 SRCS = $(addprefix ./src/, testing.c)
 SRCS_UTILS = $(addprefix ./src/utils/, free_fts.c command_spliter.c inputs_utils.c pipes_and_redirs.c qmarks_fts.c)
-SRCS_TERMINATOR = $(addprefix ./src/terminator/, redirections.c parserpath.c terminator.c signal.c)
-SRCS_BUILTINS = $(addprefix ./src/terminator/builtins/, echo.c )
+SRCS_TERMINATOR = $(addprefix ./src/terminator/, utils.c redirections.c parserpath.c terminator.c signal.c)
+SRCS_BUILTINS = $(addprefix ./src/terminator/builtins/, echo.c env.c)
 SRCS_LIST = $(addprefix ./src/list/, list_filler.c list_moves.c iofiles_fdr.c cmd_arrayer.c)
 SRCS_SYNTAX = $(addprefix ./src/syntax_errors/, syntax_checker.c)
 
@@ -60,7 +63,6 @@ $(OBJS):	$(SRCS)
 
 $(NAME):	$(OBJS) $(OBJS_UTILS) $(OBJS_LIST) $(OBJS_SYNTAX) $(OBJS_TERMINATOR) $(OBJS_BUILTINS) $(LIBFT)
 			@$(CC) $(CFLAGS) $(OBJS) $(OBJS_TERMINATOR) $(OBJS_BUILTINS) $(OBJS_UTILS) $(OBJS_LIST) $(OBJS_SYNTAX) $(RL_LIB_LINK) $(LIBFT_LINK) $(FT_PRINTF_LINK) -o $(NAME)
-			@echo "Minishell compiled!"
 			@echo "$(COLOR)$$HEADER"
 
 $(LIBFT):

@@ -42,6 +42,12 @@ typedef struct s_inputs
 	t_args			*args;
 }				t_inputs;
 
+typedef struct s_env
+{
+	char			*line;
+	struct s_env	*next;
+}				t_env;
+
 typedef struct s_pipe
 {
 	int		*childpid;
@@ -51,6 +57,7 @@ typedef struct s_pipe
 	int		fdin;
 	int		fdout;
 	int		pp[2];
+	t_env	*env;
 }	t_pipe;
 
 //*************************** FUNCTIONS **************************************
@@ -97,9 +104,11 @@ int		ft_terminator(t_inputs *inputs, char **envp);
 int		ft_check_rl(t_inputs *inputs);
 void	ft_sig_handler(int signal);
 void	ft_procs_sig(int signal);
-void	ft_setterm(void);
 void	ft_antibreeder(t_pipe data, int i);
 // echo.c
 int		ft_echo(t_inputs *inputs);
 int		ft_cd(t_inputs *inputs);
+int		ft_env(t_pipe *data);
+// utils.c
+void	ft_init_terminator(char **envp, t_pipe *data);
 #endif

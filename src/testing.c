@@ -48,17 +48,11 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	signal(SIGINT, ft_sig_handler);
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGUSR1, ft_procs_sig);
-	ft_setterm();
 	while (1)
 	{
 		i = 0;
 		inputs.line = readline(get_username(envp));
-		if (ft_check_rl(&inputs))
-			continue ;
-		if (syntax_mngr(inputs.line))
+		if (ft_check_rl(&inputs) || syntax_mngr(inputs.line))
 		{
 			add_history(inputs.line);
 			continue ;
@@ -106,7 +100,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		//----------------------------------------------------------------
 		run_to_head(&inputs.args);
-		ft_terminator(&inputs, envp);//devuelve el exit status
+		ft_terminator(&inputs, envp);//devuelve el exit status del último cmd
 		add_history(inputs.line);
 		free_list(&inputs.args);
 		ft_free_arr(inputs.line_splited);

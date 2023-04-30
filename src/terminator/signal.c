@@ -15,15 +15,6 @@ void	ft_sig_handler(int signal)
 	kill(0, SIGUSR1);
 }
 
-void	ft_setterm(void)
-{
-	struct termios	t;
-
-	tcgetattr(0, &t);
-	t.c_lflag &= ~ECHOCTL;
-	tcsetattr(0, TCSANOW, &t);
-}
-
 int	ft_check_rl(t_inputs *inputs)
 {
 	if (inputs->line == NULL)
@@ -42,7 +33,11 @@ void	ft_antibreeder(t_pipe data, int i)
 	dup2(data.cpy_in, STDIN_FILENO);
 	close(data.cpy_out);
 	close(data.cpy_in);
-	waitpid(data.childpid[i - 1], &data.status, 0);
+	if (data.childpid[i - 1] != -1)
+		waitpid(data.childpid[i - 1], &data.status, 0);
 	while (i-- > 0)
-		kill(data.childpid[i], SIGKILL);
+	{
+		if (data.childpid[i] != -1)
+			kill(data.childpid[i], SIGKILL);
+	}
 }
