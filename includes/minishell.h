@@ -70,6 +70,8 @@ void	print_pipes_redirs_str(t_inputs *inputs); //For testing.
 // qmarks_fts.c
 int		check_s_qmark(char c, int qmark_flag);
 int		check_d_qmark(char c, int qmark_flag);
+// pipe_spliter.c
+char	**pipe_spliter(char *s, char c);
 
 //** LIST **//
 // list_moves.c
