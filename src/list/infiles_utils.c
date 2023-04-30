@@ -64,7 +64,7 @@ static void	infiles_filler(t_args *node, int i, int *inf_idx)
  * Checks the infiles array length and calls infiles_filler function.
  * @param *node Token/List Node to work with.
 */
-void	infiles_mngr(t_args *node)
+void	infiles_mngr(t_args *node, int *qmarks)
 {
 	int	i;
 	int	inf_idx;
@@ -77,9 +77,13 @@ void	infiles_mngr(t_args *node)
 		exit(1);
 	while (node->cmd_line[i])
 	{
-		if (node->cmd_line[i] == '<' && node->cmd_line[i + 1] != '<')
+		qmarks[0] = check_s_qmark(node->cmd_line[i], qmarks[0]);
+		qmarks[1] = check_d_qmark(node->cmd_line[i], qmarks[1]);
+		if (node->cmd_line[i] == '<' && node->cmd_line[i + 1] != '<'
+			&& !qmarks[0] && !qmarks[1])
 			infiles_filler(node, i, &inf_idx);
-		else if (node->cmd_line[i] == '<' && node->cmd_line[i + 1] == '<')
+		else if (node->cmd_line[i] == '<' && node->cmd_line[i + 1] == '<'
+			&& !qmarks[0] && !qmarks[1])
 		{
 			i++;
 			infiles_filler(node, i, &inf_idx);

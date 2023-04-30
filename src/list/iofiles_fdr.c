@@ -64,7 +64,7 @@ static void	outfiles_filler(t_args *node, int i, int *outf_idx)
  * Checks the outfiles array length and calls outfiles_filler function.
  * @param *node Token/List Node to work with.
 */
-static void	outfiles_mngr(t_args *node)
+static void	outfiles_mngr(t_args *node, int *qmarks)
 {
 	int	i;
 	int	outf_idx;
@@ -77,9 +77,13 @@ static void	outfiles_mngr(t_args *node)
 		exit(1);
 	while (node->cmd_line[i])
 	{
-		if (node->cmd_line[i] == '>' && node->cmd_line[i + 1] != '>')
+		qmarks[0] = check_s_qmark(node->cmd_line[i], qmarks[0]);
+		qmarks[1] = check_d_qmark(node->cmd_line[i], qmarks[1]);
+		if (node->cmd_line[i] == '>' && node->cmd_line[i + 1] != '>'
+			&& !qmarks[0] && !qmarks[1])
 			outfiles_filler(node, i, &outf_idx);
-		else if (node->cmd_line[i] == '>' && node->cmd_line[i + 1] == '>')
+		else if (node->cmd_line[i] == '>' && node->cmd_line[i + 1] == '>'
+			&& !qmarks[0] && !qmarks[1])
 		{
 			i++;
 			outfiles_filler(node, i, &outf_idx);
@@ -95,14 +99,18 @@ static void	outfiles_mngr(t_args *node)
 */
 void	iofiles_fdr(t_args *node)
 {
+	int	qmarks[2];
+
+	qmarks[0] = 0;
+	qmarks[1] = 0;
 	if (node->hd_flag || node->ired_flag)
 	{
-		infiles_mngr(node);
+		infiles_mngr(node, qmarks);
 		infiles_flags_filler(node);
 	}
 	if (node->ored_flag || node->app_flag)
 	{
-		outfiles_mngr(node);
+		outfiles_mngr(node, qmarks);
 		outfiles_flag_filler(node);
 	}
 	if (!node->hd_flag && !node->app_flag

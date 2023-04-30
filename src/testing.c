@@ -63,7 +63,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		pipes_redirs_stringer(&inputs);
 		print_pipes_redirs_str(&inputs);
-		inputs.line_splited = ft_split(inputs.line, '|');
+		inputs.line_splited = pipe_spliter(inputs.line, '|');
 		inputs.lenght = input_size(inputs.line_splited);
 		fill_command_lines(&inputs.args, inputs.line_splited, &inputs);
 		run_to_head(&inputs.args);
@@ -71,14 +71,22 @@ int	main(int argc, char **argv, char **envp)
 		// BUCLE PARA IMPRIMIR Y COMPROBAR QUE TODO FUNCIONA CORRECTAMENTE
 		while (inputs.args)
 		{
-			j = 0;
 			ft_printf("%s\n", inputs.args->cmd_line);
 			ft_printf("Pipe flag: %d\n", inputs.args->pipe_flag);
 			ft_printf("Input Redir flag: %d\n", inputs.args->ired_flag);
 			ft_printf("Output Redir flag: %d\n", inputs.args->ored_flag);
 			ft_printf("Append Redir flag: %d\n", inputs.args->app_flag);
 			ft_printf("Heredoc Redir flag: %d\n", inputs.args->hd_flag);
+			ft_printf("LINE SPLITED\n");
+			j = 0;
+			while (inputs.line_splited[j])
+			{
+				ft_printf("%d: %s\n", j, inputs.line_splited[j]);
+				j++;
+			}
+			ft_printf("-------------------\n");
 			ft_printf("Splited:\n");
+			j = 0;
 			while (inputs.args->cmd_split[j])
 			{
 				ft_printf("%d: %s\n", j, inputs.args->cmd_split[j]);
