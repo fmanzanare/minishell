@@ -1,6 +1,10 @@
 
 #include "../../../includes/minishell.h"
-
+/**
+ * Write arguments to the standard output 
+ * @param flag It checks if the flag '-n' was passed
+ * @param i iterator index
+*/
 int	ft_echo(t_inputs *inputs)
 {
 	int	flag;

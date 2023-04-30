@@ -43,11 +43,13 @@ static char	*get_username(char **envp)
 int	main(int argc, char **argv, char **envp)
 {
 	t_inputs	inputs;
+	t_pipe		data;
 	int			i;
 	int			j;
 
 	(void)argc;
 	(void)argv;
+	ft_init_terminator(envp, &data);
 	while (1)
 	{
 		i = 0;
@@ -100,7 +102,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		//----------------------------------------------------------------
 		run_to_head(&inputs.args);
-		ft_terminator(&inputs, envp);//devuelve el exit status del último cmd
+		ft_terminator(&inputs, envp, &data);//devuelve el exit status del último cmd
 		add_history(inputs.line);
 		free_list(&inputs.args);
 		ft_free_arr(inputs.line_splited);

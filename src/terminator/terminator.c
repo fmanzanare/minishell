@@ -6,7 +6,7 @@
 /*   By: vde-prad <vde-prad@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 17:44:12 by vde-prad          #+#    #+#             */
-/*   Updated: 2023/04/30 14:46:08 by vde-prad         ###   ########.fr       */
+/*   Updated: 2023/04/30 20:01:48 by vde-prad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ static int	ft_builtin(t_inputs *inputs, t_pipe *data)
 		ret = ft_echo(inputs);
 	else if (ft_strncmp(inputs->args->cmd_arr[0], "env", ft_strlen("env")) == 0)
 		ret = ft_env(data);
+	else if (ft_strncmp(inputs->args->cmd_arr[0], "pwd", ft_strlen("pwd")) == 0)
+		ret = ft_pwd(data);
 	return (ret);
 }
 
@@ -102,27 +104,25 @@ static int	ft_breeder(t_inputs *inputs, char **envp, t_pipe *data, int i)
 				status
 	@return Exit status
 */
-int	ft_terminator(t_inputs *inputs, char **envp)
+int	ft_terminator(t_inputs *inputs, char **envp, t_pipe *data)
 {
 	int		i;
-	t_pipe	data;
 
-	ft_init_terminator(envp, &data);
-	data.childpid = malloc(inputs->lenght * sizeof(int));
-	data.cpy_out = dup(STDOUT_FILENO);
-	data.cpy_in = dup(STDIN_FILENO);
-	data.fdin = dup(data.cpy_in);
+	data->childpid = malloc(inputs->lenght * sizeof(int));
+	data->cpy_out = dup(STDOUT_FILENO);
+	data->cpy_in = dup(STDIN_FILENO);
+	data->fdin = dup(data->cpy_in);
 	i = 0;
 	while (i++ < inputs->lenght)
 	{
-		ft_breeder(inputs, envp, &data, i);
+		ft_breeder(inputs, envp, data, i);
 		if (inputs->args->next)
 			inputs->args = inputs->args->next;
 	}
-	ft_antibreeder(data, inputs->lenght);
+	ft_antibreeder(*data, inputs->lenght);
 	signal(SIGUSR1, ft_procs_sig);
 	run_to_head(&inputs->args);
-	return (WEXITSTATUS(data.status));
+	return (WEXITSTATUS(data->status));
 }
 // pp[0]--->lectura en pipe
 // pp[1]--->escritura en pipe

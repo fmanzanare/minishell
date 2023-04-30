@@ -27,11 +27,15 @@ int	ft_check_rl(t_inputs *inputs)
 	return (0);
 }
 
+/**
+ * It saves the stdout and stdin, waits the last process,
+ * kills all the subprocesses
+*/
 void	ft_antibreeder(t_pipe data, int i)
 {	
 	dup2(data.cpy_out, STDOUT_FILENO);
-	dup2(data.cpy_in, STDIN_FILENO);
 	close(data.cpy_out);
+	dup2(data.cpy_in, STDIN_FILENO);
 	close(data.cpy_in);
 	if (data.childpid[i - 1] != -1)
 		waitpid(data.childpid[i - 1], &data.status, 0);

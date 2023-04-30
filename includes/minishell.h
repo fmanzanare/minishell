@@ -56,6 +56,7 @@ typedef struct s_pipe
 	int		status;
 	int		fdin;
 	int		fdout;
+	char	pwd[512];
 	int		pp[2];
 	t_env	*env;
 }	t_pipe;
@@ -99,7 +100,7 @@ void	ft_setdata(t_inputs *inputs, t_pipe *data);
 // parserpath.c
 char	*ft_getpath(char **ep, char *cmd);
 // terminator.c
-int		ft_terminator(t_inputs *inputs, char **envp);
+int		ft_terminator(t_inputs *inputs, char **envp, t_pipe *data);
 // signal.c
 int		ft_check_rl(t_inputs *inputs);
 void	ft_sig_handler(int signal);
@@ -109,6 +110,8 @@ void	ft_antibreeder(t_pipe data, int i);
 int		ft_echo(t_inputs *inputs);
 int		ft_cd(t_inputs *inputs);
 int		ft_env(t_pipe *data);
+// pwd.c
+int		ft_pwd(t_pipe *data);
 // utils.c
 void	ft_init_terminator(char **envp, t_pipe *data);
 #endif
