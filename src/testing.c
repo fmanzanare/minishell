@@ -43,20 +43,18 @@ static char	*get_username(char **envp)
 int	main(int argc, char **argv, char **envp)
 {
 	t_inputs	inputs;
+	t_pipe		data;
 	int			i;
 	int			j;
 
 	(void)argc;
 	(void)argv;
-	signal(SIGINT, ft_sig_handler);
-	signal(SIGQUIT, SIG_IGN);
+	ft_init_terminator(envp, &data);
 	while (1)
 	{
 		i = 0;
 		inputs.line = readline(get_username(envp));
-		if (ft_check_rl(&inputs))
-			continue ;
-		if (syntax_mngr(inputs.line))
+		if (ft_check_rl(&inputs) || syntax_mngr(inputs.line))
 		{
 			add_history(inputs.line);
 			continue ;
@@ -140,7 +138,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		//----------------------------------------------------------------
 		run_to_head(&inputs.args);
-		ft_terminator(&inputs, envp);//devuelve el exit status
+		ft_terminator(&inputs, envp, &data);//devuelve el exit status del último cmd
 		add_history(inputs.line);
 		//free_list(&inputs.args); -> SegFault when try to be executed.
 		ft_free_arr(inputs.line_splited);

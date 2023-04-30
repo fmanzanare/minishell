@@ -7,6 +7,8 @@
 # include <readline/history.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <signal.h>
+# include <termios.h>
 # include <unistd.h>
 # include <fcntl.h>
 # include <string.h>
@@ -43,15 +45,23 @@ typedef struct s_inputs
 	t_args			*args;
 }				t_inputs;
 
+typedef struct s_env
+{
+	char			*line;
+	struct s_env	*next;
+}				t_env;
+
 typedef struct s_pipe
 {
-	char	*lastinf;
+	int		*childpid;
 	int		cpy_out;
 	int		cpy_in;
 	int		status;
 	int		fdin;
 	int		fdout;
+	char	pwd[512];
 	int		pp[2];
+	t_env	*env;
 }	t_pipe;
 
 //*************************** FUNCTIONS **************************************
@@ -103,9 +113,18 @@ void	ft_setdata(t_inputs *inputs, t_pipe *data);
 // parserpath.c
 char	*ft_getpath(char **ep, char *cmd);
 // terminator.c
-int		ft_terminator(t_inputs *inputs, char **envp);
+int		ft_terminator(t_inputs *inputs, char **envp, t_pipe *data);
 // signal.c
 int		ft_check_rl(t_inputs *inputs);
-// signal.c
 void	ft_sig_handler(int signal);
+void	ft_procs_sig(int signal);
+void	ft_antibreeder(t_pipe data, int i);
+// echo.c
+int		ft_echo(t_inputs *inputs);
+int		ft_cd(t_inputs *inputs);
+int		ft_env(t_pipe *data);
+// pwd.c
+int		ft_pwd(t_pipe *data);
+// utils.c
+void	ft_init_terminator(char **envp, t_pipe *data);
 #endif
