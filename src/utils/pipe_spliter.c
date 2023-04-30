@@ -12,7 +12,6 @@ static char	*stringmkr(char *s, int start, int end)
 	while (start < end)
 		wrd[i++] = s[start++];
 	wrd[i] = '\0';
-	puts(wrd);
 	return (wrd);
 }
 

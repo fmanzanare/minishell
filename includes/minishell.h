@@ -85,7 +85,7 @@ void	iofiles_fdr(t_args *node);
 // iofiles_utils.c
 int		files_len(t_args *node, int *i);
 // infiles_utils.c
-void	infiles_mngr(t_args *node);
+void	infiles_mngr(t_args *node, int *qmarks);
 void	infiles_flags_filler(t_args *node);
 // cmd_arrayer.c
 void	cmd_arrayer(t_args *node, int i, int j);
