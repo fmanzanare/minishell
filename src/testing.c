@@ -102,7 +102,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		//----------------------------------------------------------------
 		run_to_head(&inputs.args);
-		ft_terminator(&inputs, envp, &data);//devuelve el exit status del último cmd
+		ft_terminator(&inputs, &data);//devuelve el exit status del último cmd
 		add_history(inputs.line);
 		free_list(&inputs.args);
 		ft_free_arr(inputs.line_splited);

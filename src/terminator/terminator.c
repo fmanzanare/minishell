@@ -6,7 +6,7 @@
 /*   By: vde-prad <vde-prad@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 17:44:12 by vde-prad          #+#    #+#             */
-/*   Updated: 2023/04/30 20:01:48 by vde-prad         ###   ########.fr       */
+/*   Updated: 2023/05/01 19:57:06 by vde-prad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,9 @@ static int	ft_builtin(t_inputs *inputs, t_pipe *data)
 		ret = ft_env(data);
 	else if (ft_strncmp(inputs->args->cmd_arr[0], "pwd", ft_strlen("pwd")) == 0)
 		ret = ft_pwd(data);
+	else if (ft_strncmp(inputs->args->cmd_arr[0],
+			"export", ft_strlen("export")) == 0)
+		ret = ft_export(inputs, data);
 	return (ret);
 }
 
@@ -104,7 +107,7 @@ static int	ft_breeder(t_inputs *inputs, char **envp, t_pipe *data, int i)
 				status
 	@return Exit status
 */
-int	ft_terminator(t_inputs *inputs, char **envp, t_pipe *data)
+int	ft_terminator(t_inputs *inputs, t_pipe *data)
 {
 	int		i;
 
@@ -115,10 +118,10 @@ int	ft_terminator(t_inputs *inputs, char **envp, t_pipe *data)
 	i = 0;
 	while (i++ < inputs->lenght)
 	{
-		ft_breeder(inputs, envp, data, i);
+		ft_breeder(inputs, data->envp, data, i);
 		if (inputs->args->next)
 			inputs->args = inputs->args->next;
-	}
+	}	
 	ft_antibreeder(*data, inputs->lenght);
 	signal(SIGUSR1, ft_procs_sig);
 	run_to_head(&inputs->args);

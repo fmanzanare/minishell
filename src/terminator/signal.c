@@ -10,8 +10,10 @@ void	ft_procs_sig(int signal)
 void	ft_sig_handler(int signal)
 {
 	(void)signal;
+	write(1, "\n", 1);
 	rl_on_new_line();
-	ft_putstr_fd("\n", 1);
+	rl_replace_line("", 0);
+	rl_redisplay();
 	kill(0, SIGUSR1);
 }
 
