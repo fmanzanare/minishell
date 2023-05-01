@@ -29,7 +29,6 @@ $(NAME):	${OBJS}
 
 .c.o:		$(SRCS)
 			@gcc $(CFLAGS) -c $(SRCS)
-			@echo "Librería FT_PRINTF done!"
 
 clean:
 			@rm -rf ${OBJS}

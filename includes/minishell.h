@@ -38,8 +38,10 @@ typedef struct s_args
 
 typedef struct s_inputs
 {
+	char			*raw;
 	char			*line;
 	char			**line_splited;
+	int				exst;
 	int				lenght;
 	char			*pipes_redir;
 	t_args			*args;
@@ -72,8 +74,9 @@ void	ft_free_arr(char **arr);
 void	free_list(t_args **args);
 // command_spliter.c
 char	**command_spliter(char *str, char c);
-// inputs_spliter.c
+// inputs_utils.c
 int		input_size(char **line_splited);
+int		is_blank_line(char *line);
 // pipes_and_redirs.c
 void	pipes_redirs_stringer(t_inputs *inputs);
 void	print_pipes_redirs_str(t_inputs *inputs); //For testing.
@@ -106,6 +109,12 @@ int		array_len(char **arr);
 //** SYNTAX_ERRORS **//
 // syntax_checker.c
 char	syntax_checker(char *str);
+
+//* EXPANDER *//
+// expander.c
+void	ft_expander(t_inputs *inputs, t_env *env);
+// expander_utils.c
+char	*ft_charjoin(char *s, char c);
 
 //** PIPE **//
 // redirections.c
