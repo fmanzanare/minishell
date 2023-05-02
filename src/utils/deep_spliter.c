@@ -13,6 +13,7 @@ static char	*stringmkr(char *s, int start, int end)
 
 	i = 0;
 	wrd = malloc((end - start + 1) * sizeof(char));
+	printf("elemento original: %p\n", wrd);
 	if (!wrd)
 		exit(1);
 	while (start < end)

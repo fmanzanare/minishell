@@ -69,9 +69,6 @@ typedef struct s_pipe
 //*************************** FUNCTIONS **************************************
 
 //*** UTILS ***//
-// free_fts.c
-void	ft_free_arr(char **arr);
-void	free_list(t_args **args);
 // inputs_utils.c
 int		input_size(char **line_splited);
 int		is_blank_line(char *line);
@@ -83,6 +80,10 @@ int		check_s_qmark(char c, int qmark_flag);
 int		check_d_qmark(char c, int qmark_flag);
 // deep_spliter.c
 char	**deep_spliter(char *s, char c);
+//** FREE_FTS **//
+// free_utils.c
+void	ft_free_arr(char **arr);
+void	free_list(t_args **args);
 
 //** LIST **//
 // list_moves.c
