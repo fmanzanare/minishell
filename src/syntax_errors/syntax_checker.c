@@ -88,6 +88,32 @@ static char	error_fdr(char *str)
 }
 
 /**
+ * Checks if the raw line containes unclosed qmarks.
+ * If they are found, it returns a syntax error.
+ * @param str Raw line.
+ * @param *qmarks Flags array for quotation marks.
+*/
+static char	opened_qmarks(char *str, int *qmarks)
+{
+	int	i;
+
+	i = 0;
+	qmarks[0] = 0;
+	qmarks[1] = 0;
+	while (str[i])
+	{
+		qmarks[0] = check_s_qmark(str[i], qmarks[0]);
+		qmarks[1] = check_d_qmark(str[i], qmarks[1]);
+		i++;
+	}
+	if (qmarks[0])
+		return ('\'');
+	else if (qmarks[1])
+		return ('\"');
+	return ('\0');
+}
+
+/**
  * Checks syntax error at the begining of the line.
  * example: "$> | echo hola" o "$>      | echo hola" o "$> <", etc.
  * if no errors are found, it calls "error_fdr" function.
@@ -106,6 +132,8 @@ char	syntax_checker(char *str)
 		i++;
 	if (str[i] == '|')
 		return ('|');
+	else if (opened_qmarks(str, qmark))
+		return (opened_qmarks(str, qmark));
 	else if (check_p_r(str[i], str[i + 1], qmark, &i) == 1)
 	{
 		i++;

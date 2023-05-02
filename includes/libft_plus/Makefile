@@ -6,7 +6,7 @@
 #    By: fmanzana <fmanzana@student.42malaga.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/23 12:47:02 by fmanzana          #+#    #+#              #
-#    Updated: 2023/04/22 21:10:22 by fmanzana         ###   ########.fr        #
+#    Updated: 2023/04/30 20:49:44 by fmanzana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,7 +76,6 @@ $(NAME):
 	@make -C ./ft_printf
 	@gcc $(CFLAGS) -c $(SRC) $(BONUS)
 	@ar rcs $(NAME) $(OBJ) $(BONUS_OBJ)
-	@echo "Librería LIBFT done!"
 
 clean:
 	@rm -f $(OBJ) $(BONUS_OBJ)

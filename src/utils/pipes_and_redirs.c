@@ -114,17 +114,3 @@ void	pipes_redirs_stringer(t_inputs *inputs)
 	}
 	inputs->pipes_redir[i] = '\0';
 }
-
-// TEMPORARY FUNCTION TO VERIFY THAT STRING IS BEING BUILT CORRECTLY.
-void	print_pipes_redirs_str(t_inputs *inputs)
-{
-	int		i;
-
-	i = 0;
-	while (inputs->pipes_redir[i])
-	{
-		ft_printf("%c", inputs->pipes_redir[i]);
-		i++;
-	}
-	ft_printf("\n");
-}

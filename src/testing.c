@@ -49,19 +49,22 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+	inputs.exst = 0;
 	ft_init_terminator(envp, &data);
 	while (1)
 	{
+		inputs.line = "";
 		i = 0;
-		inputs.line = readline(get_username(envp));
-		if (ft_check_rl(&inputs) || syntax_mngr(inputs.line))
+		inputs.raw = readline(get_username(envp));
+		if (ft_check_rl(&inputs) || syntax_mngr(inputs.raw)
+			|| is_blank_line(inputs.raw))
 		{
-			add_history(inputs.line);
+			add_history(inputs.raw);
 			continue ;
 		}
+		ft_expander(&inputs, data.env);
 		pipes_redirs_stringer(&inputs);
-		print_pipes_redirs_str(&inputs);
-		inputs.line_splited = pipe_spliter(inputs.line, '|');
+		inputs.line_splited = deep_spliter(inputs.line, '|');
 		inputs.lenght = input_size(inputs.line_splited);
 		fill_command_lines(&inputs.args, inputs.line_splited, &inputs);
 		run_to_head(&inputs.args);
@@ -138,11 +141,13 @@ int	main(int argc, char **argv, char **envp)
 		}
 		//----------------------------------------------------------------
 		run_to_head(&inputs.args);
-		ft_terminator(&inputs, envp, &data);//devuelve el exit status del último cmd
-		add_history(inputs.line);
-		//free_list(&inputs.args); -> SegFault when try to be executed.
+		inputs.exst = ft_terminator(&inputs, envp, &data);//devuelve el exit status del último cmd
+		add_history(inputs.raw);
+		//free_list(&inputs.args);
 		ft_free_arr(inputs.line_splited);
+		if (inputs.line)
+		 	free(inputs.line);
 	}
-	free(inputs.line);
+	free(inputs.raw);
 	return (0);
 }

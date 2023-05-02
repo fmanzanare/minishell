@@ -17,9 +17,9 @@ void	ft_sig_handler(int signal)
 
 int	ft_check_rl(t_inputs *inputs)
 {
-	if (inputs->line == NULL)
+	if (inputs->raw == NULL)
 		exit(0);
-	if (inputs->line[0] == '\0')
+	if (inputs->raw[0] == '\0')
 	{
 		rl_on_new_line();
 		return (1);
@@ -32,7 +32,7 @@ int	ft_check_rl(t_inputs *inputs)
  * kills all the subprocesses
 */
 void	ft_antibreeder(t_pipe data, int i)
-{	
+{
 	dup2(data.cpy_out, STDOUT_FILENO);
 	close(data.cpy_out);
 	dup2(data.cpy_in, STDIN_FILENO);

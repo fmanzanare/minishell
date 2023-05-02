@@ -1,5 +1,12 @@
 #include "../../includes/minishell.h"
 
+/**
+ * Gets the string to be joined into cmd_arr.
+ * If the string is between qmarks, joins everything.
+ * If not, it joins until a redirection is found.
+ * @param *str Full line to be checked.
+ * @return String to be joined into cmd_arr.
+*/
 char	*cmdjoin(char *str)
 {
 	char	*dst;
@@ -24,6 +31,11 @@ char	*cmdjoin(char *str)
 	return (dst);
 }
 
+/**
+ * Calculates the size of an array of strings.
+ * @param **arr Used array to calculate its size.
+ * @return Size of the received array.
+*/
 int	array_len(char **arr)
 {
 	int	len;
