@@ -1,5 +1,10 @@
 #include "../../includes/minishell.h"
 
+/**
+ * It resizes the actual cmd_arr to receive new parameters.
+ * @param *node Toke/List Node to work with.
+ * @param idx Command index.
+*/
 static void	resize_arr(t_args *node, int idx)
 {
 	char	**tmp;
@@ -21,6 +26,11 @@ static void	resize_arr(t_args *node, int idx)
 	ft_free_arr(tmp);
 }
 
+/**
+ * Joins the command into cmd_arr variable.
+ * @param *node Token/List Node to work with.
+ * @param idx Command index.
+*/
 static void	add_to_cmd_array(t_args *node, int idx)
 {
 	int		len;
@@ -38,6 +48,12 @@ static void	add_to_cmd_array(t_args *node, int idx)
 		resize_arr(node, idx);
 }
 
+/**
+ * It fills the cmd_arr variable.
+ * @param *node Token/List Node to work with.
+ * @param i Index.
+ * @param j Index.
+*/
 void	cmd_arrayer(t_args *node, int i, int j)
 {
 	int	red_flag;

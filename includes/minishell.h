@@ -72,8 +72,6 @@ typedef struct s_pipe
 // free_fts.c
 void	ft_free_arr(char **arr);
 void	free_list(t_args **args);
-// command_spliter.c
-char	**command_spliter(char *str, char c);
 // inputs_utils.c
 int		input_size(char **line_splited);
 int		is_blank_line(char *line);
@@ -83,8 +81,8 @@ void	print_pipes_redirs_str(t_inputs *inputs); //For testing.
 // qmarks_fts.c
 int		check_s_qmark(char c, int qmark_flag);
 int		check_d_qmark(char c, int qmark_flag);
-// pipe_spliter.c
-char	**pipe_spliter(char *s, char c);
+// deep_spliter.c
+char	**deep_spliter(char *s, char c);
 
 //** LIST **//
 // list_moves.c

@@ -1,5 +1,11 @@
 #include "../../includes/minishell.h"
 
+/**
+ * Get the string to be saved into the array.
+ * @param *s String to work with.
+ * @param start Starting index.
+ * @param end Index of the new string end.
+*/
 static char	*stringmkr(char *s, int start, int end)
 {
 	char	*wrd;
@@ -15,6 +21,12 @@ static char	*stringmkr(char *s, int start, int end)
 	return (wrd);
 }
 
+/**
+ * Counts the number of words, that the final array will contain.
+ * @param *s String to work with.
+ * @param c Split char.
+ * @return Number of words.
+*/
 static int	wordscntr(char *s, char c)
 {
 	int		i;
@@ -43,6 +55,13 @@ static int	wordscntr(char *s, char c)
 	return (strs);
 }
 
+/**
+ * Fills the array of string with the splited lines from the received string.
+ * @param **dst Array to be filled and returned.
+ * @param *s String to work with.
+ * @param c Split char.
+ * @param idx Index.
+*/
 static char	**split_arrayer(char **dst, char *s, char c, int idx)
 {
 	size_t	i;
@@ -71,7 +90,14 @@ static char	**split_arrayer(char **dst, char *s, char c, int idx)
 	return (dst);
 }
 
-char	**pipe_spliter(char *s, char c)
+/**
+ * Special split that checks the qmarks.
+ * If split char is within qmarks, it is not splited.
+ * @param *s String to work with.
+ * @param c Split char.
+ * @return Array of string, spliting the received string by c.
+*/
+char	**deep_spliter(char *s, char c)
 {
 	int		i;
 	int		j;

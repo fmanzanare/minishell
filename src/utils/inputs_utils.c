@@ -1,5 +1,9 @@
 #include "../../includes/minishell.h"
 
+/**
+ * Checks if the raw line is empty (full of spaces, tabs, etc.)
+ * @param *line Raw line
+*/
 int	is_blank_line(char *line)
 {
 	int	i;

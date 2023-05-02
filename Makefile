@@ -22,7 +22,7 @@ CFLAGS = -Wall -Werror -Wextra
 COLOR = \033[1;31m
 
 SRCS = $(addprefix ./src/, testing.c)
-SRCS_UTILS = $(addprefix ./src/utils/, free_fts.c command_spliter.c inputs_utils.c pipes_and_redirs.c qmarks_fts.c pipe_spliter.c)
+SRCS_UTILS = $(addprefix ./src/utils/, free_fts.c inputs_utils.c pipes_and_redirs.c qmarks_fts.c deep_spliter.c)
 SRCS_TERMINATOR = $(addprefix ./src/terminator/, utils.c redirections.c parserpath.c terminator.c signal.c)
 SRCS_BUILTINS = $(addprefix ./src/terminator/builtins/, echo.c env.c pwd.c)
 SRCS_LIST = $(addprefix ./src/list/, list_filler.c list_moves.c iofiles_fdr.c iofiles_utils.c infiles_utils.c cmd_arrayer.c cmd_arrayer_utils.c)

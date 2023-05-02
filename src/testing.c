@@ -64,8 +64,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		ft_expander(&inputs, data.env);
 		pipes_redirs_stringer(&inputs);
-		print_pipes_redirs_str(&inputs);
-		inputs.line_splited = pipe_spliter(inputs.line, '|');
+		inputs.line_splited = deep_spliter(inputs.line, '|');
 		inputs.lenght = input_size(inputs.line_splited);
 		fill_command_lines(&inputs.args, inputs.line_splited, &inputs);
 		run_to_head(&inputs.args);

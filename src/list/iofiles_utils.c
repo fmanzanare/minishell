@@ -1,5 +1,10 @@
 #include "../../includes/minishell.h"
 
+/**
+ * Calculates the length of the file name.
+ * @param *node Token/List Node to work with.
+ * @param *i Pointer to the cmd_line index.
+*/
 int	files_len(t_args *node, int *i)
 {
 	int	len;

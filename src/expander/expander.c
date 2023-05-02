@@ -1,5 +1,13 @@
 #include "../../includes/minishell.h"
 
+/**
+ * Expands the variable looking for it into env struct.
+ * @param *var Variable name to be expanded.
+ * @param *env Pointer to env struct.
+ * @param var_len Variable name length.
+ * @param *inputs Pointer to inputs struct.
+ * @return Variable content. If variable is not found, it returns NULL.
+*/
 static char	*expand_var(char *var, t_env *env, int var_len, t_inputs *inputs)
 {
 	char	*ret;
@@ -28,6 +36,12 @@ static char	*expand_var(char *var, t_env *env, int var_len, t_inputs *inputs)
 	return (ret);
 }
 
+/**
+ * Gets the variable name to be expanded and calls expand_var function.
+ * @param *inputs Pointer to inputs struct.
+ * @param *env Pointer to env struct.
+ * @param *e_idx Pointer to the variable index within inputs-raw.
+*/
 static void	get_expvar(t_inputs *inputs, t_env *env, int *e_idx)
 {
 	int		i;
@@ -54,6 +68,12 @@ static void	get_expvar(t_inputs *inputs, t_env *env, int *e_idx)
 	inputs->line = ft_strjoin(inputs->line, var_cnt);
 }
 
+/**
+ * Check if there is a env variable to expand.
+ * If it is found, puts the expanded variable into inputs->line.
+ * @param *inputs Pointer to inputs struct.
+ * @param *env Pointer to env struct.
+*/
 void	ft_expander(t_inputs *inputs, t_env *env)
 {
 	int		i;
