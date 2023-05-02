@@ -11,6 +11,8 @@ t_env	*ft_new_node(char *line)
 	t_env	*node;
 
 	node = malloc(sizeof(t_env));
+	if (!node)
+		exit(1);
 	node->line = ft_strdup(line);
 	return (node);
 }
