@@ -18,13 +18,13 @@ export HEADER
 NAME = minishell
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g
 COLOR = \033[1;31m
 
 SRCS = $(addprefix ./src/, testing.c)
 SRCS_UTILS = $(addprefix ./src/utils/, free_fts.c command_spliter.c inputs_utils.c pipes_and_redirs.c qmarks_fts.c)
 SRCS_TERMINATOR = $(addprefix ./src/terminator/, utils.c redirections.c parserpath.c terminator.c signal.c)
-SRCS_BUILTINS = $(addprefix ./src/terminator/builtins/, echo.c env.c pwd.c export.c)
+SRCS_BUILTINS = $(addprefix ./src/terminator/builtins/, echo.c env.c pwd.c export.c unset.c)
 SRCS_LIST = $(addprefix ./src/list/, list_filler.c list_moves.c iofiles_fdr.c cmd_arrayer.c)
 SRCS_SYNTAX = $(addprefix ./src/syntax_errors/, syntax_checker.c)
 
@@ -69,7 +69,7 @@ $(LIBFT):
 			@make -C ./includes/libft_plus
 
 clean:
-			@rm -f $(OBJS) $(OBJS_UTILS) $(OBJS_LIST) $(OBJS_SYNTAX) $(OBJS_TERMINATOR)
+			@rm -f $(OBJS) $(OBJS_UTILS) $(OBJS_LIST) $(OBJS_SYNTAX) $(OBJS_TERMINATOR) $(OBJS_BUILTINS)
 			@make -C ./includes/libft_plus clean
 
 fclean:		clean

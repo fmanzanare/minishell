@@ -29,19 +29,29 @@ t_env	*ft_new_node(char *line)
 void	ft_init_terminator(char	**envp, t_pipe *data)
 {
 	t_env			*aux;
+	t_env			*tmp;
 	struct termios	t;
 	int				i;
 
 	i = 0;
 	data->env = ft_new_node(envp[i]);
 	aux = data->env;
+	aux->prev = NULL;
 	while (envp[++i])
 	{
+		tmp = aux;
+		printf("line: %s\n", aux->line);
+		if (aux->prev == NULL)
+		 	printf("prev line: %s\n", NULL);
+		else
+		 	printf("prev line: %s\n", aux->prev->line);
+		puts("***** NEW NODE *****");
 		aux->next = ft_new_node(envp[i]);
 		aux = aux->next;
+		aux->prev = tmp;
 	}
-	data->envp = envp;
 	aux->next = NULL;
+	data->envp = envp;
 	signal(SIGINT, ft_sig_handler);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGUSR1, ft_procs_sig);

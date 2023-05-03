@@ -1,5 +1,13 @@
 #include "../../../includes/minishell.h"
 
+/**
+ * It prints the linked list that stores the environment variables
+ * 
+ * @param data executor part structure
+ * @param i iterator index
+ * @param aux t_env linked list auxiliar pointer
+ * @return -1
+*/
 int	ft_env(t_pipe *data)
 {
 	int		i;

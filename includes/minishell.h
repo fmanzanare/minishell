@@ -46,6 +46,7 @@ typedef struct s_env
 {
 	char			*line;
 	struct s_env	*next;
+	struct s_env	*prev;
 }				t_env;
 
 typedef struct s_pipe
@@ -116,6 +117,9 @@ int		ft_pwd(t_pipe *data);
 // export.c
 int		ft_export(t_inputs *inputs, t_pipe *data);
 int		ft_find_var(char *var, t_pipe *data, t_env **target);
+int		ft_check_alpha(char *arg, int i, const char *type);
+// unset.c
+int		ft_unset(t_inputs *inputs, t_pipe *data);
 // utils.c
 void	ft_init_terminator(char **envp, t_pipe *data);
 t_env	*ft_new_node(char *line);
