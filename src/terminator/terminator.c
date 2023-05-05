@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminator.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vde-prad <vde-prad@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: fmanzana <fmanzana@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 17:44:12 by vde-prad          #+#    #+#             */
-/*   Updated: 2023/05/05 19:44:06 by vde-prad         ###   ########.fr       */
+/*   Updated: 2023/05/05 22:13:55 by fmanzana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,9 @@ int	ft_terminator(t_inputs *inputs, t_pipe *data)
 		ft_breeder(inputs, data->envp, data, i);
 		if (inputs->args->next)
 			inputs->args = inputs->args->next;
-	}	
+	}
 	ft_antibreeder(*data, inputs->lenght);
+	free(data->childpid);
 	signal(SIGUSR1, ft_procs_sig);
 	run_to_head(&inputs->args);
 	return (WEXITSTATUS(data->status));

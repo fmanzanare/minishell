@@ -22,7 +22,8 @@ CFLAGS = -Wall -Werror -Wextra -g
 COLOR = \033[1;31m
 
 SRCS = $(addprefix ./src/, testing.c)
-SRCS_UTILS = $(addprefix ./src/utils/, free_fts.c inputs_utils.c pipes_and_redirs.c qmarks_fts.c deep_spliter.c)
+SRCS_UTILS = $(addprefix ./src/utils/, inputs_utils.c pipes_and_redirs.c qmarks_fts.c deep_spliter.c)
+SRCS_FREE = $(addprefix ./src/utils/free_fts/, free_utils.c)
 SRCS_TERMINATOR = $(addprefix ./src/terminator/, utils.c redirections.c parserpath.c terminator.c signal.c)
 SRCS_BUILTINS = $(addprefix ./src/terminator/builtins/, echo.c env.c pwd.c export.c unset.c exit.c cd.c)
 SRCS_LIST = $(addprefix ./src/list/, list_filler.c list_moves.c iofiles_fdr.c iofiles_utils.c infiles_utils.c cmd_arrayer.c cmd_arrayer_utils.c)
@@ -31,6 +32,7 @@ SRCS_EXPAN = $(addprefix ./src/expander/, expander.c expander_utils.c)
 
 OBJS = $(addsuffix .o, $(notdir $(basename $(SRCS))))
 OBJS_UTILS = $(addsuffix .o, $(notdir $(basename $(SRCS_UTILS))))
+OBJS_FREE = $(addsuffix .o, $(notdir $(basename $(SRCS_FREE))))
 OBJS_TERMINATOR = $(addsuffix .o, $(notdir $(basename $(SRCS_TERMINATOR))))
 OBJS_BUILTINS = $(addsuffix .o, $(notdir $(basename $(SRCS_BUILTINS))))
 OBJS_LIST = $(addsuffix .o, $(notdir $(basename $(SRCS_LIST))))
@@ -57,6 +59,9 @@ $(OBJS_LIST):	$(SRCS_LIST)
 $(OBJS_UTILS):	$(SRCS_UTILS)
 			@$(CC) $(CFLAGS) -c $(SRCS_UTILS)
 
+$(OBJS_FREE):	$(SRCS_FREE)
+			@$(CC) $(CFLAGS) -c $(SRCS_FREE)
+
 $(OBJS_SYNTAX):	$(SRCS_SYNTAX)
 			@$(CC) $(CFLAGS) -c $(SRCS_SYNTAX)
 
@@ -66,15 +71,15 @@ $(OBJS_EXPAN):	$(SRCS_EXPAN)
 $(OBJS):	$(SRCS)
 			@$(CC) $(CFLAGS) -c $(SRCS) $(RL_LIB)
 
-$(NAME):	$(OBJS) $(OBJS_UTILS) $(OBJS_LIST) $(OBJS_EXPAN) $(OBJS_SYNTAX) $(OBJS_TERMINATOR) $(OBJS_BUILTINS) $(LIBFT)
-			@$(CC) $(CFLAGS) $(OBJS) $(OBJS_TERMINATOR) $(OBJS_EXPAN) $(OBJS_BUILTINS) $(OBJS_UTILS) $(OBJS_LIST) $(OBJS_SYNTAX) $(RL_LIB_LINK) $(LIBFT_LINK) $(FT_PRINTF_LINK) -o $(NAME)
+$(NAME):	$(OBJS) $(OBJS_FREE) $(OBJS_UTILS) $(OBJS_LIST) $(OBJS_EXPAN) $(OBJS_SYNTAX) $(OBJS_TERMINATOR) $(OBJS_BUILTINS) $(LIBFT)
+			@$(CC) $(CFLAGS) $(OBJS) $(OBJS_FREE) $(OBJS_TERMINATOR) $(OBJS_EXPAN) $(OBJS_BUILTINS) $(OBJS_UTILS) $(OBJS_LIST) $(OBJS_SYNTAX) $(RL_LIB_LINK) $(LIBFT_LINK) $(FT_PRINTF_LINK) -o $(NAME)
 			@echo "$(COLOR)$$HEADER"
 
 $(LIBFT):
 			@make -C ./includes/libft_plus
 
 clean:
-			@rm -f $(OBJS) $(OBJS_UTILS) $(OBJS_LIST) $(OBJS_EXPAN) $(OBJS_SYNTAX) $(OBJS_BUILTINS) $(OBJS_TERMINATOR)
+			@rm -f $(OBJS) $(OBJS_UTILS) $(OBJS_FREE) $(OBJS_LIST) $(OBJS_EXPAN) $(OBJS_SYNTAX) $(OBJS_BUILTINS) $(OBJS_TERMINATOR)
 			@make -C ./includes/libft_plus clean
 
 fclean:		clean

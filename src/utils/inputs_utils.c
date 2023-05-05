@@ -31,6 +31,10 @@ int	input_size(char **line_splited)
 
 	counter = 0;
 	while (line_splited[counter])
+	{
+		if (is_blank_line(line_splited[counter]))
+			break ;
 		counter++;
+	}
 	return (counter);
 }

@@ -48,5 +48,7 @@ char	*ft_charjoin(char *s, char c)
 			exit(1);
 		refillstr(s, ret, c);
 	}
+	if (s)
+		free(s);
 	return (ret);
 }

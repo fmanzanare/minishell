@@ -62,11 +62,12 @@ static t_args	*create_node(char *cmd, int node, int *rp_idx, t_inputs *inputs)
 {
 	t_args	*new;
 
-	new = malloc(sizeof * new);
+	new = malloc(sizeof(t_args));
 	node = 0;
 	zeros_and_nulls_init(new);
 	new->cmd_line = cmd;
 	new->cmd_split = deep_spliter(cmd, ' ');
+	printf("original: %p\n", new->cmd_split);
 	while (inputs->pipes_redir[*rp_idx] != '|'
 		&& inputs->pipes_redir[*rp_idx] != '\0')
 		red_pipe_checker(inputs->pipes_redir, rp_idx, new);
@@ -101,6 +102,8 @@ void	fill_command_lines(t_args **args, char **line_splited, t_inputs *inputs)
 		}
 		else
 		{
+			if (is_blank_line(line_splited[i]))
+				break ;
 			(*args)->next = create_node(line_splited[i], i, &rp_idx, inputs);
 			iofiles_fdr((*args)->next);
 			(*args)->next->prev = *args;
