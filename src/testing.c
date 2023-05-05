@@ -81,6 +81,7 @@ int	main(int argc, char **argv, char **envp)
 		inputs.line_splited = deep_spliter(inputs.line, '|');
 		inputs.lenght = input_size(inputs.line_splited);
 		fill_command_lines(&inputs.args, inputs.line_splited, &inputs);
+		printf("list len: %d\n", inputs.lenght);
 		run_to_head(&inputs.args);
 		//----------------------------------------------------------------
 		// BUCLE PARA IMPRIMIR Y COMPROBAR QUE TODO FUNCIONA CORRECTAMENTE
@@ -158,10 +159,12 @@ int	main(int argc, char **argv, char **envp)
 		inputs.exst = ft_terminator(&inputs, envp, &data);//devuelve el exit status del último cmd
 		add_history(inputs.raw);
 		free_list(&inputs.args);
+		free(inputs.pipes_redir);
 		ft_free_arr(inputs.line_splited);
-	 	free(inputs.line);
+		free(inputs.line);
 		free(inputs.raw);
 		free(user);
 	}
+	rl_clear_history();
 	return (0);
 }

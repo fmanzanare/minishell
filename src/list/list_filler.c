@@ -102,6 +102,8 @@ void	fill_command_lines(t_args **args, char **line_splited, t_inputs *inputs)
 		}
 		else
 		{
+			if (is_blank_line(line_splited[i]))
+				break ;
 			(*args)->next = create_node(line_splited[i], i, &rp_idx, inputs);
 			iofiles_fdr((*args)->next);
 			(*args)->next->prev = *args;

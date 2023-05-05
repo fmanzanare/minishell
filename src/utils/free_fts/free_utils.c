@@ -18,13 +18,13 @@ static void	free_vars(t_args *node)
 		ft_free_arr(node->outf);
 	if (node->outf_flags)
 		free(node->outf_flags);
+	free(node);
 }
 
 void	free_list(t_args **args)
 {
 	t_args	*tmp;
 
-	run_to_head(args);
 	if (!args || !(*args))
 		return ;
 	while (*args)
@@ -33,6 +33,7 @@ void	free_list(t_args **args)
 		free_vars(*args);
 		(*args) = tmp;
 	}
+	free(*args);
 }
 
 void	ft_free_arr(char **arr)

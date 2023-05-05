@@ -18,7 +18,12 @@ void	ft_sig_handler(int signal)
 int	ft_check_rl(t_inputs *inputs)
 {
 	if (inputs->raw == NULL)
+	{
+		free_list(&inputs->args);
+		free(inputs->line);
+		rl_clear_history();
 		exit(0);
+	}
 	if (inputs->raw[0] == '\0')
 	{
 		rl_on_new_line();
