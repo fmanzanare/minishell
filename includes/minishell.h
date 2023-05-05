@@ -8,6 +8,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <signal.h>
+# include <limits.h>
 # include <termios.h>
 # include <unistd.h>
 # include <fcntl.h>
@@ -143,7 +144,7 @@ void	ft_set_variable(char *arg, t_pipe *data);
 int		ft_unset(t_inputs *inputs, t_pipe *data);
 // exit.c
 // TODO: free memory of structs
-int		ft_exit(t_inputs *inputs, t_pipe *data);
+int		ft_exit(t_inputs *inputs);
 // cd.c
 int		ft_cd(char **cmd_arr, t_pipe *data);
 // utils.c

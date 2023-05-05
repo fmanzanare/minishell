@@ -6,7 +6,7 @@
 /*   By: vde-prad <vde-prad@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 17:44:12 by vde-prad          #+#    #+#             */
-/*   Updated: 2023/05/05 19:07:27 by vde-prad         ###   ########.fr       */
+/*   Updated: 2023/05/05 19:44:06 by vde-prad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	ft_builtin(t_inputs *inputs, t_pipe *data)
 	else if (ft_strncmp(inputs->args->cmd_arr[0], "unset", 6) == 0)
 		ret = ft_unset(inputs, data);
 	else if (ft_strncmp(inputs->args->cmd_arr[0], "exit", 5) == 0)
-		ret = ft_exit(inputs, data);
+		ret = ft_exit(inputs);
 	else if (ft_strncmp(inputs->args->cmd_arr[0], "cd", 3) == 0)
 		ret = ft_cd(built_arg, data);
 	return (ret);
