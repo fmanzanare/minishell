@@ -6,7 +6,7 @@
 /*   By: vde-prad <vde-prad@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 17:45:50 by vde-prad          #+#    #+#             */
-/*   Updated: 2023/04/21 11:46:39 by vde-prad         ###   ########.fr       */
+/*   Updated: 2023/05/01 13:23:11 by vde-prad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,13 @@ static char	*ft_chkaccess(char	**paths, char	*cmd)
 		}
 		i++;
 	}
-	ft_putstr_fd("Error: command not found: ", 2);
+	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd, 2);
-	ft_putstr_fd("\n", 2);
+	ft_putstr_fd(": command not found\n", 2);
 	free(res);
+	ft_freepaths(paths);
 	res = NULL;
-	return (res);
+	exit(127);
 }
 
 /**

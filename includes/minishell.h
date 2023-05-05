@@ -34,7 +34,7 @@ typedef struct s_args
 	int				hd_flag;
 	struct s_args	*next;
 	struct s_args	*prev;
-}				t_args;
+}	t_args;
 
 typedef struct s_inputs
 {
@@ -45,13 +45,14 @@ typedef struct s_inputs
 	int				lenght;
 	char			*pipes_redir;
 	t_args			*args;
-}				t_inputs;
+}	t_inputs;
 
 typedef struct s_env
 {
 	char			*line;
 	struct s_env	*next;
-}				t_env;
+	struct s_env	*prev;
+}	t_env;
 
 typedef struct s_pipe
 {
@@ -61,8 +62,9 @@ typedef struct s_pipe
 	int		status;
 	int		fdin;
 	int		fdout;
-	char	pwd[512];
 	int		pp[2];
+	char	pwd[512];
+	char	**envp;
 	t_env	*env;
 }	t_pipe;
 
@@ -120,7 +122,7 @@ void	ft_setdata(t_inputs *inputs, t_pipe *data);
 // parserpath.c
 char	*ft_getpath(char **ep, char *cmd);
 // terminator.c
-int		ft_terminator(t_inputs *inputs, char **envp, t_pipe *data);
+int		ft_terminator(t_inputs *inputs, t_pipe *data);
 // signal.c
 int		ft_check_rl(t_inputs *inputs);
 void	ft_sig_handler(int signal);
@@ -128,10 +130,23 @@ void	ft_procs_sig(int signal);
 void	ft_antibreeder(t_pipe data, int i);
 // echo.c
 int		ft_echo(t_inputs *inputs);
-int		ft_cd(t_inputs *inputs);
+// env.c
 int		ft_env(t_pipe *data);
 // pwd.c
 int		ft_pwd(t_pipe *data);
+// export.c
+int		ft_export(char **cmd_arr, t_pipe *data);
+int		ft_find_var(char *var, t_pipe *data, t_env **target);
+int		ft_check_alpha(char *arg, int i, const char *type);
+void	ft_set_variable(char *arg, t_pipe *data);
+// unset.c
+int		ft_unset(t_inputs *inputs, t_pipe *data);
+// exit.c
+// TODO: free memory of structs
+int		ft_exit(t_inputs *inputs, t_pipe *data);
+// cd.c
+int		ft_cd(char **cmd_arr, t_pipe *data);
 // utils.c
 void	ft_init_terminator(char **envp, t_pipe *data);
+t_env	*ft_new_node(char *line);
 #endif
