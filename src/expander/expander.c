@@ -52,20 +52,21 @@ static void	get_expvar(t_inputs *inputs, t_env *env, int *e_idx)
 	var_len = 0;
 	i = (*e_idx) + 1;
 	while (inputs->raw[i] != ' ' && inputs->raw[i] != '\"'
-		&& inputs->raw[i] != '\'' && inputs->raw[i])
-	{
+		&& inputs->raw[i] != '\'' && inputs->raw[i++])
 		var_len++;
-		i++;
-	}
 	i = (*e_idx) + 1;
 	var = ft_substr(inputs->raw, i, var_len);
 	var = ft_charjoin(var, '=');
 	var_len++;
 	*e_idx += (ft_strlen(var) - 1);
 	var_cnt = expand_var(var, env, var_len, inputs);
+	free(var);
 	if (!var_cnt)
 		return ;
-	inputs->line = ft_strjoin(inputs->line, var_cnt);
+	var = inputs->line;
+	inputs->line = ft_strjoin(var, var_cnt);
+	free(var);
+	free(var_cnt);
 }
 
 /**

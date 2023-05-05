@@ -81,7 +81,6 @@ int	main(int argc, char **argv, char **envp)
 		inputs.line_splited = deep_spliter(inputs.line, '|');
 		inputs.lenght = input_size(inputs.line_splited);
 		fill_command_lines(&inputs.args, inputs.line_splited, &inputs);
-		printf("list len: %d\n", inputs.lenght);
 		run_to_head(&inputs.args);
 		//----------------------------------------------------------------
 		// BUCLE PARA IMPRIMIR Y COMPROBAR QUE TODO FUNCIONA CORRECTAMENTE
