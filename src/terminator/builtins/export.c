@@ -57,7 +57,7 @@ int	ft_check_alpha(char *arg, int i, const char *type)
  * @param var the only variable name that will be export
  * @param aux t_env auxiliar pointer
 */
-static void	ft_set_variable(char *arg, t_pipe *data)
+void	ft_set_variable(char *arg, t_pipe *data)
 {
 	int		i;
 	char	*var;
@@ -72,8 +72,10 @@ static void	ft_set_variable(char *arg, t_pipe *data)
 		if (arg[i] == '=')
 		{
 			var = ft_substr(arg, 0, i + 1);
+			printf("var: %s\n", var);
 			if (ft_find_var(var, data, &aux))
 			{
+				printf("arg: %s\n", arg);
 				free(aux->line);
 				aux->line = ft_strdup(arg);
 			}
@@ -92,17 +94,17 @@ static void	ft_set_variable(char *arg, t_pipe *data)
  * @param i iterator index
  * @return -1
 */
-int	ft_export(t_inputs *inputs, t_pipe *data)
+int	ft_export(char **cmd_arr, t_pipe *data)
 {
 	int	i;
 
 	i = 1;
-	if (!inputs->args->cmd_arr[i])
+	if (!cmd_arr[i])
 	{
 		ft_env(data);
 		return (-1);
 	}
-	while (inputs->args->cmd_arr[i])
-		ft_set_variable(inputs->args->cmd_arr[i++], data);
+	while (cmd_arr[i])
+		ft_set_variable(cmd_arr[i++], data);
 	return (-1);
 }

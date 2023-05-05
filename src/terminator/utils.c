@@ -40,12 +40,6 @@ void	ft_init_terminator(char	**envp, t_pipe *data)
 	while (envp[++i])
 	{
 		tmp = aux;
-		printf("line: %s\n", aux->line);
-		if (aux->prev == NULL)
-		 	printf("prev line: %s\n", NULL);
-		else
-		 	printf("prev line: %s\n", aux->prev->line);
-		puts("***** NEW NODE *****");
 		aux->next = ft_new_node(envp[i]);
 		aux = aux->next;
 		aux->prev = tmp;

@@ -9,7 +9,6 @@
 */
 static void	ft_rm_var(t_env *aux, t_pipe *data)
 {
-	puts("hola");
 	if (aux->next == NULL && aux->prev)
 		aux->prev->next = NULL;
 	else if (aux->prev)
