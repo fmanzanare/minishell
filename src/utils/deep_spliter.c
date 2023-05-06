@@ -1,23 +1,56 @@
 #include "../../includes/minishell.h"
 
 /**
+ * Calculates the word length.
+ * It doesn't take the qmarks.
+ * @param *s String to work with.
+ * @param c Split char.
+ * @param start Starting index.
+ * @param end Index of the new string end.
+ * @return Word length.
+*/
+static int	wrd_len(char *s, char c, int start, int end)
+{
+	int	ret;
+
+	ret = 0;
+	while (start < end)
+	{
+		if (s[start] != '\'' && s[start] != '\"' && c != '|')
+			ret++;
+		else if (c == '|')
+			ret++;
+		start++;
+	}
+	return (ret);
+}
+
+/**
  * Get the string to be saved into the array.
  * @param *s String to work with.
  * @param start Starting index.
  * @param end Index of the new string end.
+ * @return String to be added to the string array.
 */
-static char	*stringmkr(char *s, int start, int end)
+static char	*stringmkr(char *s, char c, int start, int end)
 {
 	char	*wrd;
 	int		i;
 
 	i = 0;
-	wrd = malloc((end - start + 1) * sizeof(char));
-	printf("elemento original: %p\n", wrd);
+	wrd = malloc((wrd_len(s, c, start, end) + 1) * sizeof(char));
 	if (!wrd)
 		exit(1);
 	while (start < end)
+	{
+		if ((s[start] == '\'' || s[start] == '\"') && c != '|')
+		{
+			if (s[start + 1] == '\0')
+				break ;
+			start++;
+		}
 		wrd[i++] = s[start++];
+	}
 	wrd[i] = '\0';
 	return (wrd);
 }
@@ -62,6 +95,7 @@ static int	wordscntr(char *s, char c)
  * @param *s String to work with.
  * @param c Split char.
  * @param idx Index.
+ * @return Array of string, spliting the received string by c.
 */
 static char	**split_arrayer(char **dst, char *s, char c, int idx)
 {
@@ -77,12 +111,12 @@ static char	**split_arrayer(char **dst, char *s, char c, int idx)
 	{
 		qmarks[0] = check_s_qmark(s[i], qmarks[0]);
 		qmarks[1] = check_d_qmark(s[i], qmarks[1]);
-		if (s[i] != c && idx < 0)
+		if (s[i] != c && idx < 0 && s[i] != '\"' && s[i] != '\'')
 			idx = i;
 		else if ((s[i] == c || i == ft_strlen(s)) && idx >= 0
 			&& !qmarks[0] && !qmarks[1])
 		{
-			dst[j++] = stringmkr(s, idx, i);
+			dst[j++] = stringmkr(s, c, idx, i);
 			idx = -1;
 		}
 		i++;

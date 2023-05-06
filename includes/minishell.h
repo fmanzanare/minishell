@@ -107,6 +107,8 @@ void	cmd_arrayer(t_args *node, int i, int j);
 // cmd_arrayer_utils.c
 char	*cmdjoin(char *str);
 int		array_len(char **arr);
+// parser.c
+void	parser(t_inputs *inputs, t_pipe *data);
 
 //** SYNTAX_ERRORS **//
 // syntax_checker.c

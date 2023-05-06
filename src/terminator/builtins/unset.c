@@ -1,9 +1,8 @@
-
 #include "../../../includes/minishell.h"
 
 /**
  * It deletes and free the node that contains the var that is unset
- * 
+ *
  * @param aux t_env auxiliar pointer
  * @param data structure from the executor part
 */
@@ -28,7 +27,7 @@ static void	ft_rm_var(t_env *aux, t_pipe *data)
  * It checks that the argument is valid, it substract the variable name
  * from the argument, find it in the linked list and call the function that
  * removes it from the liked list.
- * 
+ *
  * @param arg the complete argument passed to ft_unset function
  * @param data structure of executor part
  * @param i iterator index

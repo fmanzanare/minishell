@@ -6,7 +6,7 @@
 /*   By: fmanzana <fmanzana@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 17:48:26 by vde-prad          #+#    #+#             */
-/*   Updated: 2023/04/23 12:43:27 by fmanzana         ###   ########.fr       */
+/*   Updated: 2023/05/06 09:03:42 by fmanzana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	ft_setdata(t_inputs *inputs, t_pipe *data)
 {
 	if (inputs->args->ired_flag)
 	{
-
 		if (!access(inputs->args->inf[0], F_OK | R_OK))
 			data->fdin = open(inputs->args->inf[0], O_RDONLY); // ¡OJO! Prueba
 		else
@@ -31,7 +30,6 @@ void	ft_setdata(t_inputs *inputs, t_pipe *data)
 			exit(127);
 		}
 	}
-
 	if (inputs->args->ored_flag || inputs->args->app_flag)
 	{
 		if (inputs->args->ored_flag)

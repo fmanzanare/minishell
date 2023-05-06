@@ -2,12 +2,8 @@
 
 static void	free_vars(t_args *node)
 {
-	// if (node->cmd_line)
-	// 	free(node->cmd_line);
 	if (node->cmd_split)
 		ft_free_arr(node->cmd_split);
-	// if (node->cmd_arr)
-	// 	ft_free_arr(node->cmd_arr);
 	if (node->cmd_path)
 		free(node->cmd_path);
 	if (node->inf)
