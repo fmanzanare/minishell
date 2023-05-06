@@ -118,6 +118,8 @@ void	pipes_redirs_stringer(t_inputs *inputs)
 	qmark[0] = 0;
 	qmark[1] = 0;
 	inputs->pipes_redir = malloc(sizeof(char) * pipes_redirs_len(inputs->line));
+	if (!inputs->pipes_redir)
+		exit(1);
 	while (inputs->line[j])
 	{
 		qmark[0] = check_s_qmark(inputs->line[j], qmark[0]);

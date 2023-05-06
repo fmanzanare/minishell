@@ -26,7 +26,7 @@ SRCS_UTILS = $(addprefix ./src/utils/, inputs_utils.c pipes_and_redirs.c qmarks_
 SRCS_FREE = $(addprefix ./src/utils/free_fts/, free_utils.c)
 SRCS_TERMINATOR = $(addprefix ./src/terminator/, utils.c redirections.c parserpath.c terminator.c signal.c)
 SRCS_BUILTINS = $(addprefix ./src/terminator/builtins/, echo.c env.c pwd.c export.c unset.c exit.c cd.c)
-SRCS_LIST = $(addprefix ./src/list/, list_filler.c list_moves.c iofiles_fdr.c iofiles_utils.c infiles_utils.c cmd_arrayer.c cmd_arrayer_utils.c)
+SRCS_LIST = $(addprefix ./src/list/, list_filler.c list_moves.c iofiles_fdr.c iofiles_utils.c infiles_utils.c cmd_arrayer.c cmd_arrayer_utils.c parser.c)
 SRCS_SYNTAX = $(addprefix ./src/syntax_errors/, syntax_checker.c)
 SRCS_EXPAN = $(addprefix ./src/expander/, expander.c expander_utils.c)
 

@@ -63,6 +63,8 @@ static t_args	*create_node(char *cmd, int node, int *rp_idx, t_inputs *inputs)
 	t_args	*new;
 
 	new = malloc(sizeof(t_args));
+	if (!new)
+		exit(1);
 	node = 0;
 	zeros_and_nulls_init(new);
 	new->cmd_line = cmd;

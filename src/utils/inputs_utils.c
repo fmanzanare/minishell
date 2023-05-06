@@ -3,6 +3,7 @@
 /**
  * Checks if the raw line is empty (full of spaces, tabs, etc.)
  * @param *line Raw line
+ * @return 1 if line is empty, 0 if line contains something.
 */
 int	is_blank_line(char *line)
 {
