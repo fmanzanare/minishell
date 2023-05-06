@@ -37,6 +37,25 @@ static char	*expand_var(char *var, t_env *env, int var_len, t_inputs *inputs)
 }
 
 /**
+ * If it needs to expand a variable, it fills the line with the content.
+ * @param *inputs Pointer to inputs struct.
+ * @param *aux Auxiliar variable.
+ * @param *var_cnt Expanded variable content.
+*/
+static void	fill_inputs_line(t_inputs *inputs, char *aux, char *var_cnt)
+{
+	if (inputs->line)
+	{
+		aux = inputs->line;
+		inputs->line = ft_strjoin(aux, var_cnt);
+		free(aux);
+	}
+	else
+		inputs->line = ft_substr(var_cnt, 0, ft_strlen(var_cnt));
+	free(var_cnt);
+}
+
+/**
  * Gets the variable name to be expanded and calls expand_var function.
  * @param *inputs Pointer to inputs struct.
  * @param *env Pointer to env struct.
@@ -63,10 +82,7 @@ static void	get_expvar(t_inputs *inputs, t_env *env, int *e_idx)
 	free(var);
 	if (!var_cnt)
 		return ;
-	var = inputs->line;
-	inputs->line = ft_strjoin(var, var_cnt);
-	free(var);
-	free(var_cnt);
+	fill_inputs_line(inputs, var, var_cnt);
 }
 
 /**

@@ -167,7 +167,7 @@ int	main(int argc, char **argv, char **envp)
 	t_inputs	inputs;
 	t_pipe		data;
 
-	atexit(leaks); // FUNCIÓN DE TESTING -> Comprueba los leaks del programa
+	//atexit(leaks); // FUNCIÓN DE TESTING -> Comprueba los leaks del programa
 	(void)argc;
 	(void)argv;
 	inputs.exst = 0;
