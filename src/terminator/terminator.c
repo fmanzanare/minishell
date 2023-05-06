@@ -6,7 +6,7 @@
 /*   By: vde-prad <vde-prad@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 17:44:12 by vde-prad          #+#    #+#             */
-/*   Updated: 2023/05/05 19:44:06 by vde-prad         ###   ########.fr       */
+/*   Updated: 2023/05/06 19:32:10 by vde-prad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ static int	ft_breeder(t_inputs *inputs, char **envp, t_pipe *data, int i)
 			else
 				execve(ft_getpath(envp, inputs->args->cmd_arr[0]),
 					inputs->args->cmd_arr, envp);
-			perror("execve failure");
+			ft_putstr_fd("execve failure", 2);
 			exit(127);
 		}
 		else
@@ -129,7 +129,7 @@ int	ft_terminator(t_inputs *inputs, t_pipe *data)
 		if (inputs->args->next)
 			inputs->args = inputs->args->next;
 	}	
-	ft_antibreeder(*data, inputs->lenght);
+	ft_antibreeder(data, inputs->lenght);
 	signal(SIGUSR1, ft_procs_sig);
 	run_to_head(&inputs->args);
 	return (WEXITSTATUS(data->status));

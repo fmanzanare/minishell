@@ -143,7 +143,7 @@ int	main(int argc, char **argv, char **envp)
 		run_to_head(&inputs.args);
 		inputs.exst = ft_terminator(&inputs, &data);//devuelve el exit status del último cmd
 		add_history(inputs.raw);
-		//free_list(&inputs.args);
+		free_list(&inputs.args);
 		ft_free_arr(inputs.line_splited);
 		if (inputs.line)
 		 	free(inputs.line);

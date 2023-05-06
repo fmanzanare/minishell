@@ -42,8 +42,6 @@ static int	ft_atoi_exit(char *str)
 	return ((int)num);
 }
 
-
-
 int	ft_exit(t_inputs *inputs)
 {
 	int		len;
