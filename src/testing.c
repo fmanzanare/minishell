@@ -55,7 +55,7 @@ int	main(int argc, char **argv, char **envp)
 	t_pipe		data;
 	int			i;
 	char		*user;
-	//int			j;
+	int			j;
 
 	atexit(leaks);
 	(void)argc;
@@ -84,75 +84,75 @@ int	main(int argc, char **argv, char **envp)
 		run_to_head(&inputs.args);
 		//----------------------------------------------------------------
 		// BUCLE PARA IMPRIMIR Y COMPROBAR QUE TODO FUNCIONA CORRECTAMENTE
-		// while (inputs.args)
-		// {
-		// 	ft_printf("%s\n", inputs.args->cmd_line);
-		// 	ft_printf("Pipe flag: %d\n", inputs.args->pipe_flag);
-		// 	ft_printf("Input Redir flag: %d\n", inputs.args->ired_flag);
-		// 	ft_printf("Output Redir flag: %d\n", inputs.args->ored_flag);
-		// 	ft_printf("Append Redir flag: %d\n", inputs.args->app_flag);
-		// 	ft_printf("Heredoc Redir flag: %d\n", inputs.args->hd_flag);
-		// 	ft_printf("LINE SPLITED\n");
-		// 	j = 0;
-		// 	while (inputs.line_splited[j])
-		// 	{
-		// 		ft_printf("%d: %s\n", j, inputs.line_splited[j]);
-		// 		j++;
-		// 	}
-		// 	ft_printf("-------------------\n");
-		// 	ft_printf("Splited:\n");
-		// 	j = 0;
-		// 	while (inputs.args->cmd_split[j])
-		// 	{
-		// 		ft_printf("%d: %s\n", j, inputs.args->cmd_split[j]);
-		// 		j++;
-		// 	}
-		// 	ft_printf("-------------------\n");
-		// 	j = 0;
-		// 	while (inputs.args->cmd_arr[j])
-		// 	{
-		// 		ft_printf("%d: %s\n", j, inputs.args->cmd_arr[j]);
-		// 		j++;
-		// 	}
-		// 	if (inputs.args->inf)
-		// 	{
-		// 		j = 0;
-		// 		while (inputs.args->inf[j])
-		// 		{
-		// 			ft_printf("Infile: %s\n", inputs.args->inf[j]);
-		// 			j++;
-		// 		}
-		// 		ft_printf("FLAGS\n");
-		// 		j = 0;
-		// 		while (j < inputs.args->inf_len)
-		// 		{
-		// 			ft_printf("Infile flag: %d\n", inputs.args->inf_flags[j]);
-		// 			j++;
-		// 		}
-		// 	}
-		// 	if (inputs.args->outf)
-		// 	{
-		// 		j = 0;
-		// 		while (inputs.args->outf[j])
-		// 		{
-		// 			ft_printf("Outfile: %s\n", inputs.args->outf[j]);
-		// 			j++;
-		// 		}
-		// 		ft_printf("FLAGS\n");
-		// 		j = 0;
-		// 		while (j < inputs.args->outf_len)
-		// 		{
-		// 			ft_printf("Outfile flag: %d\n", inputs.args->outf_flags[j]);
-		// 			j++;
-		// 		}
-		// 	}
-		// 	if (inputs.args->inf_len)
-		// 		ft_printf("Infiles len: %d\n", inputs.args->inf_len);
-		// 	ft_printf("\n");
-		// 	if (!inputs.args->next)
-		// 		break ;
-		// 	inputs.args = inputs.args->next;
-		// }
+		while (inputs.args)
+		{
+			ft_printf("%s\n", inputs.args->cmd_line);
+			ft_printf("Pipe flag: %d\n", inputs.args->pipe_flag);
+			ft_printf("Input Redir flag: %d\n", inputs.args->ired_flag);
+			ft_printf("Output Redir flag: %d\n", inputs.args->ored_flag);
+			ft_printf("Append Redir flag: %d\n", inputs.args->app_flag);
+			ft_printf("Heredoc Redir flag: %d\n", inputs.args->hd_flag);
+			ft_printf("LINE SPLITED\n");
+			j = 0;
+			while (inputs.line_splited[j])
+			{
+				ft_printf("%d: %s\n", j, inputs.line_splited[j]);
+				j++;
+			}
+			ft_printf("-------------------\n");
+			ft_printf("Splited:\n");
+			j = 0;
+			while (inputs.args->cmd_split[j])
+			{
+				ft_printf("%d: %s\n", j, inputs.args->cmd_split[j]);
+				j++;
+			}
+			ft_printf("-------------------\n");
+			j = 0;
+			while (inputs.args->cmd_arr[j])
+			{
+				ft_printf("%d: %s\n", j, inputs.args->cmd_arr[j]);
+				j++;
+			}
+			if (inputs.args->inf)
+			{
+				j = 0;
+				while (inputs.args->inf[j])
+				{
+					ft_printf("Infile: %s\n", inputs.args->inf[j]);
+					j++;
+				}
+				ft_printf("FLAGS\n");
+				j = 0;
+				while (j < inputs.args->inf_len)
+				{
+					ft_printf("Infile flag: %d\n", inputs.args->inf_flags[j]);
+					j++;
+				}
+			}
+			if (inputs.args->outf)
+			{
+				j = 0;
+				while (inputs.args->outf[j])
+				{
+					ft_printf("Outfile: %s\n", inputs.args->outf[j]);
+					j++;
+				}
+				ft_printf("FLAGS\n");
+				j = 0;
+				while (j < inputs.args->outf_len)
+				{
+					ft_printf("Outfile flag: %d\n", inputs.args->outf_flags[j]);
+					j++;
+				}
+			}
+			if (inputs.args->inf_len)
+				ft_printf("Infiles len: %d\n", inputs.args->inf_len);
+			ft_printf("\n");
+			if (!inputs.args->next)
+				break ;
+			inputs.args = inputs.args->next;
+		}
 		//----------------------------------------------------------------
 		run_to_head(&inputs.args);
 		inputs.exst = ft_terminator(&inputs, &data);//devuelve el exit status del último cmd

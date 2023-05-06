@@ -77,6 +77,32 @@ static int	check_p_r(char c, char c_plus, int *qmark_flag)
 }
 
 /**
+ * Checks if the current index is a pipe or a redirection.
+ * It gets the pointer to the indexes to move them inside.
+ * @param *inputs Pointer to "inputs" struct.
+ * @param *j Pointer to index "j".
+ * @param *i Pointer to index "i".
+ * @param *qmarks Qmarks flags array.
+*/
+static void	pr_checker_conditions(t_inputs *inputs, int *j, int *i, int *qmarks)
+{
+	if (check_p_r(inputs->line[*j], inputs->line[(*j) + 1], qmarks) == 1)
+	{
+		inputs->pipes_redir[*i] = inputs->line[*j];
+		inputs->pipes_redir[*i + 1] = ' ';
+		(*i) += 2;
+	}
+	else if (check_p_r(inputs->line[*j], inputs->line[(*j) + 1], qmarks) == 2)
+	{
+		inputs->pipes_redir[*i] = inputs->line[*j];
+		inputs->pipes_redir[(*i) + 1] = inputs->line[(*j) + 1];
+		inputs->pipes_redir[(*i) + 2] = ' ';
+		(*i) += 3;
+		(*j)++;
+	}
+}
+
+/**
  * Builds the string that contains the pipes and redirections separated by ' '.
  * The string is saved in "inputs->pipes_redir" variable.
  * @param *inputs Pointer to "inputs" struct.
@@ -96,20 +122,7 @@ void	pipes_redirs_stringer(t_inputs *inputs)
 	{
 		qmark[0] = check_s_qmark(inputs->line[j], qmark[0]);
 		qmark[1] = check_d_qmark(inputs->line[j], qmark[1]);
-		if (check_p_r(inputs->line[j], inputs->line[j + 1], qmark) == 1)
-		{
-			inputs->pipes_redir[i] = inputs->line[j];
-			inputs->pipes_redir[i + 1] = ' ';
-			i += 2;
-		}
-		else if (check_p_r(inputs->line[j], inputs->line[j + 1], qmark) == 2)
-		{
-			inputs->pipes_redir[i] = inputs->line[j];
-			inputs->pipes_redir[i + 1] = inputs->line[j + 1];
-			inputs->pipes_redir[i + 2] = ' ';
-			i += 3;
-			j++;
-		}
+		pr_checker_conditions(inputs, &j, &i, qmark);
 		j++;
 	}
 	inputs->pipes_redir[i] = '\0';

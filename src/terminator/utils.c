@@ -1,10 +1,9 @@
 #include "../../includes/minishell.h"
 
-
 /**
  * It creates a new node to fill the linked list
  * @param line value will set the node content
- * @param node 
+ * @param node
 */
 t_env	*ft_new_node(char *line)
 {

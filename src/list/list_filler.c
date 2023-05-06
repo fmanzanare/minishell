@@ -67,7 +67,6 @@ static t_args	*create_node(char *cmd, int node, int *rp_idx, t_inputs *inputs)
 	zeros_and_nulls_init(new);
 	new->cmd_line = cmd;
 	new->cmd_split = deep_spliter(cmd, ' ');
-	printf("original: %p\n", new->cmd_split);
 	while (inputs->pipes_redir[*rp_idx] != '|'
 		&& inputs->pipes_redir[*rp_idx] != '\0')
 		red_pipe_checker(inputs->pipes_redir, rp_idx, new);

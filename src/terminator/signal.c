@@ -1,4 +1,3 @@
-
 #include "../../includes/minishell.h"
 
 /**
@@ -54,7 +53,7 @@ int	ft_check_rl(t_inputs *inputs)
 /**
  * It saves the stdout and stdin, waits the last process,
  * kills all the subprocesses
- * 
+ *
  * @param data executor part strcuture
  * @param i iterator index
 */

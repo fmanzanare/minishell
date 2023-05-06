@@ -1,7 +1,7 @@
-
 #include "../../../includes/minishell.h"
+
 /**
- * Write arguments to the standard output 
+ * Write arguments to the standard output
  * @param flag It checks if the flag '-n' was passed
  * @param i iterator index
 */
