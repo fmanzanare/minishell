@@ -8,27 +8,28 @@
  * @param *inputs Pointer to inputs struct.
  * @return Variable content. If variable is not found, it returns NULL.
 */
-static char	*expand_var(char *var, t_env *env, int var_len, t_inputs *inputs)
+static char	*expand_var(char *var, t_pipe *data, int var_len, t_inputs *inputs)
 {
 	char	*ret;
 	t_env	*aux;
 	int		j;
 	int		len;
 
-	aux = env;
+	aux = data->env;
 	j = 0;
 	len = 0;
 	if (var[0] != '?')
 	{
-		while (aux->next && !ft_strnstr(aux->line, var, var_len))
+		while (aux && !ft_strnstr(aux->line, var, var_len))
 		{
 			aux = aux->next;
-			if (!aux->next)
+			if (!aux)
 				return (NULL);
 		}
 		j = ft_strlen(var);
 		while (aux->line[(j++)])
 			len++;
+
 		ret = ft_substr(aux->line, var_len, len);
 	}
 	else
@@ -61,7 +62,7 @@ static void	fill_inputs_line(t_inputs *inputs, char *aux, char *var_cnt)
  * @param *env Pointer to env struct.
  * @param *e_idx Pointer to the variable index within inputs-raw.
 */
-static void	get_expvar(t_inputs *inputs, t_env *env, int *e_idx)
+static void	get_expvar(t_inputs *inputs, t_pipe *data, int *e_idx)
 {
 	int		i;
 	int		var_len;
@@ -78,7 +79,7 @@ static void	get_expvar(t_inputs *inputs, t_env *env, int *e_idx)
 	var = ft_charjoin(var, '=');
 	var_len++;
 	*e_idx += (ft_strlen(var) - 1);
-	var_cnt = expand_var(var, env, var_len, inputs);
+	var_cnt = expand_var(var, data, var_len, inputs);
 	free(var);
 	if (!var_cnt)
 		return ;
@@ -91,7 +92,7 @@ static void	get_expvar(t_inputs *inputs, t_env *env, int *e_idx)
  * @param *inputs Pointer to inputs struct.
  * @param *env Pointer to env struct.
 */
-void	ft_expander(t_inputs *inputs, t_env *env)
+void	ft_expander(t_inputs *inputs, t_pipe *data)
 {
 	int		i;
 	int		qmarks[2];
@@ -107,7 +108,7 @@ void	ft_expander(t_inputs *inputs, t_env *env)
 		if (inputs->raw[i] == '$' && (!qmarks[0]
 				|| (qmarks[0] && qmarks[1])))
 		{
-			get_expvar(inputs, env, &i);
+			get_expvar(inputs, data, &i);
 			i++;
 			if (!inputs->raw[i])
 				break ;

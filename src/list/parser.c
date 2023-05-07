@@ -2,7 +2,7 @@
 
 void	parser(t_inputs *inputs, t_pipe *data)
 {
-	ft_expander(inputs, data->env);
+	ft_expander(inputs, data);
 	add_history(inputs->raw);
 	free(inputs->raw);
 	pipes_redirs_stringer(inputs);
