@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminator.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vde-prad <vde-prad@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: fmanzana <fmanzana@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 17:44:12 by vde-prad          #+#    #+#             */
-/*   Updated: 2023/05/07 15:48:35 by vde-prad         ###   ########.fr       */
+/*   Updated: 2023/05/07 17:13:40 by fmanzana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,5 +165,3 @@ int	ft_terminator(t_inputs *inputs, t_pipe *data)
 	else
 		return (WEXITSTATUS(data->status));
 }
-// pp[0]--->lectura en pipe
-// pp[1]--->escritura en pipe

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expander.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fmanzana <fmanzana@student.42malaga.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/07 17:08:30 by fmanzana          #+#    #+#             */
+/*   Updated: 2023/05/07 17:19:28 by fmanzana         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 /**
@@ -29,7 +41,6 @@ static char	*expand_var(char *var, t_pipe *data, int var_len, t_inputs *inputs)
 		j = ft_strlen(var);
 		while (aux->line[(j++)])
 			len++;
-
 		ret = ft_substr(aux->line, var_len, len);
 	}
 	else

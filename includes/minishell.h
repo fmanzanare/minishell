@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fmanzana <fmanzana@student.42malaga.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/07 17:08:08 by fmanzana          #+#    #+#             */
+/*   Updated: 2023/05/07 17:19:59 by fmanzana         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -24,15 +36,15 @@ typedef struct s_args
 	char			*cmd_path;
 	char			**inf;
 	int				*inf_flags;
-	int				inf_len; // n total de inredir
+	int				inf_len;
 	char			**outf;
 	int				*outf_flags;
-	int				outf_len; // n total de outredir
+	int				outf_len;
 	int				pipe_flag;
 	int				ored_flag;
-	int				ired_flag; //numero infiles
+	int				ired_flag;
 	int				app_flag;
-	int				hd_flag; //numero heredocs
+	int				hd_flag;
 	struct s_args	*next;
 	struct s_args	*prev;
 }	t_args;
@@ -83,7 +95,6 @@ int		input_size(char **line_splited);
 int		is_blank_line(char *line);
 // pipes_and_redirs.c
 void	pipes_redirs_stringer(t_inputs *inputs);
-void	print_pipes_redirs_str(t_inputs *inputs); //For testing.
 // qmarks_fts.c
 int		check_s_qmark(char c, int qmark_flag);
 int		check_d_qmark(char c, int qmark_flag);
@@ -153,7 +164,6 @@ void	ft_set_variable(char *arg, t_pipe *data);
 // unset.c
 int		ft_unset(t_inputs *inputs, t_pipe *data);
 // exit.c
-// TODO: free memory of structs
 int		ft_exit(t_inputs *inputs);
 // cd.c
 int		ft_cd(char **cmd_arr, t_pipe *data);
@@ -162,7 +172,10 @@ void	ft_init_terminator(char **envp, t_pipe *data);
 t_env	*ft_new_node(char *line);
 int		ft_check_alpha(char *arg, int i, const char *type, t_pipe *data);
 // list.c
-void    ft_mod_envp(t_pipe *data);
-int	ft_find_var(char *var, t_pipe *data, t_env **target);
+void	ft_mod_envp(t_pipe *data);
+int		ft_find_var(char *var, t_pipe *data, t_env **target);
 void	ft_add_var(char *var, t_pipe *data);
+// hd_utils.c
+void	ft_here_doc(t_inputs *inputs, t_pipe *data);
+
 #endif
