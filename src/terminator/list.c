@@ -1,5 +1,40 @@
 #include "../../includes/minishell.h"
 
+static int ft_count_list(t_pipe *data)
+{
+    t_env   *aux;
+    int     len;
+
+    len = 0;
+    aux = data->env;
+    while (aux)
+    {
+        len++;
+        aux = aux->next;
+    }
+    return (len);
+}
+
+void    ft_mod_envp(t_pipe *data)
+{
+    t_env   *aux;
+    int     len;
+    int     i;
+
+    i = 0;
+    len = ft_count_list(data);
+    data->envp = malloc((len + 1) * sizeof(char *));
+    if (!data->envp)
+        exit(127);
+    aux = data->env;
+    while(aux)
+    {
+        data->envp[i++] = ft_strdup(aux->line);
+        aux = aux->next;
+    }
+    data->envp[i] = NULL;
+}
+
 void	ft_add_var(char *var, t_pipe *data)
 {
 	t_env	*aux;

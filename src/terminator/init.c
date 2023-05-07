@@ -8,6 +8,8 @@ static void    ft_init_envlst(char **envp, t_pipe *data)
 	int				i;
 
     data->envp = malloc((array_len(envp) + 1) * sizeof(char *));
+    if (!data->envp)
+        exit(127);
 	i = 0;
 	data->env = ft_new_node(envp[i]);
     data->envp[i] = ft_strdup(envp[i]);

@@ -6,7 +6,7 @@
 /*   By: vde-prad <vde-prad@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 17:44:12 by vde-prad          #+#    #+#             */
-/*   Updated: 2023/05/07 11:00:38 by vde-prad         ###   ########.fr       */
+/*   Updated: 2023/05/07 12:44:59 by vde-prad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static int	ft_builtin(t_inputs *inputs, t_pipe *data)
 	@param childpid File descriptor of the child process
 	@return return the childpid
 */
-static int	ft_breeder(t_inputs *inputs, char **envp, t_pipe *data, int i)
+static int	ft_breeder(t_inputs *inputs, t_pipe *data, int i)
 {
 	int		childpid;
 
@@ -96,10 +96,10 @@ static int	ft_breeder(t_inputs *inputs, char **envp, t_pipe *data, int i)
 		if (childpid == 0)
 		{
 			if (access(inputs->args->cmd_arr[0], F_OK | R_OK) == 0)
-				execve(inputs->args->cmd_arr[0], inputs->args->cmd_arr, envp);
+				execve(inputs->args->cmd_arr[0], inputs->args->cmd_arr, data->envp);
 			else
-				execve(ft_getpath(envp, inputs->args->cmd_arr[0]),
-					inputs->args->cmd_arr, envp);
+				execve(ft_getpath(data->envp, inputs->args->cmd_arr[0]),
+					inputs->args->cmd_arr, data->envp);
 			ft_putstr_fd("execve failure", 2);
 			exit(127);
 		}
@@ -134,7 +134,7 @@ int	ft_terminator(t_inputs *inputs, t_pipe *data)
 	i = 0;
 	while (i++ < inputs->lenght)
 	{
-		ft_breeder(inputs, data->envp, data, i);
+		ft_breeder(inputs, data, i);
 		if (inputs->args->next)
 			inputs->args = inputs->args->next;
 	}
