@@ -6,7 +6,7 @@
 /*   By: fmanzana <fmanzana@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:14:28 by fmanzana          #+#    #+#             */
-/*   Updated: 2023/05/07 17:36:50 by fmanzana         ###   ########.fr       */
+/*   Updated: 2023/05/07 17:44:25 by fmanzana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,16 +95,10 @@ static void	minishell_loop(char **envp)
 	}
 }
 
-static void	leaks(void)
-{
-	system("leaks -q minishell");
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	(void)argc;
 	(void)argv;
-	atexit(leaks);
 	minishell_loop(envp);
 	return (0);
 }
