@@ -6,7 +6,7 @@
 /*   By: fmanzana <fmanzana@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:17:16 by fmanzana          #+#    #+#             */
-/*   Updated: 2023/05/07 17:17:30 by fmanzana         ###   ########.fr       */
+/*   Updated: 2023/05/07 17:36:04 by fmanzana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	ft_get_delim(t_inputs *inputs, char **del1, char **del2)
 		else if (inputs->args->hd_flag > 1)
 		{
 			i = inputs->args->inf_len - 1;
-			while (i > 0)
+			while (i >= 0)
 			{
 				if (inputs->args->inf_flags[i] == 2 && !(*del2))
 					*del2 = inputs->args->inf[i];

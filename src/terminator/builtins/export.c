@@ -6,7 +6,7 @@
 /*   By: fmanzana <fmanzana@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:10:16 by fmanzana          #+#    #+#             */
-/*   Updated: 2023/05/07 17:10:17 by fmanzana         ###   ########.fr       */
+/*   Updated: 2023/05/07 17:41:39 by fmanzana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	ft_set_variable(char *arg, t_pipe *data)
 			}
 			else
 				ft_add_var(arg, data);
+			free(var);
 		}
 		i++;
 	}

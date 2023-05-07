@@ -6,7 +6,7 @@
 /*   By: fmanzana <fmanzana@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:13:56 by fmanzana          #+#    #+#             */
-/*   Updated: 2023/05/07 17:13:57 by fmanzana         ###   ########.fr       */
+/*   Updated: 2023/05/07 17:33:07 by fmanzana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@ static void	free_vars(t_args *node)
 {
 	if (node->cmd_split)
 		ft_free_arr(node->cmd_split);
+	if (node->ired_flag || node->hd_flag
+		|| node->ored_flag || node->app_flag)
+		ft_free_arr(node->cmd_arr);
 	if (node->cmd_path)
 		free(node->cmd_path);
 	if (node->inf)

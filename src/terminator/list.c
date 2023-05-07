@@ -6,7 +6,7 @@
 /*   By: fmanzana <fmanzana@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:11:37 by fmanzana          #+#    #+#             */
-/*   Updated: 2023/05/07 17:12:42 by fmanzana         ###   ########.fr       */
+/*   Updated: 2023/05/07 17:40:24 by fmanzana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	ft_mod_envp(t_pipe *data)
 
 	i = 0;
 	len = ft_count_list(data);
+	ft_free_arr(data->envp);
 	data->envp = malloc((len + 1) * sizeof(char *));
 	if (!data->envp)
 		exit(127);
