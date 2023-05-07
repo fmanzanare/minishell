@@ -118,7 +118,7 @@ char	syntax_checker(char *str);
 
 //* EXPANDER *//
 // expander.c
-void	ft_expander(t_inputs *inputs, t_env *env);
+void	ft_expander(t_inputs *inputs, t_pipe *data);
 // expander_utils.c
 char	*ft_charjoin(char *s, char c);
 
