@@ -8,13 +8,21 @@
  * @param aux t_env linked list auxiliar pointer
  * @return -1
 */
-int	ft_env(t_pipe *data)
+int	ft_env(t_inputs *inputs, t_pipe *data)
 {
 	int		i;
 	t_env	*aux;
 
 	i = 0;
 	aux = data->env;
+	if (inputs->args->cmd_arr[1])
+	{
+		ft_putstr_fd("env : ",2);
+		ft_putstr_fd(inputs->args->cmd_arr[1], 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+		data->built_st = 127;
+		return (-1);
+	}
 	if (!aux)
 		return (1);
 	while (aux)

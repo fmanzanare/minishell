@@ -6,7 +6,7 @@
 /*   By: vde-prad <vde-prad@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 17:44:12 by vde-prad          #+#    #+#             */
-/*   Updated: 2023/05/07 09:57:22 by vde-prad         ###   ########.fr       */
+/*   Updated: 2023/05/07 10:33:35 by vde-prad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ static int	ft_builtin(t_inputs *inputs, t_pipe *data)
 	built_arg = inputs->args->cmd_arr;
 	ret = 1;
 	if (ft_strncmp(inputs->args->cmd_arr[0], "echo", 5) == 0)
-		ret = ft_echo(inputs);
+		ret = ft_echo(inputs, data);
 	else if (ft_strncmp(inputs->args->cmd_arr[0], "env", 4) == 0)
-		ret = ft_env(data);
+		ret = ft_env(inputs, data);
 	else if (ft_strncmp(inputs->args->cmd_arr[0], "pwd", 4) == 0)
 		ret = ft_pwd(data);
 	else if (ft_strncmp(inputs->args->cmd_arr[0], "export", 7) == 0)
-		ret = ft_export(built_arg, data);
+		ret = ft_export(built_arg, data, inputs);
 	else if (ft_strncmp(inputs->args->cmd_arr[0], "unset", 6) == 0)
 		ret = ft_unset(inputs, data);
 	else if (ft_strncmp(inputs->args->cmd_arr[0], "exit", 5) == 0)
@@ -133,7 +133,10 @@ int	ft_terminator(t_inputs *inputs, t_pipe *data)
 	free(data->childpid);
 	signal(SIGUSR1, ft_procs_sig);
 	run_to_head(&inputs->args);
-	return (WEXITSTATUS(data->status));
+	if (data->childpid[inputs->lenght - 1] == -1)
+		return (data->built_st);
+	else
+		return (WEXITSTATUS(data->status));
 }
 // pp[0]--->lectura en pipe
 // pp[1]--->escritura en pipe

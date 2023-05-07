@@ -64,6 +64,7 @@ typedef struct s_pipe
 	int		fdin;
 	int		fdout;
 	int		ign_inf;
+	int		built_st;
 	int		pp[2];
 	char	pwd[512];
 	char	**envp;
@@ -134,15 +135,15 @@ void	ft_sig_handler(int signal);
 void	ft_procs_sig(int signal);
 void	ft_antibreeder(t_pipe *data, int i);
 // echo.c
-int		ft_echo(t_inputs *inputs);
+int		ft_echo(t_inputs *inputs, t_pipe *data);
 // env.c
-int		ft_env(t_pipe *data);
+int		ft_env(t_inputs *inputs, t_pipe *data);
 // pwd.c
 int		ft_pwd(t_pipe *data);
 // export.c
-int		ft_export(char **cmd_arr, t_pipe *data);
+int		ft_export(char **cmd_arr, t_pipe *data, t_inputs *inputs);
 int		ft_find_var(char *var, t_pipe *data, t_env **target);
-int		ft_check_alpha(char *arg, int i, const char *type);
+int		ft_check_alpha(char *arg, int i, const char *type, t_pipe *data);
 void	ft_set_variable(char *arg, t_pipe *data);
 // unset.c
 int		ft_unset(t_inputs *inputs, t_pipe *data);

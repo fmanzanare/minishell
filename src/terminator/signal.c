@@ -37,7 +37,6 @@ int	ft_check_rl(t_inputs *inputs)
 {
 	if (inputs->raw == NULL)
 	{
-		free_list(&inputs->args);
 		free(inputs->line);
 		rl_clear_history();
 		exit(0);

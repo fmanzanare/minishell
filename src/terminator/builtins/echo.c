@@ -5,7 +5,7 @@
  * @param flag It checks if the flag '-n' was passed
  * @param i iterator index
 */
-int	ft_echo(t_inputs *inputs)
+int	ft_echo(t_inputs *inputs, t_pipe *data)
 {
 	int	flag;
 	int	i;
@@ -27,5 +27,6 @@ int	ft_echo(t_inputs *inputs)
 	}
 	if (flag)
 		ft_putstr_fd("\n", 1);
+	data->built_st = 0;
 	return (-1);
 }

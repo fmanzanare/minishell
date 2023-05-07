@@ -8,5 +8,6 @@
 int	ft_pwd(t_pipe *data)
 {
 	printf("%s\n", getcwd(data->pwd, 512));
+	data->built_st = 0;
 	return (-1);
 }

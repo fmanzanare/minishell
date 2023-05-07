@@ -42,7 +42,7 @@ static void	ft_unset_var(char *arg, t_pipe *data)
 
 	i = 0;
 	var = NULL;
-	if (ft_check_alpha(arg, i, "unset"))
+	if (ft_check_alpha(arg, i, "unset", data))
 		return ;
 	while (arg[i])
 	{

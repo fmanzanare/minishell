@@ -33,7 +33,7 @@ static void	ft_add_var(char *var, t_pipe *data)
 	tmp->next->next = NULL;
 }
 
-int	ft_check_alpha(char *arg, int i, const char *type)
+int	ft_check_alpha(char *arg, int i, const char *type, t_pipe *data)
 {
 	if (!ft_isalpha(arg[i]))
 	{
@@ -42,6 +42,7 @@ int	ft_check_alpha(char *arg, int i, const char *type)
 		ft_putstr_fd(": `", 2);
 		ft_putstr_fd(arg, 2);
 		ft_putstr_fd("': not a valid indetifier\n", 2);
+		data->built_st = 1;
 		return (1);
 	}
 	return (0);
@@ -65,17 +66,15 @@ void	ft_set_variable(char *arg, t_pipe *data)
 
 	i = 0;
 	var = NULL;
-	if (ft_check_alpha(arg, i, "export"))
+	if (ft_check_alpha(arg, i, "export", data))
 		return ;
 	while (arg[i])
 	{
 		if (arg[i] == '=')
 		{
 			var = ft_substr(arg, 0, i + 1);
-			printf("var: %s\n", var);
 			if (ft_find_var(var, data, &aux))
 			{
-				printf("arg: %s\n", arg);
 				free(aux->line);
 				aux->line = ft_strdup(arg);
 			}
@@ -94,14 +93,14 @@ void	ft_set_variable(char *arg, t_pipe *data)
  * @param i iterator index
  * @return -1
 */
-int	ft_export(char **cmd_arr, t_pipe *data)
+int	ft_export(char **cmd_arr, t_pipe *data, t_inputs *inputs)
 {
 	int	i;
 
 	i = 1;
 	if (!cmd_arr[i])
 	{
-		ft_env(data);
+		ft_env(inputs, data);
 		return (-1);
 	}
 	while (cmd_arr[i])
