@@ -67,6 +67,8 @@ typedef struct s_pipe
 	int		built_st;
 	int		pp[2];
 	char	pwd[512];
+	char	*line;
+	int		ppp[2];
 	char	*del1;
 	char	*del2;
 	char	**envp;
