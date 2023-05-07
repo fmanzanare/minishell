@@ -29,11 +29,14 @@ void	print_inputs(t_inputs *inputs)
 			j++;
 		}
 		ft_printf("-------------------\n");
-		j = 0;
-		while (inputs->args->cmd_arr[j])
+		if (inputs->args->cmd_arr)
 		{
-			ft_printf("%d: %s\n", j, inputs->args->cmd_arr[j]);
-			j++;
+			j = 0;
+			while (inputs->args->cmd_arr[j])
+			{
+				ft_printf("%d: %s\n", j, inputs->args->cmd_arr[j]);
+				j++;
+			}
 		}
 		if (inputs->args->inf)
 		{

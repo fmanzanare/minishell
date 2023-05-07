@@ -67,6 +67,8 @@ typedef struct s_pipe
 	int		built_st;
 	int		pp[2];
 	char	pwd[512];
+	char	*del1;
+	char	*del2;
 	char	**envp;
 	t_env	*env;
 }	t_pipe;
@@ -126,7 +128,7 @@ char	*ft_charjoin(char *s, char c);
 // redirections.c
 int		ft_setdata(t_inputs *inputs, t_pipe *data);
 // parserpath.c
-char	*ft_getpath(char **ep, char *cmd);
+char	*ft_getpath(t_pipe *data, char *cmd);
 // terminator.c
 int		ft_terminator(t_inputs *inputs, t_pipe *data);
 // signal.c
@@ -157,4 +159,8 @@ int		ft_cd(char **cmd_arr, t_pipe *data);
 void	ft_init_terminator(char **envp, t_pipe *data);
 t_env	*ft_new_node(char *line);
 int		ft_check_alpha(char *arg, int i, const char *type, t_pipe *data);
+// list.c
+void    ft_mod_envp(t_pipe *data);
+int	ft_find_var(char *var, t_pipe *data, t_env **target);
+void	ft_add_var(char *var, t_pipe *data);
 #endif

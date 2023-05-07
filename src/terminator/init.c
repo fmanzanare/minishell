@@ -8,6 +8,8 @@ static void    ft_init_envlst(char **envp, t_pipe *data)
 	int				i;
 
     data->envp = malloc((array_len(envp) + 1) * sizeof(char *));
+    if (!data->envp)
+        exit(127);
 	i = 0;
 	data->env = ft_new_node(envp[i]);
     data->envp[i] = ft_strdup(envp[i]);
@@ -23,7 +25,6 @@ static void    ft_init_envlst(char **envp, t_pipe *data)
 	}
 	aux->next = NULL;
     data->envp[i] = NULL;
-	data->envp = envp;
 }
 
 /**
@@ -39,6 +40,7 @@ void	ft_init_terminator(char	**envp, t_pipe *data)
 {
 	struct termios	t;
 
+    data->built_st = 0;
     ft_init_envlst(envp, data);
 	signal(SIGINT, ft_sig_handler);
 	signal(SIGQUIT, SIG_IGN);

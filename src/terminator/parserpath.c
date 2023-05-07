@@ -6,7 +6,7 @@
 /*   By: vde-prad <vde-prad@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 17:45:50 by vde-prad          #+#    #+#             */
-/*   Updated: 2023/05/01 13:23:11 by vde-prad         ###   ########.fr       */
+/*   Updated: 2023/05/07 15:48:53 by vde-prad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ static char	*ft_chkaccess(char	**paths, char	*cmd)
 	@param paths The possible paths splited
 	@return The path of the cmd, cmd included
 */
-char	*ft_getpath(char **ep, char *cmd)
+char	*ft_getpath(t_pipe *data, char *cmd)
 {
 	unsigned int	i;
 	char			*pathline;
@@ -109,9 +109,9 @@ char	*ft_getpath(char **ep, char *cmd)
 
 	paths = NULL;
 	i = 0;
-	while (ep[i])
+	while (data->envp[i])
 	{
-		pathline = ft_strnstr(ep[i], "PATH", 5);
+		pathline = ft_strnstr(data->envp[i], "PATH", 5);
 		if (pathline)
 		{
 			pathline = ft_substr(pathline, 5, 200);

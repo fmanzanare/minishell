@@ -55,6 +55,7 @@ static void	ft_unset_var(char *arg, t_pipe *data)
 		}
 		i++;
 	}
+	ft_mod_envp(data);
 }
 
 /**

@@ -35,6 +35,7 @@ void	ft_set_variable(char *arg, t_pipe *data)
 		}
 		i++;
 	}
+	ft_mod_envp(data);
 }
 
 /**
