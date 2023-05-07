@@ -57,17 +57,17 @@ int	ft_check_rl(t_inputs *inputs)
  * @param data executor part strcuture
  * @param i iterator index
 */
-void	ft_antibreeder(t_pipe data, int i)
+void	ft_antibreeder(t_pipe *data, int i)
 {
-	dup2(data.cpy_out, STDOUT_FILENO);
-	close(data.cpy_out);
-	dup2(data.cpy_in, STDIN_FILENO);
-	close(data.cpy_in);
-	if (data.childpid[i - 1] != -1)
-		waitpid(data.childpid[i - 1], &data.status, 0);
+	dup2(data->cpy_out, STDOUT_FILENO);
+	close(data->cpy_out);
+	dup2(data->cpy_in, STDIN_FILENO);
+	close(data->cpy_in);
+	if (data->childpid[i - 1] != -1)
+		waitpid(data->childpid[i - 1], &data->status, 0);
 	while (i-- > 0)
 	{
-		if (data.childpid[i] != -1)
-			kill(data.childpid[i], SIGKILL);
+		if (data->childpid[i] != -1)
+			kill(data->childpid[i], SIGKILL);
 	}
 }

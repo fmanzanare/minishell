@@ -126,7 +126,8 @@ static int	check_issues(t_inputs *inputs, char *user)
 	if (ft_check_rl(inputs) || syntax_mngr(inputs->raw)
 		|| is_blank_line(inputs->raw))
 	{
-		add_history(inputs->raw);
+		if (inputs->raw[0] != '\0')
+			add_history(inputs->raw);
 		free(inputs->raw);
 		free(user);
 		return (1);
@@ -134,24 +135,28 @@ static int	check_issues(t_inputs *inputs, char *user)
 	return (0);
 }
 
-static void	minishell_loop(t_inputs *inputs, t_pipe *data, char **envp)
+static void	minishell_loop(char **envp)
 {
-	char	*user;
+	t_inputs	inputs;
+	t_pipe		data;
+	char		*user;
 
+	inputs.exst = 0;
+	ft_init_terminator(envp, &data);
 	while (1)
 	{
-		inputs->line = NULL;
+		inputs.line = NULL;
 		user = get_username(envp);
-		inputs->raw = readline(user);
-		if (check_issues(inputs, user))
+		inputs.raw = readline(user);
+		if (check_issues(&inputs, user))
 			continue ;
-		parser(inputs, data);
-		print_inputs(inputs); // FUNCIÓN DE TESTING -> Imprime el contenido de INPUTS
-		inputs->exst = ft_terminator(inputs, data);
-		free_list(&inputs->args);
-		free(inputs->pipes_redir);
-		ft_free_arr(inputs->line_splited);
-		free(inputs->line);
+		parser(&inputs, &data);
+		print_inputs(&inputs); // FUNCIÓN DE TESTING -> Imprime el contenido de INPUTS
+		inputs.exst = ft_terminator(&inputs, &data);
+		free_list(&inputs.args);
+		free(inputs.pipes_redir);
+		ft_free_arr(inputs.line_splited);
+		free(inputs.line);
 		free(user);
 	}
 }
@@ -164,14 +169,9 @@ void	leaks()
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_inputs	inputs;
-	t_pipe		data;
-
 	//atexit(leaks); // FUNCIÓN DE TESTING -> Comprueba los leaks del programa
 	(void)argc;
 	(void)argv;
-	inputs.exst = 0;
-	ft_init_terminator(envp, &data);
-	minishell_loop(&inputs, &data, envp);
+	minishell_loop(envp);
 	return (0);
 }

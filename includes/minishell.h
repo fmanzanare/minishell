@@ -131,7 +131,7 @@ int		ft_terminator(t_inputs *inputs, t_pipe *data);
 int		ft_check_rl(t_inputs *inputs);
 void	ft_sig_handler(int signal);
 void	ft_procs_sig(int signal);
-void	ft_antibreeder(t_pipe data, int i);
+void	ft_antibreeder(t_pipe *data, int i);
 // echo.c
 int		ft_echo(t_inputs *inputs);
 // env.c
