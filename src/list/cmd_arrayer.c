@@ -15,7 +15,7 @@ static void	resize_arr(t_args *node, int idx)
 	tmp = node->cmd_arr;
 	arr_len = array_len(node->cmd_arr);
 	node->cmd_arr = malloc(sizeof(char *) * (arr_len + 2));
-	if (node->cmd_arr)
+	if (!node->cmd_arr)
 		exit(1);
 	while (tmp[i])
 	{
