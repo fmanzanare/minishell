@@ -25,7 +25,6 @@ static void    ft_init_envlst(char **envp, t_pipe *data)
 	}
 	aux->next = NULL;
     data->envp[i] = NULL;
-	data->envp = envp;
 }
 
 /**

@@ -67,6 +67,8 @@ typedef struct s_pipe
 	int		built_st;
 	int		pp[2];
 	char	pwd[512];
+	char	*del1;
+	char	*del2;
 	char	**envp;
 	t_env	*env;
 }	t_pipe;
@@ -126,7 +128,7 @@ char	*ft_charjoin(char *s, char c);
 // redirections.c
 int		ft_setdata(t_inputs *inputs, t_pipe *data);
 // parserpath.c
-char	*ft_getpath(char **ep, char *cmd);
+char	*ft_getpath(t_pipe *data, char *cmd);
 // terminator.c
 int		ft_terminator(t_inputs *inputs, t_pipe *data);
 // signal.c

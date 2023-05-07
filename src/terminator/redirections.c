@@ -6,11 +6,24 @@
 /*   By: vde-prad <vde-prad@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 17:48:26 by vde-prad          #+#    #+#             */
-/*   Updated: 2023/05/07 10:57:28 by vde-prad         ###   ########.fr       */
+/*   Updated: 2023/05/07 15:35:27 by vde-prad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int	ft_sstrlen(char *s1, char *s2)
+{
+	int	l1;
+	int	l2;
+
+	l1 = ft_strlen(s1);
+	l2 = ft_strlen(s2);
+	if (l1 >= l2)
+		return (l1);
+	else
+		return (l2);
+}
 
 static void	ft_get_delim(t_inputs *inputs, char **del1, char **del2)
 {
@@ -107,7 +120,7 @@ static int	ft_check_inf(t_inputs *inputs, t_pipe *data)
 			}
 			else
 			{
-				ft_putstr_fd("minishell : ",2);
+				ft_putstr_fd("minishell : ", 2);
 				ft_putstr_fd(inputs->args->inf[i], 2);
 				ft_putstr_fd(": No such file or directory\n", 2);
 				return (1);
@@ -126,10 +139,10 @@ static void	ft_check_out(t_inputs *inputs, t_pipe *data)
 	while (i < inputs->args->outf_len)
 	{
 		if (inputs->args->outf_flags[i] == 1)
-			data->fdout = open(inputs->args->outf[i], 
+			data->fdout = open(inputs->args->outf[i],
 					O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		else if (inputs->args->outf_flags[i] == 2)
-			data->fdout = open(inputs->args->outf[i], 
+			data->fdout = open(inputs->args->outf[i],
 					O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (i < inputs->args->outf_len - 1)
 			close(data->fdout);

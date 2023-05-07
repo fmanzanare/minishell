@@ -6,7 +6,7 @@
 /*   By: vde-prad <vde-prad@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 17:44:12 by vde-prad          #+#    #+#             */
-/*   Updated: 2023/05/07 13:51:09 by vde-prad         ###   ########.fr       */
+/*   Updated: 2023/05/07 15:48:35 by vde-prad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 */
 static int	ft_inout_fd(t_inputs *inputs, t_pipe *data, int i)
 {
-	int st;
+	int	st;
 
 	st = 0;
 	if (pipe(data->pp) == 1)
@@ -82,7 +82,7 @@ static void	ft_child(t_inputs *inputs, t_pipe *data, int i)
 		if (access(inputs->args->cmd_arr[0], F_OK | R_OK) == 0)
 			execve(inputs->args->cmd_arr[0], inputs->args->cmd_arr, data->envp);
 		else
-			execve(ft_getpath(data->envp, inputs->args->cmd_arr[0]),
+			execve(ft_getpath(data, inputs->args->cmd_arr[0]),
 				inputs->args->cmd_arr, data->envp);
 		ft_putstr_fd("execve failure", 2);
 		exit(127);
