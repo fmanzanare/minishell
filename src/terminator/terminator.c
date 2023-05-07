@@ -6,7 +6,7 @@
 /*   By: vde-prad <vde-prad@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 17:44:12 by vde-prad          #+#    #+#             */
-/*   Updated: 2023/05/07 10:33:35 by vde-prad         ###   ########.fr       */
+/*   Updated: 2023/05/07 11:00:38 by vde-prad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,11 @@
 	@param data Structure that contains the 1 the fd necessary for the execution
 	@param i iterator index
 */
-static void	ft_inout_fd(t_inputs *inputs, t_pipe *data, int i)
+static int	ft_inout_fd(t_inputs *inputs, t_pipe *data, int i)
 {
+	int st;
+
+	st = 0;
 	if (pipe(data->pp) == 1)
 	{
 		perror("pipe failure");
@@ -28,12 +31,13 @@ static void	ft_inout_fd(t_inputs *inputs, t_pipe *data, int i)
 	data->fdout = data->pp[1];
 	if (i == inputs->lenght)
 		data->fdout = data->cpy_out;
-	ft_setdata(inputs, data);
+	st = ft_setdata(inputs, data);
 	dup2(data->fdin, STDIN_FILENO);
 	close(data->fdin);
 	data->fdin = data->pp[0];
 	dup2(data->fdout, STDOUT_FILENO);
 	close(data->fdout);
+	return (st);
 }
 
 static int	ft_builtin(t_inputs *inputs, t_pipe *data)
@@ -75,10 +79,15 @@ static int	ft_breeder(t_inputs *inputs, char **envp, t_pipe *data, int i)
 {
 	int		childpid;
 
-	childpid = -1;
-	ft_inout_fd(inputs, data, i);
+	childpid = 0;
+	childpid = ft_inout_fd(inputs, data, i);
+	if (childpid > 0 && inputs->lenght == 1)
+	{
+		data->childpid[i - 1] = -1;
+		return (childpid);
+	}
 	childpid = ft_builtin(inputs, data);
-	if (childpid != -1)
+	if (childpid > 0)
 	{
 		signal(SIGUSR1, SIG_IGN);
 		childpid = fork();

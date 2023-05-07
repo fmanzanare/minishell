@@ -1,5 +1,20 @@
 #include "../../includes/minishell.h"
 
+int	ft_check_alpha(char *arg, int i, const char *type, t_pipe *data)
+{
+	if (!ft_isalpha(arg[i]))
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd((char *)type, 2);
+		ft_putstr_fd(": `", 2);
+		ft_putstr_fd(arg, 2);
+		ft_putstr_fd("': not a valid indetifier\n", 2);
+		data->built_st = 1;
+		return (1);
+	}
+	return (0);
+}
+
 /**
  * It creates a new node to fill the linked list
  * @param line value will set the node content
@@ -14,41 +29,4 @@ t_env	*ft_new_node(char *line)
 		exit(1);
 	node->line = ft_strdup(line);
 	return (node);
-}
-
-/**
- * It initializes the main data structure variables, signal input
- * and terminal set.
- * @param envp environment variables
- * @param data own structure
- * @param aux auxiliar 't_env' variable to set the linked list
- * @param t structure of type of 'termios'
- * @param i iterator index
-*/
-void	ft_init_terminator(char	**envp, t_pipe *data)
-{
-	t_env			*aux;
-	t_env			*tmp;
-	struct termios	t;
-	int				i;
-
-	i = 0;
-	data->env = ft_new_node(envp[i]);
-	aux = data->env;
-	aux->prev = NULL;
-	while (envp[++i])
-	{
-		tmp = aux;
-		aux->next = ft_new_node(envp[i]);
-		aux = aux->next;
-		aux->prev = tmp;
-	}
-	aux->next = NULL;
-	data->envp = envp;
-	signal(SIGINT, ft_sig_handler);
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGUSR1, ft_procs_sig);
-	tcgetattr(0, &t);
-	t.c_lflag &= ~ECHOCTL;
-	tcsetattr(0, TCSANOW, &t);
 }

@@ -6,24 +6,11 @@
 /*   By: vde-prad <vde-prad@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 17:48:26 by vde-prad          #+#    #+#             */
-/*   Updated: 2023/05/07 09:57:45 by vde-prad         ###   ########.fr       */
+/*   Updated: 2023/05/07 10:57:28 by vde-prad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	ft_sstrlen(char *s1, char *s2)
-{
-	int	l1;
-	int	l2;
-
-	l1 = ft_strlen(s1);
-	l2 = ft_strlen(s2);
-	if (l1 >= l2)
-		return (l1);
-	else
-		return (l2);
-}
 
 static void	ft_get_delim(t_inputs *inputs, char **del1, char **del2)
 {
@@ -102,7 +89,7 @@ static void	ft_here_doc(t_inputs *inputs, t_pipe *data)
 	ft_iter_hd(inputs, data, del1, del2);
 }
 
-static void	ft_check_inf(t_inputs *inputs, t_pipe *data)
+static int	ft_check_inf(t_inputs *inputs, t_pipe *data)
 {
 	int	i;
 	int	fd;
@@ -120,12 +107,15 @@ static void	ft_check_inf(t_inputs *inputs, t_pipe *data)
 			}
 			else
 			{
-				ft_putstr_fd("No such file or directory\n", STDERR_FILENO);
-				exit(127);
+				ft_putstr_fd("minishell : ",2);
+				ft_putstr_fd(inputs->args->inf[i], 2);
+				ft_putstr_fd(": No such file or directory\n", 2);
+				return (1);
 			}
 		}
 		i++;
 	}
+	return (0);
 }
 
 static void	ft_check_out(t_inputs *inputs, t_pipe *data)
@@ -158,8 +148,10 @@ static void	ft_check_out(t_inputs *inputs, t_pipe *data)
 	@param inputs Structure that contains the the parsed arguments.
 	@param data Structure that contains the 1 the fd necessary for the execution.
 */
-void	ft_setdata(t_inputs *inputs, t_pipe *data)
+int	ft_setdata(t_inputs *inputs, t_pipe *data)
 {
+	if (inputs->args->ored_flag || inputs->args->app_flag)
+		ft_check_out(inputs, data);
 	if (inputs->args->inf_len)
 	{
 		if (inputs->args->inf_flags[inputs->args->inf_len - 1] == 1)
@@ -168,10 +160,7 @@ void	ft_setdata(t_inputs *inputs, t_pipe *data)
 			data->ign_inf = 1;
 		if (inputs->args->hd_flag > 0)
 			ft_here_doc(inputs, data);
-		ft_check_inf(inputs, data);
+		return (ft_check_inf(inputs, data));
 	}
-	if (inputs->args->ored_flag || inputs->args->app_flag)
-	{
-		ft_check_out(inputs, data);
-	}
+	return (0);
 }

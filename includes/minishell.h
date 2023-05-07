@@ -124,7 +124,7 @@ char	*ft_charjoin(char *s, char c);
 
 //** PIPE **//
 // redirections.c
-void	ft_setdata(t_inputs *inputs, t_pipe *data);
+int		ft_setdata(t_inputs *inputs, t_pipe *data);
 // parserpath.c
 char	*ft_getpath(char **ep, char *cmd);
 // terminator.c
@@ -134,6 +134,9 @@ int		ft_check_rl(t_inputs *inputs);
 void	ft_sig_handler(int signal);
 void	ft_procs_sig(int signal);
 void	ft_antibreeder(t_pipe *data, int i);
+// list.c
+int		ft_find_var(char *var, t_pipe *data, t_env **target);
+void	ft_add_var(char *var, t_pipe *data);
 // echo.c
 int		ft_echo(t_inputs *inputs, t_pipe *data);
 // env.c
@@ -142,8 +145,6 @@ int		ft_env(t_inputs *inputs, t_pipe *data);
 int		ft_pwd(t_pipe *data);
 // export.c
 int		ft_export(char **cmd_arr, t_pipe *data, t_inputs *inputs);
-int		ft_find_var(char *var, t_pipe *data, t_env **target);
-int		ft_check_alpha(char *arg, int i, const char *type, t_pipe *data);
 void	ft_set_variable(char *arg, t_pipe *data);
 // unset.c
 int		ft_unset(t_inputs *inputs, t_pipe *data);
@@ -155,4 +156,5 @@ int		ft_cd(char **cmd_arr, t_pipe *data);
 // utils.c
 void	ft_init_terminator(char **envp, t_pipe *data);
 t_env	*ft_new_node(char *line);
+int		ft_check_alpha(char *arg, int i, const char *type, t_pipe *data);
 #endif

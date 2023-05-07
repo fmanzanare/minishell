@@ -1,53 +1,5 @@
 #include "../../../includes/minishell.h"
 
-int	ft_find_var(char *var, t_pipe *data, t_env **target)
-{
-	t_env	*aux;
-	int		len;
-
-	len = ft_strlen(var);
-	aux = data->env;
-	while (aux)
-	{
-		if (!ft_strncmp(var, aux->line, len))
-		{
-			*target = aux;
-			return (1);
-		}
-		aux = aux->next;
-	}
-	return (0);
-}
-
-static void	ft_add_var(char *var, t_pipe *data)
-{
-	t_env	*aux;
-	t_env	*tmp;
-
-	aux = data->env;
-	while (aux->next)
-		aux = aux->next;
-	tmp = aux;
-	tmp->next = ft_new_node(var);
-	tmp->next->prev = tmp;
-	tmp->next->next = NULL;
-}
-
-int	ft_check_alpha(char *arg, int i, const char *type, t_pipe *data)
-{
-	if (!ft_isalpha(arg[i]))
-	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd((char *)type, 2);
-		ft_putstr_fd(": `", 2);
-		ft_putstr_fd(arg, 2);
-		ft_putstr_fd("': not a valid indetifier\n", 2);
-		data->built_st = 1;
-		return (1);
-	}
-	return (0);
-}
-
 /**
  * It checks that the variable name is valid, checks if the variable
  * already exist and create it or modify the value.
