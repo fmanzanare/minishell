@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminator.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmanzana <fmanzana@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: vde-prad <vde-prad@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 17:44:12 by vde-prad          #+#    #+#             */
-/*   Updated: 2023/05/06 17:31:07 by fmanzana         ###   ########.fr       */
+/*   Updated: 2023/05/07 09:57:22 by vde-prad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ static int	ft_breeder(t_inputs *inputs, char **envp, t_pipe *data, int i)
 			else
 				execve(ft_getpath(envp, inputs->args->cmd_arr[0]),
 					inputs->args->cmd_arr, envp);
-			perror("execve failure");
+			ft_putstr_fd("execve failure", 2);
 			exit(127);
 		}
 		else

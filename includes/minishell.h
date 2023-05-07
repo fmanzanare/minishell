@@ -24,15 +24,15 @@ typedef struct s_args
 	char			*cmd_path;
 	char			**inf;
 	int				*inf_flags;
-	int				inf_len;
+	int				inf_len; // n total de inredir
 	char			**outf;
 	int				*outf_flags;
-	int				outf_len;
+	int				outf_len; // n total de outredir
 	int				pipe_flag;
 	int				ored_flag;
-	int				ired_flag;
+	int				ired_flag; //numero infiles
 	int				app_flag;
-	int				hd_flag;
+	int				hd_flag; //numero heredocs
 	struct s_args	*next;
 	struct s_args	*prev;
 }	t_args;
@@ -63,6 +63,7 @@ typedef struct s_pipe
 	int		status;
 	int		fdin;
 	int		fdout;
+	int		ign_inf;
 	int		pp[2];
 	char	pwd[512];
 	char	**envp;
