@@ -41,6 +41,7 @@ void	ft_init_terminator(char	**envp, t_pipe *data)
 {
 	struct termios	t;
 
+    data->built_st = 0;
     ft_init_envlst(envp, data);
 	signal(SIGINT, ft_sig_handler);
 	signal(SIGQUIT, SIG_IGN);

@@ -6,7 +6,7 @@
 /*   By: vde-prad <vde-prad@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 17:44:12 by vde-prad          #+#    #+#             */
-/*   Updated: 2023/05/07 12:44:59 by vde-prad         ###   ########.fr       */
+/*   Updated: 2023/05/07 13:51:09 by vde-prad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,33 @@ static int	ft_builtin(t_inputs *inputs, t_pipe *data)
 }
 
 /**
+ * Creates the proccesses, and executes the cmd passed by parser
+ * @param inputs struct of the parser part
+ * @param data struct of terminator part
+ * @param i iterator index
+*/
+static void	ft_child(t_inputs *inputs, t_pipe *data, int i)
+{
+	int	childpid;
+
+	childpid = fork();
+	if (childpid == -1)
+		exit(127);
+	if (childpid == 0)
+	{
+		if (access(inputs->args->cmd_arr[0], F_OK | R_OK) == 0)
+			execve(inputs->args->cmd_arr[0], inputs->args->cmd_arr, data->envp);
+		else
+			execve(ft_getpath(data->envp, inputs->args->cmd_arr[0]),
+				inputs->args->cmd_arr, data->envp);
+		ft_putstr_fd("execve failure", 2);
+		exit(127);
+	}
+	else
+		data->childpid[i - 1] = childpid;
+}
+
+/**
 	Generates 'i' number of processes for the execution of each cmd. It
 	executes the cmds too.
 	@param inputs Structure that contains the arguments passed by the CLI, parsed
@@ -86,25 +113,16 @@ static int	ft_breeder(t_inputs *inputs, t_pipe *data, int i)
 		data->childpid[i - 1] = -1;
 		return (childpid);
 	}
+	if (!inputs->args->cmd_arr)
+	{
+		data->childpid[i - 1] = -1;
+		return (-1);
+	}
 	childpid = ft_builtin(inputs, data);
 	if (childpid > 0)
 	{
 		signal(SIGUSR1, SIG_IGN);
-		childpid = fork();
-		if (childpid == -1)
-			exit(127);
-		if (childpid == 0)
-		{
-			if (access(inputs->args->cmd_arr[0], F_OK | R_OK) == 0)
-				execve(inputs->args->cmd_arr[0], inputs->args->cmd_arr, data->envp);
-			else
-				execve(ft_getpath(data->envp, inputs->args->cmd_arr[0]),
-					inputs->args->cmd_arr, data->envp);
-			ft_putstr_fd("execve failure", 2);
-			exit(127);
-		}
-		else
-			data->childpid[i - 1] = childpid;
+		ft_child(inputs, data, i);
 	}
 	else
 		data->childpid[i - 1] = childpid;
